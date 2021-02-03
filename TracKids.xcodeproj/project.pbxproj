@@ -3,27 +3,39 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A418323D3EE13D15A330643 /* Pods_TracKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */; };
 		EF5B0EF225BE492200890F4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0EF125BE492200890F4B /* AppDelegate.swift */; };
 		EF5B0EF425BE492200890F4B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0EF325BE492200890F4B /* SceneDelegate.swift */; };
-		EF5B0EF625BE492200890F4B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0EF525BE492200890F4B /* ViewController.swift */; };
+		EF5B0EF625BE492200890F4B /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0EF525BE492200890F4B /* ListViewController.swift */; };
 		EF5B0EF925BE492200890F4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF5B0EF725BE492200890F4B /* Main.storyboard */; };
 		EF5B0EFB25BE492300890F4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF5B0EFA25BE492300890F4B /* Assets.xcassets */; };
 		EF5B0EFE25BE492300890F4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF5B0EFC25BE492300890F4B /* LaunchScreen.storyboard */; };
+		EF5B0F0925BF5FEE00890F4B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */; };
+		EF5B0F1525BFA44100890F4B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5B0F1425BFA44100890F4B /* GoogleService-Info.plist */; };
+		EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */; };
+		EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TracKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		30C081F087F0E1B14B89321F /* Pods-TracKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.debug.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.debug.xcconfig"; sourceTree = "<group>"; };
+		9A758AE6DBFF2BD4185F6F0F /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
 		EF5B0EEE25BE492200890F4B /* TracKids.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TracKids.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF5B0EF125BE492200890F4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF5B0EF325BE492200890F4B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EF5B0EF525BE492200890F4B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EF5B0EF525BE492200890F4B /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		EF5B0EF825BE492200890F4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EF5B0EFA25BE492300890F4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF5B0EFD25BE492300890F4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF5B0EFF25BE492300890F4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		EF5B0F1425BFA44100890F4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A418323D3EE13D15A330643 /* Pods_TracKids.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +55,8 @@
 			children = (
 				EF5B0EF025BE492200890F4B /* TracKids */,
 				EF5B0EEF25BE492200890F4B /* Products */,
+				F8B61BF64E95AA6B7DB1AB4C /* Pods */,
+				F6594CC00AB2089641DFF0A8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,13 +73,34 @@
 			children = (
 				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
 				EF5B0EF325BE492200890F4B /* SceneDelegate.swift */,
-				EF5B0EF525BE492200890F4B /* ViewController.swift */,
+				EF5B0EF525BE492200890F4B /* ListViewController.swift */,
 				EF5B0EF725BE492200890F4B /* Main.storyboard */,
+				EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */,
+				EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */,
+				EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */,
 				EF5B0EFA25BE492300890F4B /* Assets.xcassets */,
 				EF5B0EFC25BE492300890F4B /* LaunchScreen.storyboard */,
 				EF5B0EFF25BE492300890F4B /* Info.plist */,
+				EF5B0F1425BFA44100890F4B /* GoogleService-Info.plist */,
 			);
 			path = TracKids;
+			sourceTree = "<group>";
+		};
+		F6594CC00AB2089641DFF0A8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F8B61BF64E95AA6B7DB1AB4C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				30C081F087F0E1B14B89321F /* Pods-TracKids.debug.xcconfig */,
+				9A758AE6DBFF2BD4185F6F0F /* Pods-TracKids.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +110,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF5B0F0225BE492300890F4B /* Build configuration list for PBXNativeTarget "TracKids" */;
 			buildPhases = (
+				C9DCB41CA2E85617DC3D7F10 /* [CP] Check Pods Manifest.lock */,
 				EF5B0EEA25BE492200890F4B /* Sources */,
 				EF5B0EEB25BE492200890F4B /* Frameworks */,
 				EF5B0EEC25BE492200890F4B /* Resources */,
+				EB125CD7E4F40CDD4AE2B177 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF5B0EFE25BE492300890F4B /* LaunchScreen.storyboard in Resources */,
+				EF5B0F1525BFA44100890F4B /* GoogleService-Info.plist in Resources */,
 				EF5B0EFB25BE492300890F4B /* Assets.xcassets in Resources */,
 				EF5B0EF925BE492200890F4B /* Main.storyboard in Resources */,
 			);
@@ -132,14 +171,59 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C9DCB41CA2E85617DC3D7F10 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TracKids-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB125CD7E4F40CDD4AE2B177 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EF5B0EEA25BE492200890F4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF5B0EF625BE492200890F4B /* ViewController.swift in Sources */,
+				EF5B0EF625BE492200890F4B /* ListViewController.swift in Sources */,
 				EF5B0EF225BE492200890F4B /* AppDelegate.swift in Sources */,
 				EF5B0EF425BE492200890F4B /* SceneDelegate.swift in Sources */,
+				EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */,
+				EF5B0F0925BF5FEE00890F4B /* SignUpViewController.swift in Sources */,
+				EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,12 +367,14 @@
 		};
 		EF5B0F0325BE492300890F4B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30C081F087F0E1B14B89321F /* Pods-TracKids.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 376L6GYCXP;
 				INFOPLIST_FILE = TracKids/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,12 +388,14 @@
 		};
 		EF5B0F0425BE492300890F4B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A758AE6DBFF2BD4185F6F0F /* Pods-TracKids.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 376L6GYCXP;
 				INFOPLIST_FILE = TracKids/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

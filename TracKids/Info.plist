@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>please  allow the app to always get your child Location to give you all Time tracking</string>
+	<key>NSLocationUsageDescription</key>
+	<string>please  allow the app to always get your child Location to give you all Time tracking</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>please  allow the app to always get your child Location to give you all Time tracking</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>please we need your child Location to give you all Time tracking</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -50,11 +58,7 @@
 		<string>armv7</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
+	<array/>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
