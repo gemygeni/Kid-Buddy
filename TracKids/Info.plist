@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>please  allow the app to always get your child Location to give you all Time tracking</string>
+	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
 	<key>NSLocationUsageDescription</key>
-	<string>please  allow the app to always get your child Location to give you all Time tracking</string>
+	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>please  allow the app to always get your child Location to give you all Time tracking</string>
+	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>please we need your child Location to give you all Time tracking</string>
+	<string>please allow this app to Always get your child Location to give you all Time tracking</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

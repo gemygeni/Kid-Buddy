@@ -44,7 +44,7 @@
                                                 <rect key="frame" x="0.0" y="136.66666666666669" width="388" height="48.666666666666657"/>
                                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
                                             <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Full Name" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iY9-5j-XsY">
                                                 <rect key="frame" x="0.0" y="205.33333333333331" width="388" height="48.333333333333343"/>
@@ -268,7 +268,7 @@
                                                 <rect key="frame" x="0.0" y="127.33333333333333" width="388" height="43.666666666666671"/>
                                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vw4-tM-fMB">
                                                 <rect key="frame" x="0.0" y="191" width="388" height="43.666666666666657"/>
@@ -371,8 +371,43 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="hwS-0S-dYn">
                                 <rect key="frame" x="30" y="140" width="368" height="562"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZu-MK-pE0">
+                                        <rect key="frame" x="0.0" y="0.0" width="368" height="42.666666666666664"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                        <state key="normal" title="  Add Child">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <imageReference key="image" image="plus" catalog="system" symbolScale="large" renderingMode="original"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" weight="semibold"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P3c-9z-8pk">
+                                        <rect key="frame" x="0.0" y="86.666666666666657" width="368" height="42.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                        <state key="normal" title="  Observe Places">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <imageReference key="image" image="eyes" catalog="system" symbolScale="large" renderingMode="original"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TNH-QU-IRq">
+                                        <rect key="frame" x="0.0" y="173" width="368" height="42.666666666666657"/>
+                                        <state key="normal" title="  Buzz">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <imageReference key="image" image="bell" catalog="system" symbolScale="large" renderingMode="original"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="40" scale="large" weight="regular"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2a8-c0-2ef">
+                                        <rect key="frame" x="0.0" y="259.66666666666669" width="368" height="42.666666666666686"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                        <state key="normal" title="  Help">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <imageReference key="image" image="info.circle" catalog="system" symbolScale="large" renderingMode="original"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" weight="semibold"/>
+                                        </state>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="joT-El-mLJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="368" height="57"/>
+                                        <rect key="frame" x="0.0" y="346.33333333333331" width="368" height="42.666666666666686"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <state key="normal" title="  Sign in">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -383,43 +418,20 @@
                                             <segue destination="zu5-A9-fYx" kind="show" id="WZU-q8-wgU"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZu-MK-pE0">
-                                        <rect key="frame" x="0.0" y="101" width="368" height="57"/>
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OLt-fm-rdT">
+                                        <rect key="frame" x="0.0" y="433" width="368" height="42.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                        <state key="normal" title="  Add Child">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <imageReference key="image" image="plus" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" weight="semibold"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P3c-9z-8pk">
-                                        <rect key="frame" x="0.0" y="202" width="368" height="57"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                        <state key="normal" title="  Observe Places">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <imageReference key="image" image="eyes" catalog="system" symbolScale="large" renderingMode="original"/>
+                                        <state key="normal" title="  Sign Out">
+                                            <color key="titleColor" systemColor="systemRedColor"/>
+                                            <imageReference key="image" image="pip.exit" catalog="system" symbolScale="large" renderingMode="original"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
                                         </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TNH-QU-IRq">
-                                        <rect key="frame" x="0.0" y="303" width="368" height="57"/>
-                                        <state key="normal" title="  Buzz">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <imageReference key="image" image="bell" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="40" scale="large" weight="regular"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2a8-c0-2ef">
-                                        <rect key="frame" x="0.0" y="404" width="368" height="57"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                        <state key="normal" title="  Help">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <imageReference key="image" image="info.circle" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" weight="semibold"/>
-                                        </state>
+                                        <connections>
+                                            <action selector="signOutPressed:" destination="PEL-v1-FtV" eventType="touchUpInside" id="wcn-yf-bSp"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cn2-az-kFh">
-                                        <rect key="frame" x="0.0" y="505" width="368" height="57"/>
+                                        <rect key="frame" x="0.0" y="519.33333333333337" width="368" height="42.666666666666629"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <state key="normal" title="  Unpair Child">
                                             <color key="titleColor" systemColor="systemRedColor"/>
@@ -545,6 +557,7 @@
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="message" catalog="system" width="128" height="113"/>
         <image name="pip.enter" catalog="system" width="128" height="96"/>
+        <image name="pip.exit" catalog="system" width="128" height="96"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus.circle" catalog="system" width="128" height="121"/>
         <systemColor name="linkColor">

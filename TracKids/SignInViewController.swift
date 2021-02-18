@@ -9,7 +9,7 @@ import UIKit
 import  Firebase
 
 class SignInViewController: UIViewController {
-
+    
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var passwordTextField: UITextField!
@@ -20,7 +20,7 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         // Do any additional setup after loading the view.
     }
     private func handleSignIn(){
@@ -30,28 +30,32 @@ class SignInViewController: UIViewController {
             if let error = error {
                 print("Failed to log user in due to: \(error.localizedDescription)")
                 return}
-            self.dismiss(animated: true) {
-                print("alhamdo lellah")
+            DispatchQueue.main.async {
+                self.dismiss(animated: true) {
+                    self.navigationController?.popToRootViewController(animated: true)
+                    print("signed in successfully")
+                    
+                }
             }
             
-                            }
-        navigationController?.popToRootViewController(animated: true)
-            }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
         }
         
-       
+    }
     
-    
+}
+
+
+extension UIViewController {
+    var navcon : UIViewController {
+        if let VC = self as? UINavigationController {
+            return VC.visibleViewController ?? self
+        }
+        else {
+            return self
+        }
+    }
+}
+
+
+
 

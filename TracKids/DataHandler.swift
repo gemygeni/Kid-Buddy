@@ -1,0 +1,44 @@
+//
+//  DataHandler.swift
+//  TracKids
+//
+//  Created by AHMED GAMAL  on 2/4/21.
+//
+import Foundation
+import Firebase
+import GeoFire
+
+
+let DBRefernce = Database.database().reference()
+let userReference = DBRefernce.child("users")
+let childLocationReference = DBRefernce.child("childLocation")
+
+struct DataHandler{
+   static let shared  = DataHandler()
+    
+    
+    func fetchUserInfo(UId : String , completion : @escaping (User) -> Void) {
+        
+        userReference.child(UId).observeSingleEvent(of: .value) { (snapshot) in
+            let userID = snapshot.key
+            guard let userInfo = snapshot.value as? [String : Any] else {return}
+            let user = User(uid: userID, dictionary: userInfo)
+            completion(user)
+        }
+    }
+    
+    func fetchChildLocation(uid : String, completion : @escaping (CLLocation?) -> Void){
+        let geofire = GeoFire(firebaseRef: childLocationReference)
+        childLocationReference.observe(.value) { (snapshot) in
+             let childUid = uid
+            
+            geofire.getLocationForKey(childUid) { (location, error) in
+                if error != nil {print(error!.localizedDescription) }
+                guard let location = location else {return}
+                completion(location)
+                
+            }
+        
+        }
+    }
+}

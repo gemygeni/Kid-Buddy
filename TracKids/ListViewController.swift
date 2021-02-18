@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ListViewController: UIViewController {
 
@@ -15,5 +16,26 @@ class ListViewController: UIViewController {
     }
 
 
+    @IBAction func signOutPressed(_ sender: UIButton) {
+        handleSignOut()
+    }
+    
+    
+    private func handleSignOut(){
+        do {
+            try! Auth.auth().signOut()
+        }
+       
+        DispatchQueue.main.async {
+            self.dismiss(animated: true) {
+                print("signed out successfully")
+            }
+            self.navigationController?.popToRootViewController(animated: true)
+                 }
+        
+    }
+    
+    
+    
 }
 
