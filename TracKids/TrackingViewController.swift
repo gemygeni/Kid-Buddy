@@ -9,15 +9,18 @@ import UIKit
 import MapKit
 import Firebase
 
+
+
 enum AccountType : Int  {
     case parent
     case child
 }
+
+
 class TrackingViewController: UIViewController  {
     var accountType : AccountType!
     
-    
-    
+    let kSecRandomDefault = SecRandomRef(bitPattern: 10)
     @IBOutlet weak var mapView: MKMapView!
     let LocationManager = LocationHandler.shared.locationManager
     var user : User?{
@@ -39,9 +42,10 @@ class TrackingViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchUserInfo()
-        //handleLocationServices()
         configureMapView()
     }
+    
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -49,35 +53,21 @@ class TrackingViewController: UIViewController  {
         configureMapView()
         
         if accountType == .parent {
-            print("hey iam parent willappear")
+            print("hey iam parent and i willappear")
             fetchChildLocation()
         }
         else if accountType == .child {
-            print("hey iam child")
+            print("hey iam child and i willappear")
             handleLocationServices()
         }
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(true)
-//        fetchUserInfo()
-//        configureMapView()
-//
-//        if accountType == .parent {
-//            //print("hey iam parent didappear")
-//            fetchChildLocation()
-//        }
-//        else if accountType == .child {
-//           // print("hey iam child")
-//            handleLocationServices()
-//        }
-//    }
-////
+
     func fetchChildLocation()  {
         if accountType == .parent {
-            let childID = "CYpe7scPGvenNUDXLLARvfvBn4U2"
+            
+            let childID = "0ZI2DCNhrnPpdkgUJjAtKtLNiXo1"
             DataHandler.shared.fetchChildLocation(uid: childID) { (location) in
-                print("hhhhhhhhhhhhhhh \((location?.coordinate.latitude)!)")
                 guard let fetchedLocation = location else {return}
                 let region = MKCoordinateRegion(center: fetchedLocation.coordinate , span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                 DispatchQueue.main.async {
@@ -86,10 +76,10 @@ class TrackingViewController: UIViewController  {
                     if self.mapView.annotations.contains(where: { (annotation) -> Bool in
                         guard let childAnnnotation = annotation as? ChildAnnotation else{return false}
                         childAnnnotation.updateMapView(with: fetchedLocation.coordinate)
-                    
-                        print("this anno already exist")
-                        return true
-                    }){
+                        
+                                            return true
+                    })
+                    {
                     }
                     else{
                         self.mapView.addAnnotation(annotation)
@@ -98,32 +88,8 @@ class TrackingViewController: UIViewController  {
           }
         }
     }
-//
-//    func centerMapOn(_ location: CLLocation) {
-//        let locationCooordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//        let region = MKCoordinateRegion(center: locationCooordinate , span: MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07))
-//        DispatchQueue.main.async {
-//            self.mapView.setRegion(region, animated: true)
-//            let annotation = ChildAnnotation(coordinate: locationCooordinate)
-//            print("annnnnno corrdinate is \(annotation.coordinate.latitude)")
-//            if self.mapView.annotations.contains(where: { (annotation) -> Bool in
-//
-//                print("this anno already exist")
-//                return true
-//            }){
-//
-//                print("now annnnnno corrdinate is \(annotation.coordinate.latitude)")
-//            return
-//            }
-//            else{
-//                annotation.coordinate = location.coordinate
-//                self.mapView.addAnnotation(annotation)
-//
-//                print("herrrre corrdinate is \(annotation.coordinate.latitude)")
-//
-//            }
-//        }
-//    }
+
+    
 //
     func fetchUserInfo(){
         guard let UId = Auth.auth().currentUser?.uid else {return}
@@ -141,6 +107,7 @@ class TrackingViewController: UIViewController  {
             print("please log in")
         }
         else {
+            performSegue(withIdentifier: "AddChild", sender: sender)
             print("you are logged in")
         }
     }

@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
-	<key>NSLocationUsageDescription</key>
-	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>please allow this app to Always get your child Location to give you all Time tracking</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -26,8 +18,20 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>INIntentsSupported</key>
+	<array>
+		<string>Intent</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>please allow this app to Always get your child Location to give you all Time tracking</string>
+	<key>NSLocationUsageDescription</key>
+	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

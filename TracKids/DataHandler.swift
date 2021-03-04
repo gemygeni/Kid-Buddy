@@ -9,13 +9,12 @@ import Firebase
 import GeoFire
 
 
-let DBRefernce = Database.database().reference()
-let userReference = DBRefernce.child("users")
-let childLocationReference = DBRefernce.child("childLocation")
+let DBReference = Database.database().reference()
+let userReference = DBReference.child("users")
+let childLocationReference = DBReference.child("childLocation")
 
 struct DataHandler{
    static let shared  = DataHandler()
-    
     
     func fetchUserInfo(UId : String , completion : @escaping (User) -> Void) {
         
@@ -28,17 +27,16 @@ struct DataHandler{
     }
     
     func fetchChildLocation(uid : String, completion : @escaping (CLLocation?) -> Void){
+        
         let geofire = GeoFire(firebaseRef: childLocationReference)
         childLocationReference.observe(.value) { (snapshot) in
              let childUid = uid
             
             geofire.getLocationForKey(childUid) { (location, error) in
                 if error != nil {print(error!.localizedDescription) }
-                guard let location = location else {return}
-                completion(location)
-                
+                guard let childLocation = location else {return}
+                completion(childLocation)
             }
-        
         }
     }
 }
