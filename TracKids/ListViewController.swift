@@ -16,11 +16,22 @@ class ListViewController: UIViewController {
     }
 
 
+    
+    @IBOutlet weak var SignInButton: UIButton!{
+        didSet{
+            SignInButton.isHidden = Auth.auth().currentUser?.uid != nil
+        }
+    }
     @IBAction func signOutPressed(_ sender: UIButton) {
         handleSignOut()
     }
     
     
+    @IBOutlet weak var SignOutButton: UIButton!{
+        didSet{
+            SignOutButton.isHidden = Auth.auth().currentUser?.uid == nil
+        }
+    }
     private func handleSignOut(){
         do {
             try! Auth.auth().signOut()
@@ -32,7 +43,6 @@ class ListViewController: UIViewController {
             }
             self.navigationController?.popToRootViewController(animated: true)
                  }
-        
     }
     
     

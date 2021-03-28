@@ -8,15 +8,22 @@ import UIKit
 
 class AddChildViewController: UIViewController {
 
-
-    
+   
     @IBOutlet weak var ChildNameTextField: UITextField!
     
     @IBOutlet weak var ChildPhoneTextField: UITextField!
     @IBAction func AddImagePressed(_ sender: UIButton) {
     }
     
+    
+    func AddNewChild(){
+        if let name = ChildNameTextField.text, let phoneNumber = ChildPhoneTextField.text{
+            var newChild = Child(name: name, phoneNumber: phoneNumber)
+        }
+   }
+    
     @IBAction func AddChildPressed(_ sender: UIButton) {
+        AddNewChild()
     }
     
     
@@ -24,6 +31,9 @@ class AddChildViewController: UIViewController {
         self.dismiss(animated: true) {
             print("canceled adding")
         }
+        
+        
+        
     }
     
     

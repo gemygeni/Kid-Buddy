@@ -17,11 +17,13 @@ class SignInViewController: UIViewController {
     @IBAction func signInPressd(_ sender: UIButton) {
         handleSignIn()
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        // Do any additional setup after loading the view.
+    
+    @IBAction func CancelPressed(_ sender: Any) {
+        DispatchQueue.main.async {
+            self.dismiss(animated: true) {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }
     }
     private func handleSignIn(){
         guard let email = emailTextField.text else {return}

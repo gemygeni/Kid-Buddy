@@ -83,7 +83,6 @@
 		EF5B0EF025BE492200890F4B /* TracKids */ = {
 			isa = PBXGroup;
 			children = (
-				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
 				EF5B0EF325BE492200890F4B /* SceneDelegate.swift */,
 				EF5B0EF525BE492200890F4B /* ListViewController.swift */,
 				EF5B0EF725BE492200890F4B /* Main.storyboard */,
@@ -96,12 +95,21 @@
 				EF8F9B0925F0A2FB00C4BE16 /* Child.swift */,
 				EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */,
 				EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */,
-				EF5B0EFA25BE492300890F4B /* Assets.xcassets */,
-				EF5B0EFC25BE492300890F4B /* LaunchScreen.storyboard */,
 				EF5B0EFF25BE492300890F4B /* Info.plist */,
 				EF3A9A6E25D8C3CF00BE1C8A /* GoogleService-Info.plist */,
+				EF8F9B0C25F5DF2500C4BE16 /* supporting files */,
 			);
 			path = TracKids;
+			sourceTree = "<group>";
+		};
+		EF8F9B0C25F5DF2500C4BE16 /* supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
+				EF5B0EFA25BE492300890F4B /* Assets.xcassets */,
+				EF5B0EFC25BE492300890F4B /* LaunchScreen.storyboard */,
+			);
+			path = "supporting files";
 			sourceTree = "<group>";
 		};
 		F6594CC00AB2089641DFF0A8 /* Frameworks */ = {
