@@ -19,6 +19,7 @@ class SignUpViewController: UIViewController {
     
     @IBOutlet weak var userTypeControl: UISegmentedControl!
     let location = LocationHandler.shared.locationManager.location
+    var child = Child(name: "medo", phoneNumber: "010666666")
     
     @IBAction func signUpPressd(_ sender: UIButton) {
         print("location\(String(describing: location))")
