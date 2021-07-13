@@ -42,7 +42,7 @@ class SignUpViewController: UIViewController {
     }
     
    
-    //main func to handle signUP
+  
     private func handleSignUp(){
         let userType = userTypeControl.selectedSegmentIndex
         guard let email = emailTextField.text else {return}

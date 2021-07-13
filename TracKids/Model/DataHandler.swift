@@ -26,6 +26,8 @@ struct DataHandler{
         }
     }
     
+    
+    
     func fetchChildLocation(uid : String, completion : @escaping (CLLocation?) -> Void){
         
         let geofire = GeoFire(firebaseRef: childLocationReference)
