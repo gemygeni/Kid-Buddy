@@ -62,6 +62,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EF55672226797DEE00077ACF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EF3A9A7325DB6DCC00BE1C8A /* ChildAnnotation.swift */,
+				EF95470B25CBA30300806D45 /* DataHandler.swift */,
+				EF27376125D0C166002A5601 /* LocationHandler.swift */,
+				EF95470E25CBB45F00806D45 /* User.swift */,
+				EF8F9B0925F0A2FB00C4BE16 /* Child.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EF55672326797E1800077ACF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EF5B0EF525BE492200890F4B /* ListViewController.swift */,
+				EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */,
+				EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */,
+				EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */,
+				EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		EF5B0EE525BE492200890F4B = {
 			isa = PBXGroup;
 			children = (
@@ -83,20 +107,11 @@
 		EF5B0EF025BE492200890F4B /* TracKids */ = {
 			isa = PBXGroup;
 			children = (
-				EF5B0EF325BE492200890F4B /* SceneDelegate.swift */,
-				EF5B0EF525BE492200890F4B /* ListViewController.swift */,
+				EF55672326797E1800077ACF /* Controller */,
 				EF5B0EF725BE492200890F4B /* Main.storyboard */,
-				EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */,
-				EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */,
-				EF3A9A7325DB6DCC00BE1C8A /* ChildAnnotation.swift */,
-				EF95470B25CBA30300806D45 /* DataHandler.swift */,
-				EF27376125D0C166002A5601 /* LocationHandler.swift */,
-				EF95470E25CBB45F00806D45 /* User.swift */,
-				EF8F9B0925F0A2FB00C4BE16 /* Child.swift */,
-				EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */,
-				EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */,
 				EF5B0EFF25BE492300890F4B /* Info.plist */,
 				EF3A9A6E25D8C3CF00BE1C8A /* GoogleService-Info.plist */,
+				EF55672226797DEE00077ACF /* Model */,
 				EF8F9B0C25F5DF2500C4BE16 /* supporting files */,
 			);
 			path = TracKids;
@@ -105,6 +120,7 @@
 		EF8F9B0C25F5DF2500C4BE16 /* supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				EF5B0EF325BE492200890F4B /* SceneDelegate.swift */,
 				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
 				EF5B0EFA25BE492300890F4B /* Assets.xcassets */,
 				EF5B0EFC25BE492300890F4B /* LaunchScreen.storyboard */,
