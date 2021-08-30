@@ -12,8 +12,7 @@ struct User {
     var passWord : String
     var accountType : Int
     var uid : String
-    var location : CLLocation?
-    var image : UIImage?
+    
     
     init(uid : String , dictionary : [String : Any] ) {
         self.uid = uid

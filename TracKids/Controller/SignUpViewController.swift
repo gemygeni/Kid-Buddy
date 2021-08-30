@@ -11,17 +11,34 @@ import GeoFire
 
 class SignUpViewController: UIViewController {
     
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!{
+        didSet{
+            emailTextField.delegate = self
+        }
+    }
     
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!{
+        didSet{
+            passwordTextField.delegate = self
+        }
+    }
     
-    @IBOutlet weak var phoneNumberTextField: UITextField!
-    
+    @IBOutlet weak var phoneNumberTextField: UITextField!{
+        didSet{
+            phoneNumberTextField.delegate = self
+        }
+    }
+    func tapRecognnizer(){
+        let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(taprecognizer)
+    }
+    @objc func handleTap(){
+        view.endEditing(true)
+    }
     @IBOutlet weak var userTypeControl: UISegmentedControl!
     let location = LocationHandler.shared.locationManager.location
-    var child = Child(name: "medo", phoneNumber: "010666666")
     
-    @IBAction func signUpPressd(_ sender: UIButton) {
+    @IBAction func signUpPressed(_ sender: UIButton) {
         print("location\(String(describing: location))")
         handleSignUp()
     }
@@ -46,16 +63,24 @@ class SignUpViewController: UIViewController {
   
     private func handleSignUp(){
         let userType = userTypeControl.selectedSegmentIndex
-        guard let email = emailTextField.text else {return}
-        guard let password = passwordTextField.text else {return}
-        guard let phoneNumber = phoneNumberTextField.text else {return}
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            if let error = error{
-                print(error.localizedDescription)
+        
+        guard let email = emailTextField.text,
+         let passWord = passwordTextField.text,
+         let phoneNumber = phoneNumberTextField.text,
+        !email.isEmpty,!passWord.isEmpty,!phoneNumber.isEmpty
+        else {return}
+        
+        Auth.auth().createUser(withEmail: email, password: passWord) { (result, error) in
+            if let error = error {
+                let alert = UIAlertController(title: "Sign Up Failed", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+                self.emailTextField.text = nil
+                self.passwordTextField.text = nil
             }
             guard let UId = result?.user.uid else {return}
             
-            let UserInfo = ["userType" : userType, "email" : email, "password" : password, "phoneNumber" : phoneNumber] as [String : Any]
+            let UserInfo = ["userType" : userType, "email" : email, "password" : passWord, "phoneNumber" : phoneNumber] as [String : Any]
             Database.database().reference().child("users").child(UId).updateChildValues(UserInfo) { (error, reference) in
                 if let error = error{
                     print(error.localizedDescription)
@@ -70,3 +95,10 @@ class SignUpViewController: UIViewController {
     }
 }
 
+extension SignUpViewController : UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+}

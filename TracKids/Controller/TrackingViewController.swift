@@ -20,6 +20,12 @@ enum AccountType : Int  {
 class TrackingViewController: UIViewController  {
     var accountType : AccountType!
     
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+      return .lightContent
+    }
+
+    
    // let kSecRandomDefault = SecRandomRef(bitPattern: 10)
     @IBOutlet weak var mapView: MKMapView!
     let LocationManager = LocationHandler.shared.locationManager
@@ -126,7 +132,9 @@ class TrackingViewController: UIViewController  {
     func configureMapView(){
         mapView.delegate = self
         mapView.addSubview(addChild)
-        //mapView.showsUserLocation = true
+        if accountType == .child {
+            self.mapView.showsUserLocation = true
+        }
         mapView.userTrackingMode = .follow
         mapView.isZoomEnabled = true
     }
