@@ -20,6 +20,7 @@ class AddChildViewController: UIViewController {
         }
     }
 
+    @IBOutlet weak var spinnner: UIActivityIndicatorView!
     
     @IBOutlet weak var ChildPhoneTextField: UITextField!{
         didSet{
@@ -63,8 +64,7 @@ class AddChildViewController: UIViewController {
     
    
     @IBAction func AddChildPressed(_ sender: UIButton) {
-        UploadData()
-        presentingViewController?.dismiss(animated: true)
+        self.UploadData()
     }
     
     
@@ -75,6 +75,7 @@ class AddChildViewController: UIViewController {
     }
     
     func UploadData(){
+        spinnner?.startAnimating()
         let storageReference = storage.reference()
         let UID = Auth.auth().currentUser?.uid
         let childName = ChildNameTextField.text ?? ""
@@ -88,30 +89,34 @@ class AddChildViewController: UIViewController {
                     if error != nil {print(error!.localizedDescription)}
                     if let downloadedURL = url{
                         self.ImageURL = downloadedURL.absoluteString
-                        self.AddNewChild()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.AddNewChild()
+                        }
                     }
                 }
             }
-    }
-    
+          }
     }
     
     
     func AddNewChild(){
-            
                 guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text,
               !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
         else {return}
         let childInfo : [String : Any] = ["ChildName" : ChildName,"ChildPhoneNumber" : ChildPhoneNumber, "ImageURL" : ImageURL ?? ""]
-                childInfoReference.child(UID).child(ChildName).updateChildValues(childInfo)
-        
+        childInfoReference.child(UID).child(ChildName).updateChildValues(childInfo){_,_ in
+            if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {
+                self.navigationController?.popViewController(animated: true)
+                self.presentingViewController?.dismiss(animated: true, completion: {
+                self.spinnner?.stopAnimating()
+               })
+            }
+        }
    }
 }
 
 
 extension AddChildViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
-    
     //func to take a photo by device camera
     func PresentCamera() {
         let picker = UIImagePickerController()

@@ -12,7 +12,7 @@ import GeoFire
 let DBReference = Database.database().reference()
 let userReference = DBReference.child("users")
 let childLocationReference = DBReference.child("childLocation")
-
+let TrackedChildsReference = DBReference.child("TrackedChilds")
 struct DataHandler{
     static let shared  = DataHandler()
     
@@ -40,4 +40,18 @@ struct DataHandler{
             }
         }
     }
-}
+    
+    func fetchChildInfo(UId : String, completion : @escaping (Child) -> Void)  {
+        TrackedChildsReference.child(UId).observe(.childAdded, with: { (snapshot) in
+            guard let childInfo = snapshot.value as? [String : Any] else {return}
+            let child = Child(ParentID: UId, ChildInfo: childInfo)
+            completion(child)
+           })
+        }
+    }
+    
+    
+    
+    
+    
+

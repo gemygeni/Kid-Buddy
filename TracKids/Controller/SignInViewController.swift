@@ -97,16 +97,7 @@ extension SignInViewController : UITextFieldDelegate{
     }
     
 }
-extension UIViewController {
-    var navcon : UIViewController {
-        if let VC = self as? UINavigationController {
-            return VC.visibleViewController ?? self
-        }
-        else {
-            return self
-        }
-    }
-}
+
 
 
 

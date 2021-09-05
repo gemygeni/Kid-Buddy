@@ -46,7 +46,6 @@ class TrackingViewController: UIViewController  {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchUserInfo()
@@ -113,7 +112,7 @@ class TrackingViewController: UIViewController  {
             print("please log in")
         }
         else {
-            performSegue(withIdentifier: "AddChild", sender: sender)
+            performSegue(withIdentifier: "AddChildSegue", sender: sender)
             print("you are logged in")
         }
     }
@@ -139,16 +138,6 @@ class TrackingViewController: UIViewController  {
         mapView.isZoomEnabled = true
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 extension TrackingViewController : CLLocationManagerDelegate {

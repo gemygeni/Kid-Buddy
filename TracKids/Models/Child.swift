@@ -11,8 +11,8 @@ struct Child {
     var ParentID : String
     
     var ChildName : String
-    var ImageURL : String
     var ChildPhoneNumber : String
+    var ImageURL : String?
     var CurrentLocation : CLLocation?
     var History : [CLLocation]?
     
@@ -20,9 +20,7 @@ struct Child {
         self.ParentID = ParentID
         self.ChildName = ChildInfo["ChildName"] as? String ?? ""
         self.ChildPhoneNumber = ChildInfo["ChildPhoneNumber"] as? String ?? ""
-
         self.ImageURL = ChildInfo["ImageURL"] as? String ?? ""
-        self.CurrentLocation = ChildInfo["CurrentLocation"] as? CLLocation ?? nil
-        self.History = ChildInfo["History"] as? [CLLocation] ?? nil
+        
     }
 }

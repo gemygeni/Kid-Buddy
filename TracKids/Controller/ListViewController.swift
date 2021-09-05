@@ -15,7 +15,11 @@ class ListViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-
+    @IBAction func settingsPressed(_ sender: UIButton) {
+        
+        
+    }
+    
     
     @IBOutlet weak var SignInButton: UIButton!{
         didSet{
@@ -45,6 +49,9 @@ class ListViewController: UIViewController {
                  }
     }
     
+    @IBAction func ChildsButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "ChildsListSegue", sender: self)
+    }
     
     
 }
