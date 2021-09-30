@@ -81,16 +81,16 @@ class AddChildViewController: UIViewController {
         let childName = ChildNameTextField.text ?? ""
       
         let imageReference  = storageReference.child("ChildsPictures/\(UID!)/\(childName).jpg")
-        if let imageData =    ChildImageView.image!.pngData(){
+        if let imageData =   ChildImageView.image!.jpegData(compressionQuality: 0.3){
             imageReference.putData(imageData, metadata: nil) { (metadata, error) in
                 if error != nil {print(error!.localizedDescription)}
-                guard let metadata = metadata else {return}
                 imageReference.downloadURL { (url, error) in
                     if error != nil {print(error!.localizedDescription)}
                     if let downloadedURL = url{
                         self.ImageURL = downloadedURL.absoluteString
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             self.AddNewChild()
+                            
                         }
                     }
                 }
@@ -104,7 +104,7 @@ class AddChildViewController: UIViewController {
               !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
         else {return}
         let childInfo : [String : Any] = ["ChildName" : ChildName,"ChildPhoneNumber" : ChildPhoneNumber, "ImageURL" : ImageURL ?? ""]
-        childInfoReference.child(UID).child(ChildName).updateChildValues(childInfo){_,_ in
+        childInfoReference.child(UID).childByAutoId().updateChildValues(childInfo){_,_ in
             if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {
                 self.navigationController?.popViewController(animated: true)
                 self.presentingViewController?.dismiss(animated: true, completion: {
@@ -162,14 +162,4 @@ extension AddChildViewController : UITextFieldDelegate{
     
 }
 
-//later for table editing
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//      if editingStyle == .delete {
 
-//  let groceryItem = items[indexPath.row]
- // groceryItem.ref?.removeValue()
-
-
-//        tableView.reloadData()
-//      }
-//    }

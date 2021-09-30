@@ -3,15 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		9A418323D3EE13D15A330643 /* Pods_TracKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */; };
+		EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16107526E79FFB007BA5ED /* MessageCell.swift */; };
+		EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF16107626E79FFB007BA5ED /* MessageCell.xib */; };
 		EF27376225D0C166002A5601 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27376125D0C166002A5601 /* LocationHandler.swift */; };
 		EF3A9A6F25D8C3CF00BE1C8A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF3A9A6E25D8C3CF00BE1C8A /* GoogleService-Info.plist */; };
 		EF3A9A7425DB6DCC00BE1C8A /* ChildAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3A9A7325DB6DCC00BE1C8A /* ChildAnnotation.swift */; };
 		EF447EA326D86CD9000786F1 /* Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF447EA226D86CD9000786F1 /* Child.swift */; };
+		EF54A17D26F6C34400E9ADCC /* ChildsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54A17B26F6C34300E9ADCC /* ChildsListTableViewController.swift */; };
+		EF54A17E26F6C34400E9ADCC /* ChildProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54A17C26F6C34300E9ADCC /* ChildProfileViewController.swift */; };
+		EF54A18326F717CE00E9ADCC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54A18226F717CE00E9ADCC /* Message.swift */; };
+		EF5A089926F15481000087EB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5A089826F15481000087EB /* MapKit.framework */; };
 		EF5B0EF225BE492200890F4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0EF125BE492200890F4B /* AppDelegate.swift */; };
 		EF5B0EF425BE492200890F4B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0EF325BE492200890F4B /* SceneDelegate.swift */; };
 		EF5B0EF625BE492200890F4B /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0EF525BE492200890F4B /* ListViewController.swift */; };
@@ -21,12 +27,11 @@
 		EF5B0F0925BF5FEE00890F4B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */; };
 		EF5F98F626E06DCB000B61D8 /* ChildsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5F98F526E06DCB000B61D8 /* ChildsListTableViewCell.swift */; };
 		EF5F98FE26E378CB000B61D8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5F98FD26E378CB000B61D8 /* Extensions.swift */; };
+		EF67B5F826F6C1FB00741054 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67B5F726F6C1FB00741054 /* ChatViewController.swift */; };
 		EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470B25CBA30300806D45 /* DataHandler.swift */; };
 		EF95470F25CBB45F00806D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470E25CBB45F00806D45 /* User.swift */; };
 		EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */; };
-		EFD0BF5626B5229B00595101 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EFD0BF5426B5229B00595101 /* DataModel.xcdatamodeld */; };
-		EFD6A4E026DC916700C38A18 /* ChildsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6A4DF26DC916700C38A18 /* ChildsListTableViewController.swift */; };
-		EFD6A4E326DCA78300C38A18 /* ChildProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6A4E226DCA78300C38A18 /* ChildProfileViewController.swift */; };
+		EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */; };
 		EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */; };
 		EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */; };
 /* End PBXBuildFile section */
@@ -35,10 +40,16 @@
 		2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TracKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		30C081F087F0E1B14B89321F /* Pods-TracKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.debug.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.debug.xcconfig"; sourceTree = "<group>"; };
 		9A758AE6DBFF2BD4185F6F0F /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
+		EF16107526E79FFB007BA5ED /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		EF16107626E79FFB007BA5ED /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		EF27376125D0C166002A5601 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		EF3A9A6E25D8C3CF00BE1C8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EF3A9A7325DB6DCC00BE1C8A /* ChildAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildAnnotation.swift; sourceTree = "<group>"; };
 		EF447EA226D86CD9000786F1 /* Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Child.swift; sourceTree = "<group>"; };
+		EF54A17B26F6C34300E9ADCC /* ChildsListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildsListTableViewController.swift; sourceTree = "<group>"; };
+		EF54A17C26F6C34300E9ADCC /* ChildProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildProfileViewController.swift; sourceTree = "<group>"; };
+		EF54A18226F717CE00E9ADCC /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		EF5A089826F15481000087EB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		EF5B0EEE25BE492200890F4B /* TracKids.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TracKids.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF5B0EF125BE492200890F4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF5B0EF325BE492200890F4B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,12 +61,11 @@
 		EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		EF5F98F526E06DCB000B61D8 /* ChildsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildsListTableViewCell.swift; sourceTree = "<group>"; };
 		EF5F98FD26E378CB000B61D8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Pods/Extensions.swift; sourceTree = SOURCE_ROOT; };
+		EF67B5F726F6C1FB00741054 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		EF8BE78B26F71D1100E90DB4 /* TracKids.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TracKids.entitlements; sourceTree = "<group>"; };
 		EF95470B25CBA30300806D45 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
-		EFD0BF5526B5229B00595101 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		EFD6A4DF26DC916700C38A18 /* ChildsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChildsListTableViewController.swift; path = TracKids/ChildsListTableViewController.swift; sourceTree = SOURCE_ROOT; };
-		EFD6A4E226DCA78300C38A18 /* ChildProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChildProfileViewController.swift; path = TracKids/ChildProfileViewController.swift; sourceTree = SOURCE_ROOT; };
 		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,16 +76,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A418323D3EE13D15A330643 /* Pods_TracKids.framework in Frameworks */,
+				EF5A089926F15481000087EB /* MapKit.framework in Frameworks */,
+				EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EF16107A26E7A01C007BA5ED /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EF16107526E79FFB007BA5ED /* MessageCell.swift */,
+				EF5B0EF725BE492200890F4B /* Main.storyboard */,
+				EF16107626E79FFB007BA5ED /* MessageCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		EF55672226797DEE00077ACF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EFD0BF5426B5229B00595101 /* DataModel.xcdatamodeld */,
+				EF54A18226F717CE00E9ADCC /* Message.swift */,
 				EF447EA226D86CD9000786F1 /* Child.swift */,
 				EF3A9A7325DB6DCC00BE1C8A /* ChildAnnotation.swift */,
 				EF95470B25CBA30300806D45 /* DataHandler.swift */,
@@ -85,11 +107,12 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		EF55672326797E1800077ACF /* Controller */ = {
+		EF55672326797E1800077ACF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				EFD6A4E226DCA78300C38A18 /* ChildProfileViewController.swift */,
-				EFD6A4DF26DC916700C38A18 /* ChildsListTableViewController.swift */,
+				EF54A17C26F6C34300E9ADCC /* ChildProfileViewController.swift */,
+				EF54A17B26F6C34300E9ADCC /* ChildsListTableViewController.swift */,
+				EF67B5F726F6C1FB00741054 /* ChatViewController.swift */,
 				EF5B0EF525BE492200890F4B /* ListViewController.swift */,
 				EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */,
 				EF5F98F526E06DCB000B61D8 /* ChildsListTableViewCell.swift */,
@@ -97,12 +120,13 @@
 				EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */,
 				EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		EF5B0EE525BE492200890F4B = {
 			isa = PBXGroup;
 			children = (
+				EF8BE78B26F71D1100E90DB4 /* TracKids.entitlements */,
 				EF5B0EF025BE492200890F4B /* TracKids */,
 				EF5B0EEF25BE492200890F4B /* Products */,
 				F8B61BF64E95AA6B7DB1AB4C /* Pods */,
@@ -121,8 +145,8 @@
 		EF5B0EF025BE492200890F4B /* TracKids */ = {
 			isa = PBXGroup;
 			children = (
-				EF55672326797E1800077ACF /* Controller */,
-				EF5B0EF725BE492200890F4B /* Main.storyboard */,
+				EF55672326797E1800077ACF /* Controllers */,
+				EF16107A26E7A01C007BA5ED /* Views */,
 				EF5B0EFF25BE492300890F4B /* Info.plist */,
 				EF3A9A6E25D8C3CF00BE1C8A /* GoogleService-Info.plist */,
 				EF55672226797DEE00077ACF /* Models */,
@@ -146,6 +170,7 @@
 		F6594CC00AB2089641DFF0A8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF5A089826F15481000087EB /* MapKit.framework */,
 				2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */,
 			);
 			name = Frameworks;
@@ -171,13 +196,16 @@
 				EF5B0EEA25BE492200890F4B /* Sources */,
 				EF5B0EEB25BE492200890F4B /* Frameworks */,
 				EF5B0EEC25BE492200890F4B /* Resources */,
-				C30936285ED49E0613B67934 /* [CP] Embed Pods Frameworks */,
+				7625589453B0CE3B110EE195 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = TracKids;
+			packageProductDependencies = (
+				EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */,
+			);
 			productName = TracKids;
 			productReference = EF5B0EEE25BE492200890F4B /* TracKids.app */;
 			productType = "com.apple.product-type.application";
@@ -209,6 +237,9 @@
 				Base,
 			);
 			mainGroup = EF5B0EE525BE492200890F4B;
+			packageReferences = (
+				EFEB940626E5E2520059BCE6 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+			);
 			productRefGroup = EF5B0EEF25BE492200890F4B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -223,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */,
 				EF5B0EFE25BE492300890F4B /* LaunchScreen.storyboard in Resources */,
 				EF3A9A6F25D8C3CF00BE1C8A /* GoogleService-Info.plist in Resources */,
 				EF5B0EFB25BE492300890F4B /* Assets.xcassets in Resources */,
@@ -233,7 +265,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C30936285ED49E0613B67934 /* [CP] Embed Pods Frameworks */ = {
+		7625589453B0CE3B110EE195 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -279,22 +311,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFD6A4E026DC916700C38A18 /* ChildsListTableViewController.swift in Sources */,
+				EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */,
 				EF5B0EF625BE492200890F4B /* ListViewController.swift in Sources */,
+				EF54A17E26F6C34400E9ADCC /* ChildProfileViewController.swift in Sources */,
 				EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */,
 				EF5B0EF225BE492200890F4B /* AppDelegate.swift in Sources */,
 				EF27376225D0C166002A5601 /* LocationHandler.swift in Sources */,
 				EF5B0EF425BE492200890F4B /* SceneDelegate.swift in Sources */,
+				EF54A18326F717CE00E9ADCC /* Message.swift in Sources */,
 				EF95470F25CBB45F00806D45 /* User.swift in Sources */,
-				EFD6A4E326DCA78300C38A18 /* ChildProfileViewController.swift in Sources */,
 				EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */,
 				EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */,
 				EF5F98FE26E378CB000B61D8 /* Extensions.swift in Sources */,
 				EF3A9A7425DB6DCC00BE1C8A /* ChildAnnotation.swift in Sources */,
 				EF447EA326D86CD9000786F1 /* Child.swift in Sources */,
-				EFD0BF5626B5229B00595101 /* DataModel.xcdatamodeld in Sources */,
+				EF54A17D26F6C34400E9ADCC /* ChildsListTableViewController.swift in Sources */,
 				EF5B0F0925BF5FEE00890F4B /* SignUpViewController.swift in Sources */,
 				EF5F98F626E06DCB000B61D8 /* ChildsListTableViewCell.swift in Sources */,
+				EF67B5F826F6C1FB00741054 /* ChatViewController.swift in Sources */,
 				EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,6 +477,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TracKids/TracKids.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 376L6GYCXP;
 				INFOPLIST_FILE = TracKids/Info.plist;
@@ -464,6 +499,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TracKids/TracKids.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 376L6GYCXP;
 				INFOPLIST_FILE = TracKids/Info.plist;
@@ -502,18 +538,24 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCVersionGroup section */
-		EFD0BF5426B5229B00595101 /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				EFD0BF5526B5229B00595101 /* DataModel.xcdatamodel */,
-			);
-			currentVersion = EFD0BF5526B5229B00595101 /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+/* Begin XCRemoteSwiftPackageReference section */
+		EFEB940626E5E2520059BCE6 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 6.5.6;
+			};
 		};
-/* End XCVersionGroup section */
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EFEB940626E5E2520059BCE6 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EF5B0EE625BE492200890F4B /* Project object */;
 }

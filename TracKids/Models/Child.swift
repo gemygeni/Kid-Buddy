@@ -9,6 +9,8 @@ import Foundation
 import CoreLocation
 struct Child {
     var ParentID : String
+    //var ChildID : String
+    
     
     var ChildName : String
     var ChildPhoneNumber : String
@@ -19,6 +21,8 @@ struct Child {
     init(ParentID : String ,ChildInfo : [String  : Any] ) {
         self.ParentID = ParentID
         self.ChildName = ChildInfo["ChildName"] as? String ?? ""
+       // self.ChildID = ChildInfo["ChildID"] as! String
+
         self.ChildPhoneNumber = ChildInfo["ChildPhoneNumber"] as? String ?? ""
         self.ImageURL = ChildInfo["ImageURL"] as? String ?? ""
         

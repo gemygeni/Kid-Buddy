@@ -46,7 +46,7 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
         childLocationReference.observe(.value) { (snapshot) in
             guard let lastLocation = locations.last else {return}
             guard   let UId =  Auth.auth().currentUser?.uid else {return}
-            DataHandler.shared.fetchUserInfo(UId: UId) { (user) in
+            DataHandler.shared.fetchUserInfo() { (user) in
                 let currentUser = user
                 if currentUser.accountType == 1 {
                     geofire.setLocation(lastLocation, forKey: UId) { (error) in

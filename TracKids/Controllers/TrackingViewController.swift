@@ -30,6 +30,7 @@ class TrackingViewController: UIViewController  {
     @IBOutlet weak var mapView: MKMapView!
     let LocationManager = LocationHandler.shared.locationManager
     
+    
     var user : User?{
         didSet{
             if let index = user?.accountType{
@@ -73,7 +74,7 @@ class TrackingViewController: UIViewController  {
     func fetchChildLocation()  {
         if accountType == .parent {
             let childID = "6zex1vff9uhsQZ76MhyOoLT8bOM2"
-            DataHandler.shared.fetchChildLocation(uid: childID) { (location) in
+            DataHandler.shared.fetchChildLocation(for: childID) { (location) in
                 guard let fetchedLocation = location else {return}
                 let region = MKCoordinateRegion(center: fetchedLocation.coordinate , span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                 DispatchQueue.main.async {
@@ -97,8 +98,7 @@ class TrackingViewController: UIViewController  {
     
     //
     func fetchUserInfo(){
-        guard let UId = Auth.auth().currentUser?.uid else {return}
-        DataHandler.shared.fetchUserInfo(UId: UId) { (user) in
+        DataHandler.shared.fetchUserInfo() { (user) in
             self.user = user
         }
     }
@@ -112,8 +112,12 @@ class TrackingViewController: UIViewController  {
             print("please log in")
         }
         else {
+            if accountType == .parent{
             performSegue(withIdentifier: "AddChildSegue", sender: sender)
             print("you are logged in")
+            } else if accountType == .child{
+                performSegue(withIdentifier: "showAddParentSegue", sender: sender)
+            }
         }
     }
     

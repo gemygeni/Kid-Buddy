@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>please allow access to photo library to select a profile picture</string>
-	<key>NSCameraUsageDescription</key>
-	<string>please allow access to device camera to take a profile picture</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -28,6 +24,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>please allow access to device camera to take a profile picture</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -36,6 +34,8 @@
 	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>please  allow this app to always get your child Location to give you all Time tracking</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>please allow access to photo library to select a profile picture</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

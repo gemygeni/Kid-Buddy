@@ -63,14 +63,13 @@ class SignUpViewController: UIViewController {
   
     private func handleSignUp(){
         let userType = userTypeControl.selectedSegmentIndex
-        
         guard let email = emailTextField.text,
-         let passWord = passwordTextField.text,
+         let password = passwordTextField.text,
          let phoneNumber = phoneNumberTextField.text,
-        !email.isEmpty,!passWord.isEmpty,!phoneNumber.isEmpty
+        !email.isEmpty,!password.isEmpty,!phoneNumber.isEmpty
         else {return}
         
-        Auth.auth().createUser(withEmail: email, password: passWord) { (result, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 let alert = UIAlertController(title: "Sign Up Failed", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -80,7 +79,7 @@ class SignUpViewController: UIViewController {
             }
             guard let UId = result?.user.uid else {return}
             
-            let UserInfo = ["userType" : userType, "email" : email, "password" : passWord, "phoneNumber" : phoneNumber] as [String : Any]
+            let UserInfo = ["userType" : userType, "email" : email, "password" : password, "phoneNumber" : phoneNumber] as [String : Any]
             Database.database().reference().child("users").child(UId).updateChildValues(UserInfo) { (error, reference) in
                 if let error = error{
                     print(error.localizedDescription)
