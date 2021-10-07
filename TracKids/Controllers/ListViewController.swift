@@ -14,6 +14,9 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if self.user?.uid == nil{
+        self.childsButton.isHidden = true
+        }
         fetchUserInfo()
     }
 
@@ -24,6 +27,9 @@ class ListViewController: UIViewController {
                 self.childsButton.isHidden = true
                 self.settingsButton.isHidden = true
            }
+            else if user.accountType == 0{
+                self.childsButton.isHidden = false
+            }
         }
     }
     

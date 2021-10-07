@@ -49,22 +49,39 @@ struct DataHandler{
             guard let childInfo = snapshot.value as? [String : Any] else {return}
             let child = Child(ParentID: uid, ChildInfo: childInfo)
             let childID = snapshot.key
-            print("in the main func child ID IS \(childID)")
             completion(child,childID)
            })
         }
     
     
-    func uploadMessageWithInfo(_ messageText : String, _ recipient : String)  {
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-
-        let sender = Auth.auth().currentUser?.email
+    func uploadMessageWithInfo(_ messageText : String , _ recipient : String)  {
+       // guard let uid = Auth.auth().currentUser?.uid else {return}
+        let sender = Auth.auth().currentUser?.uid
         let messageBody = messageText
         let recipient = recipient
         let timestamp = Int(Date().timeIntervalSince1970)
         let messsageInfo = ["sender" : sender!, "body"  : messageBody,"recipient" : recipient, "timestamp" : timestamp] as [String : Any]
-        MessagesReference.child(uid).child(recipient).childByAutoId().updateChildValues(messsageInfo)
+        fetchUserInfo { (user) in
+            if user.accountType == 0{
+                MessagesReference.child(sender!).child(recipient).childByAutoId().updateChildValues(messsageInfo)
+            }
+            else if user.accountType == 1{
+                MessagesReference.child(user.parentID).child(sender!).childByAutoId().updateChildValues(messsageInfo)
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
          }
+    
+    
+    
+    
     
     
     }

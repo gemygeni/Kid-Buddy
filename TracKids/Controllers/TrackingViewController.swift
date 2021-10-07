@@ -19,14 +19,23 @@ enum AccountType : Int  {
 
 class TrackingViewController: UIViewController  {
     var accountType : AccountType!
-    
+    var Childs = [Child]()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
       return .lightContent
     }
 
     
-   // let kSecRandomDefault = SecRandomRef(bitPattern: 10)
+    
+    
+    @IBOutlet weak var childsCollectionView: UICollectionView!
+    
+    
+    
+    
+    
+    
+   
     @IBOutlet weak var mapView: MKMapView!
     let LocationManager = LocationHandler.shared.locationManager
     
@@ -51,6 +60,8 @@ class TrackingViewController: UIViewController  {
         super.viewDidLoad()
         fetchUserInfo()
         configureMapView()
+        childsCollectionView.delegate = self
+        childsCollectionView.dataSource = self
     }
     
     
@@ -173,4 +184,41 @@ extension TrackingViewController : MKMapViewDelegate {
         }
         return nil
     }
+}
+
+
+extension TrackingViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case 0: return 1
+        case 1 : return Childs.count
+        default: return 0
+            
+        }
+        
+        
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+       return 2
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 1{
+              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChildProfileCell", for: indexPath)
+            
+            if let childCell = cell as? ChildsCollectionViewCell{
+                
+            }
+                return cell
+        }
+        else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddChildBUttonCell", for: indexPath)
+            return cell
+        }
+        
+    }
+    
+    
 }

@@ -28,6 +28,12 @@ class AddChildViewController: UIViewController {
         }
     }
     
+    
+    @IBOutlet weak var childMailTextField: UITextField!
+    
+    @IBOutlet weak var childPasswordTextField: UITextField!
+    
+    
     @IBOutlet weak var ChildImageView: UIImageView!{
         didSet{
             ChildImageView.layer.cornerRadius = ChildImageView.frame.height/2.0
@@ -41,8 +47,6 @@ class AddChildViewController: UIViewController {
     
     private var ImageURL : String?
     
-  
-
     
     @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil  ) {
         print("tappingdone")
@@ -100,16 +104,36 @@ class AddChildViewController: UIViewController {
     
     
     func AddNewChild(){
-                guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text,
+        guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
               !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
         else {return}
-        let childInfo : [String : Any] = ["ChildName" : ChildName,"ChildPhoneNumber" : ChildPhoneNumber, "ImageURL" : ImageURL ?? ""]
-        childInfoReference.child(UID).childByAutoId().updateChildValues(childInfo){_,_ in
-            if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {
-                self.navigationController?.popViewController(animated: true)
-                self.presentingViewController?.dismiss(animated: true, completion: {
-                self.spinnner?.stopAnimating()
-               })
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                let alert = UIAlertController(title: "register faild", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+                self.childMailTextField.text = nil
+                self.childPasswordTextField.text = nil
+            }
+            guard let childId = result?.user.uid else {return}
+            let childInfo = ["email" : email,
+                             "phoneNumber" : ChildPhoneNumber,
+                             "password" : password,
+                             "userType" : 1,
+                             "ParentID" : UID ,
+                             "ChildName" : ChildName,
+                             "ChildPhoneNumber" : ChildPhoneNumber,
+                             "ImageURL" : self.ImageURL ?? "", ] as [String : Any]
+            Database.database().reference().child("users").child(childId).updateChildValues(childInfo) { (error, reference) in
+                if let error = error{print(error.localizedDescription)}
+                self.childInfoReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
+                    if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {
+                        self.navigationController?.popViewController(animated: true)
+                        self.presentingViewController?.dismiss(animated: true, completion: {
+                        self.spinnner?.stopAnimating()
+                       })
+                    }
+                }
             }
         }
    }
@@ -149,10 +173,7 @@ extension AddChildViewController : UIImagePickerControllerDelegate, UINavigation
         }
         
         picker.presentingViewController?.dismiss(animated: true)
-
     }
-    
-    
 }
 extension AddChildViewController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

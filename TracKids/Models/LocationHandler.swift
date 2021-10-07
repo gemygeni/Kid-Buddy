@@ -51,7 +51,6 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
                 if currentUser.accountType == 1 {
                     geofire.setLocation(lastLocation, forKey: UId) { (error) in
                         print("nnewwwwwwwwwwwwwwww child created")
-                        
                         if error != nil {print(error!.localizedDescription )}
                     }
                 }

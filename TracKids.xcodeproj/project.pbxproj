@@ -28,6 +28,7 @@
 		EF5F98F626E06DCB000B61D8 /* ChildsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5F98F526E06DCB000B61D8 /* ChildsListTableViewCell.swift */; };
 		EF5F98FE26E378CB000B61D8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5F98FD26E378CB000B61D8 /* Extensions.swift */; };
 		EF67B5F826F6C1FB00741054 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67B5F726F6C1FB00741054 /* ChatViewController.swift */; };
+		EF68FE59270EB4010056F8A0 /* ChildsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF68FE58270EB4010056F8A0 /* ChildsCollectionViewCell.swift */; };
 		EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470B25CBA30300806D45 /* DataHandler.swift */; };
 		EF95470F25CBB45F00806D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470E25CBB45F00806D45 /* User.swift */; };
 		EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */; };
@@ -62,7 +63,7 @@
 		EF5F98F526E06DCB000B61D8 /* ChildsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildsListTableViewCell.swift; sourceTree = "<group>"; };
 		EF5F98FD26E378CB000B61D8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Pods/Extensions.swift; sourceTree = SOURCE_ROOT; };
 		EF67B5F726F6C1FB00741054 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		EF8BE78B26F71D1100E90DB4 /* TracKids.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TracKids.entitlements; sourceTree = "<group>"; };
+		EF68FE58270EB4010056F8A0 /* ChildsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildsCollectionViewCell.swift; sourceTree = "<group>"; };
 		EF95470B25CBA30300806D45 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +117,7 @@
 				EF5B0EF525BE492200890F4B /* ListViewController.swift */,
 				EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */,
 				EF5F98F526E06DCB000B61D8 /* ChildsListTableViewCell.swift */,
+				EF68FE58270EB4010056F8A0 /* ChildsCollectionViewCell.swift */,
 				EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */,
 				EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */,
 				EF5B0F0825BF5FEE00890F4B /* SignUpViewController.swift */,
@@ -126,7 +128,6 @@
 		EF5B0EE525BE492200890F4B = {
 			isa = PBXGroup;
 			children = (
-				EF8BE78B26F71D1100E90DB4 /* TracKids.entitlements */,
 				EF5B0EF025BE492200890F4B /* TracKids */,
 				EF5B0EEF25BE492200890F4B /* Products */,
 				F8B61BF64E95AA6B7DB1AB4C /* Pods */,
@@ -322,6 +323,7 @@
 				EF95470F25CBB45F00806D45 /* User.swift in Sources */,
 				EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */,
 				EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */,
+				EF68FE59270EB4010056F8A0 /* ChildsCollectionViewCell.swift in Sources */,
 				EF5F98FE26E378CB000B61D8 /* Extensions.swift in Sources */,
 				EF3A9A7425DB6DCC00BE1C8A /* ChildAnnotation.swift in Sources */,
 				EF447EA326D86CD9000786F1 /* Child.swift in Sources */,
