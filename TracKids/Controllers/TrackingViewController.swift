@@ -19,7 +19,8 @@ enum AccountType : Int  {
 
 class TrackingViewController: UIViewController  {
     var accountType : AccountType!
-    var Childs = [Child]()
+    var childs = [Child]()
+    var childsID = [String]()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
       return .lightContent
@@ -29,10 +30,6 @@ class TrackingViewController: UIViewController  {
     
     
     @IBOutlet weak var childsCollectionView: UICollectionView!
-    
-    
-    
-    
     
     
    
@@ -59,6 +56,7 @@ class TrackingViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchUserInfo()
+        fetchChildInfo()
         configureMapView()
         childsCollectionView.delegate = self
         childsCollectionView.dataSource = self
@@ -107,7 +105,7 @@ class TrackingViewController: UIViewController  {
     }
     
     
-    //
+  
     func fetchUserInfo(){
         DataHandler.shared.fetchUserInfo() { (user) in
             self.user = user
@@ -145,7 +143,6 @@ class TrackingViewController: UIViewController  {
     
     func configureMapView(){
         mapView.delegate = self
-        mapView.addSubview(addChild)
         if accountType == .child {
             self.mapView.showsUserLocation = true
         }
@@ -188,37 +185,41 @@ extension TrackingViewController : MKMapViewDelegate {
 
 
 extension TrackingViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0: return 1
-        case 1 : return Childs.count
-        default: return 0
-            
+    
+    
+    
+    func fetchChildInfo(){
+       DataHandler.shared.fetchChildInfo() { (child,childID) in
+            self.childs.append(child)
+           self.childsID.append(childID)
+            DispatchQueue.main.async {
+                self.childsCollectionView.reloadData()
+            }
         }
-        
-        
+    }
+    
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+          return  childs.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-       return 2
+       return 1
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 1{
-              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChildProfileCell", for: indexPath)
+       
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChildProfileCell", for: indexPath)
             
             if let childCell = cell as? ChildsCollectionViewCell{
-                
+                 let child = childs[indexPath.item]
+                if let childImageURl = child.ImageURL {
+                    childCell.profileImageView.loadImageUsingCacheWithUrlString(childImageURl)
+                }
+                return childCell
             }
                 return cell
-        }
-        else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddChildBUttonCell", for: indexPath)
-            return cell
-        }
-        
     }
-    
-    
 }

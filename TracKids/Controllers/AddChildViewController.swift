@@ -33,7 +33,6 @@ class AddChildViewController: UIViewController {
     
     @IBOutlet weak var childPasswordTextField: UITextField!
     
-    
     @IBOutlet weak var ChildImageView: UIImageView!{
         didSet{
             ChildImageView.layer.cornerRadius = ChildImageView.frame.height/2.0
@@ -41,12 +40,10 @@ class AddChildViewController: UIViewController {
             ChildImageView.layer.borderColor = UIColor.lightGray.cgColor
             ChildImageView.layer.masksToBounds = true
             ChildImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setChildPhoto(_:))))
-
         }
     }
     
     private var ImageURL : String?
-    
     
     @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil  ) {
         print("tappingdone")
@@ -100,12 +97,12 @@ class AddChildViewController: UIViewController {
                 }
             }
           }
-    }
+       }
     
     
     func AddNewChild(){
         guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
-              !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
+        !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
         else {return}
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
@@ -124,7 +121,7 @@ class AddChildViewController: UIViewController {
                              "ChildName" : ChildName,
                              "ChildPhoneNumber" : ChildPhoneNumber,
                              "ImageURL" : self.ImageURL ?? "", ] as [String : Any]
-            Database.database().reference().child("users").child(childId).updateChildValues(childInfo) { (error, reference) in
+                     Database.database().reference().child("users").child(childId).updateChildValues(childInfo) { (error, reference) in
                 if let error = error{print(error.localizedDescription)}
                 self.childInfoReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
                     if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {

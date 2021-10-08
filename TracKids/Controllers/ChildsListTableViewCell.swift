@@ -24,8 +24,8 @@ class ChildsListTableViewCell: UITableViewCell {
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
-        
     }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         textLabel?.frame = CGRect(x: 64, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
@@ -36,7 +36,6 @@ class ChildsListTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        // Configure the view for the selected state
     }
     
 }
