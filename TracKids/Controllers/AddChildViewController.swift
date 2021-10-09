@@ -35,7 +35,13 @@ class AddChildViewController: UIViewController {
     
     @IBOutlet weak var ChildImageView: UIImageView!{
         didSet{
-            ChildImageView.layer.cornerRadius = ChildImageView.frame.height/2.0
+           
+            ChildImageView.translatesAutoresizingMaskIntoConstraints = false
+            
+           // ChildImageView.layer.cornerRadius = ChildImageView.frame.height/2.0
+            ChildImageView.contentMode = .scaleAspectFill
+            ChildImageView.layer.cornerRadius = 130
+            //ChildImageView.frame.height/2.0
             ChildImageView.layer.borderWidth = 2.0
             ChildImageView.layer.borderColor = UIColor.lightGray.cgColor
             ChildImageView.layer.masksToBounds = true
@@ -77,11 +83,18 @@ class AddChildViewController: UIViewController {
     
     func UploadData(){
         spinnner?.startAnimating()
-        let storageReference = storage.reference()
+        
+        guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
+        !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, !password.isEmpty ,!email.isEmpty,
         let UID = Auth.auth().currentUser?.uid
+        else {
+            spinnner?.stopAnimating()
+            return}
+        
+        let storageReference = storage.reference()
         let childName = ChildNameTextField.text ?? ""
       
-        let imageReference  = storageReference.child("ChildsPictures/\(UID!)/\(childName).jpg")
+        let imageReference  = storageReference.child("ChildsPictures/\(UID)/\(childName).jpg")
         if let imageData =   ChildImageView.image!.jpegData(compressionQuality: 0.3){
             imageReference.putData(imageData, metadata: nil) { (metadata, error) in
                 if error != nil {print(error!.localizedDescription)}
@@ -91,7 +104,6 @@ class AddChildViewController: UIViewController {
                         self.ImageURL = downloadedURL.absoluteString
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             self.AddNewChild()
-                            
                         }
                     }
                 }

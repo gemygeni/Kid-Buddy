@@ -55,7 +55,6 @@ struct DataHandler{
     
     
     func uploadMessageWithInfo(_ messageText : String , _ recipient : String)  {
-       // guard let uid = Auth.auth().currentUser?.uid else {return}
         let sender = Auth.auth().currentUser?.uid
         let messageBody = messageText
         let recipient = recipient
@@ -67,23 +66,9 @@ struct DataHandler{
             }
             else if user.accountType == 1{
                 MessagesReference.child(user.parentID).child(sender!).childByAutoId().updateChildValues(messsageInfo)
-            }
-        }
-        
-        
-        
-        
-        
-        
-        
-        
+               }
+             }
          }
-    
-    
-    
-    
-    
-    
     }
     
     
