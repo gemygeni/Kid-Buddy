@@ -50,7 +50,10 @@ class SignUpViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
      }
-    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        emailTextField.becomeFirstResponder()
+    }
     
     @IBAction func signInPressed(_ sender: UIButton) {
         DispatchQueue.main.async {

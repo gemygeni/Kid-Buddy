@@ -16,7 +16,7 @@ let TrackedChildsReference = DBReference.child("TrackedChilds")
 let MessagesReference = DBReference.child("Messages")
 
 struct DataHandler{
-    static let shared  = DataHandler()
+    static  let shared  = DataHandler()
     
     func fetchUserInfo(completion : @escaping (User) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else {return}

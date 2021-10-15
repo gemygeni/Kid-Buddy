@@ -15,6 +15,14 @@ extension UIViewController {
             return self
         }
     }
+    var rootViewController : UIViewController {
+        if let VC = self as? UINavigationController{
+            return VC.viewControllers.first ?? self
+        }
+        else {
+            return self
+        }
+    }
 }
 
 

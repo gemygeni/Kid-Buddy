@@ -23,20 +23,20 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
         switch manager.authorizationStatus {
         
         case .notDetermined:
-            print("nnnnnnnnnnnnnnnnnot determined")
+            print("not determined")
             break
         case .restricted , .denied:
-            print("rrrrrrrrrrrrrestricted")
+            print("restricted")
             break
         case .authorizedAlways:
             locationManager.startUpdatingLocation()
             locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            print("alwaaaaaaays auth")
+            print("always auth")
             
         case .authorizedWhenInUse:
             locationManager.requestAlwaysAuthorization()
         @unknown default:
-            print("defaulllllllllllllllllt")
+            print("default")
             break
         }
     }
@@ -50,7 +50,7 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
                 let currentUser = user
                 if currentUser.accountType == 1 {
                     geofire.setLocation(lastLocation, forKey: UId) { (error) in
-                        print("nnewwwwwwwwwwwwwwww child created")
+                        print("new child created")
                         if error != nil {print(error!.localizedDescription )}
                     }
                 }

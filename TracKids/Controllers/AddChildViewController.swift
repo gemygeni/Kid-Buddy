@@ -51,6 +51,11 @@ class AddChildViewController: UIViewController {
     
     private var ImageURL : String?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        childMailTextField.becomeFirstResponder()
+    }
+    
     @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil  ) {
         print("tappingdone")
         let alert = UIAlertController(title: "Profile Image", message: "How Would You Like To Select a Picture ", preferredStyle: .actionSheet)

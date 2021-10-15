@@ -9,10 +9,10 @@ import UIKit
 import  Firebase
 
 class SignInViewController: UIViewController  {
-    //var handle : AuthStateDidChangeListenerHandle?
+//var handle : AuthStateDidChangeListenerHandle?
     
 //    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
+    //        super.viewWillAppear(true)
 //
 //        handle = Auth.auth().addStateDidChangeListener { _, user in
 //          if user == nil {
@@ -25,7 +25,6 @@ class SignInViewController: UIViewController  {
 //            self.passwordTextField.text = nil
 //          }
 //        }
-//
 //    }
     
     
@@ -44,22 +43,29 @@ class SignInViewController: UIViewController  {
     @IBAction func signInPressed(_ sender: UIButton) {
         handleSignIn()
     }
+    
+    
     func tapRecognnizer(){
         let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(taprecognizer)
     }
+    
     @objc func handleTap(){
         view.endEditing(true)
     }
     
     @IBAction func CancelPressed(_ sender: Any) {
         DispatchQueue.main.async {
-            self.dismiss(animated: true) {
+                self.dismiss(animated: true) {
                 self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        emailTextField.becomeFirstResponder()
+    }
     
     
     private func handleSignIn(){
@@ -73,7 +79,6 @@ class SignInViewController: UIViewController  {
                 self.present(alert, animated: true, completion: nil)
                 self.emailTextField.text = nil
                 self.passwordTextField.text = nil
-
                 }
             
             else{
@@ -83,9 +88,7 @@ class SignInViewController: UIViewController  {
                         print("signed in successfully")
                     }
                 }
-
             }
-            
         }
     }
 }
