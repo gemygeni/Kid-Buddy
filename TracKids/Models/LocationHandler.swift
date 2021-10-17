@@ -17,6 +17,7 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
         super.init()
         locationManager = CLLocationManager()
         locationManager.delegate = self
+        locationManager.allowsBackgroundLocationUpdates = true
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

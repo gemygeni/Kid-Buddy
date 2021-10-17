@@ -29,7 +29,21 @@
         var childsID = [String]()
         var AuthHandler : AuthStateDidChangeListenerHandle?
         var annotationImage : UIImage?
-        var trackedChild : Child?
+        var trackedChild : Child?{
+            didSet{
+                self.annotationImage = nil
+                DispatchQueue.main.async {
+                    if let childImageURl = self.trackedChild?.ImageURL {
+    let fetchedImageView =  UIImageView()
+        fetchedImageView.loadImageUsingCacheWithUrlString(childImageURl)
+                        self.annotationImage = fetchedImageView.image
+                        self.fetchChildLocation()
+
+                    }
+                   
+                }
+            }
+        }
         var IsLoggedIn : Bool = false
         
         
@@ -38,6 +52,7 @@
                 didSet{
                     
                     NotificationCenter.default.post(name: .TrackedChildDidChange, object: TrackingViewController.trackedChildUId)
+                    
                 }
             }
         
@@ -122,7 +137,7 @@
             let region = MKCoordinateRegion(center: Location ?? CLLocationCoordinate2D() , span: MKCoordinateSpan(latitudeDelta: 20, longitudeDelta: 20))
             self.mapView.setRegion(region, animated: true)
 self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeInsets(top: 100.0, left:100.0, bottom: 100.0, right: 100.0), animated: true)
-            print("mappppp resettttttt")
+            print("map reset")
         }
         
         
@@ -155,9 +170,7 @@ self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeI
             else{
                 resetMap()
             }
-            
         }
-        
         
         func fetchUserInfo(){
             DataHandler.shared.fetchUserInfo() { (user) in
