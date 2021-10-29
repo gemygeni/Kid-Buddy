@@ -72,19 +72,19 @@ class SignInViewController: UIViewController  {
         guard let email = emailTextField.text ,
          let password = passwordTextField.text,
         !email.isEmpty,!password.isEmpty else {return}
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
             if let error = error, user == nil {
                 let alert = UIAlertController(title: "Sign In Failed", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true, completion: nil)
-                self.emailTextField.text = nil
-                self.passwordTextField.text = nil
+                self?.present(alert, animated: true, completion: nil)
+                self?.emailTextField.text = nil
+                self?.passwordTextField.text = nil
                 }
             
             else{
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true) {
-                        self.navigationController?.popToRootViewController(animated: true)
+                    self?.dismiss(animated: true) {
+                        self?.navigationController?.popToRootViewController(animated: true)
                         print("signed in successfully")
                     }
                 }
@@ -95,6 +95,7 @@ class SignInViewController: UIViewController  {
 
 extension SignInViewController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        handleSignIn()
         textField.resignFirstResponder()
         return true
     }

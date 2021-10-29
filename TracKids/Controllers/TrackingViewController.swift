@@ -67,6 +67,28 @@
         @IBOutlet weak var mapView: MKMapView!
         let LocationManager = LocationHandler.shared.locationManager
         
+        
+        @IBAction func MapType(_ sender: UISegmentedControl) {
+            if sender.selectedSegmentIndex == 0 {
+                mapView.mapType = .standard
+            }
+            else if sender.selectedSegmentIndex == 1 {
+                mapView.mapType = .satellite
+            }
+        }
+        
+        
+        @IBAction func changeMapTypeButtonPressed(_ sender: Any) {
+            if mapView.mapType == .standard{
+                mapView.mapType = .satellite
+            }
+            else if mapView.mapType == .satellite{
+                mapView.mapType = .standard
+            }
+        }
+        
+        
+        
         var user : User?{
             didSet{
                 IsLoggedIn = true
@@ -102,14 +124,14 @@
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(true)
             childsCollectionView.delegate = self
-            childsCollectionView.dataSource = self
+           childsCollectionView.dataSource = self
             fetchUserInfo()
             configureMapView()
             if accountType == .parent {
                 print("hey iam parent and i willappear")
-                //if IsLoggedIn{
+                
                 fetchChildLocation()
-                   //  }
+                   
             }
        
             else if accountType == .child {
@@ -119,9 +141,11 @@
             AuthHandler =  Auth.auth().addStateDidChangeListener({ (_, user) in
                 if user == nil {
                     
-                    self.resetMap()
+                    self.updateMapView()
                     self.childsCollectionView.isHidden = true
                     self.addChildButton.isHidden = true
+                   // self.childsCollectionView.removeFromSuperview()
+                   // self.addChildButton.removeFromSuperview()
                 }
                 else{
                     self.childsCollectionView.isHidden = false
@@ -131,13 +155,15 @@
         }
          
         
-        func resetMap(){
+        func updateMapView(){
             self.mapView.removeAnnotations( self.mapView.annotations)
             let Location = self.LocationManager?.location?.coordinate
             let region = MKCoordinateRegion(center: Location ?? CLLocationCoordinate2D() , span: MKCoordinateSpan(latitudeDelta: 20, longitudeDelta: 20))
             self.mapView.setRegion(region, animated: true)
 self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeInsets(top: 100.0, left:100.0, bottom: 100.0, right: 100.0), animated: true)
             print("map reset")
+            
+            
         }
         
         
@@ -147,28 +173,28 @@ self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeI
             if accountType == .parent {
                 guard let  childID = TrackingViewController.trackedChildUId else {return}
                print("in fetchChildLocation childID is \(childID)")
-                DataHandler.shared.fetchChildLocation(for: childID) { (location) in
+                DataHandler.shared.fetchChildLocation(for: childID) { [weak self](location) in
                     guard let fetchedLocation = location else {return}
                     let region = MKCoordinateRegion(center: fetchedLocation.coordinate , span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                     DispatchQueue.main.async {
-                        self.mapView.setRegion(region, animated: true)
+                        self?.mapView.setRegion(region, animated: true)
               let annotation = ChildAnnotation(uid: childID, coordinate: fetchedLocation.coordinate)
-                        if self.mapView.annotations.contains(where: { (annotation) -> Bool in
+                        if ((self!.mapView.annotations.contains(where: { (annotation) -> Bool in
                             guard let childAnnnotation = annotation as? ChildAnnotation else{return false}
                             childAnnnotation.updateMapView(with: fetchedLocation.coordinate)
                             return true
-                        })
+                        })) )
                         {
                         }
                         else{
-                            self.mapView.addAnnotation(annotation)
+                            self?.mapView.addAnnotation(annotation)
                         }
                     }
                 }
               }
             }
             else{
-                resetMap()
+                updateMapView()
             }
         }
         

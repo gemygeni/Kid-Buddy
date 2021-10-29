@@ -36,17 +36,22 @@ class AddChildViewController: UIViewController {
     @IBOutlet weak var ChildImageView: UIImageView!{
         didSet{
            
-            ChildImageView.translatesAutoresizingMaskIntoConstraints = false
+         //   ChildImageView.translatesAutoresizingMaskIntoConstraints = false
             
-           // ChildImageView.layer.cornerRadius = ChildImageView.frame.height/2.0
-            ChildImageView.contentMode = .scaleAspectFill
-            ChildImageView.layer.cornerRadius = 130
-            //ChildImageView.frame.height/2.0
-            ChildImageView.layer.borderWidth = 2.0
-            ChildImageView.layer.borderColor = UIColor.lightGray.cgColor
-            ChildImageView.layer.masksToBounds = true
-            ChildImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setChildPhoto(_:))))
+          // ChildImageView.layer.cornerRadius = ((ChildImageView.frame.height) + (ChildImageView.frame.width)) / 5.0
+         
+//            ChildImageView.layer.borderColor = UIColor.lightGray.cgColor
+//            ChildImageView.layer.masksToBounds = true
+//            ChildImageView.layer.cornerRadius = ChildImageView.frame.size.width/2
+//
+//            ChildImageView.contentMode = .scaleToFill
+//            ChildImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setChildPhoto(_:))))
         }
+    }
+    override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+        ChildImageView.layer.masksToBounds = true
+        ChildImageView.layer.cornerRadius = ChildImageView.frame.size.width/2.5
     }
     
     private var ImageURL : String?
@@ -54,19 +59,27 @@ class AddChildViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         childMailTextField.becomeFirstResponder()
+        
+           ChildImageView.layer.borderColor = UIColor.lightGray.cgColor
+           ChildImageView.layer.masksToBounds = true
+        ChildImageView.layer.cornerRadius = ChildImageView.frame.size.width / 2.5
+          
+           ChildImageView.contentMode = .scaleToFill
+           ChildImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setChildPhoto(_:))))
     }
     
     @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil  ) {
         print("tappingdone")
         let alert = UIAlertController(title: "Profile Image", message: "How Would You Like To Select a Picture ", preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "Take By Camera", style: .default, handler: { (actionn) in
-            self.PresentCamera()
+        alert.addAction(UIAlertAction(title: "Take By Camera", style: .default, handler: {
+            [weak self](actionn) in
+            self?.PresentCamera()
         }))
                         
         
-        alert.addAction(UIAlertAction(title: "Select From Library", style: .default, handler: { (action) in
-            self.PresentPhotoPicker()
+        alert.addAction(UIAlertAction(title: "Select From Library", style: .default, handler: { [weak self](action) in
+            self?.PresentPhotoPicker()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         self.present(alert, animated: true, completion: nil)
@@ -76,7 +89,7 @@ class AddChildViewController: UIViewController {
     
    
     @IBAction func AddChildPressed(_ sender: UIButton) {
-        self.UploadData()
+        UploadData()
     }
     
     
@@ -103,12 +116,12 @@ class AddChildViewController: UIViewController {
         if let imageData =   ChildImageView.image!.jpegData(compressionQuality: 0.3){
             imageReference.putData(imageData, metadata: nil) { (metadata, error) in
                 if error != nil {print(error!.localizedDescription)}
-                imageReference.downloadURL { (url, error) in
+                imageReference.downloadURL { [weak self](url, error) in
                     if error != nil {print(error!.localizedDescription)}
                     if let downloadedURL = url{
-                        self.ImageURL = downloadedURL.absoluteString
+                        self?.ImageURL = downloadedURL.absoluteString
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self.AddNewChild()
+                            self?.AddNewChild()
                         }
                     }
                 }
@@ -191,6 +204,7 @@ extension AddChildViewController : UIImagePickerControllerDelegate, UINavigation
 }
 extension AddChildViewController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        UploadData()
         textField.resignFirstResponder()
         return true
     }
