@@ -78,7 +78,8 @@ class ListViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
             if let TrackingController = self.navigationController?.rootViewController as? TrackingViewController{
                 TrackingController.IsLoggedIn = false
-                TrackingController.updateMapView()
+                TrackingController.mapView.removeAnnotations( TrackingController.mapView.annotations)
+                TrackingController.centerMapOnUserLocation()
             }
             print("signed out successfully")
         }

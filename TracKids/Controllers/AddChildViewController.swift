@@ -89,7 +89,7 @@ class AddChildViewController: UIViewController {
     
    
     @IBAction func AddChildPressed(_ sender: UIButton) {
-        UploadData()
+        uploadData()
     }
     
     
@@ -99,19 +99,16 @@ class AddChildViewController: UIViewController {
         }
     }
     
-    func UploadData(){
+    func uploadData(){
         spinnner?.startAnimating()
-        
         guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
         !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, !password.isEmpty ,!email.isEmpty,
         let UID = Auth.auth().currentUser?.uid
         else {
             spinnner?.stopAnimating()
             return}
-        
         let storageReference = storage.reference()
         let childName = ChildNameTextField.text ?? ""
-      
         let imageReference  = storageReference.child("ChildsPictures/\(UID)/\(childName).jpg")
         if let imageData =   ChildImageView.image!.jpegData(compressionQuality: 0.3){
             imageReference.putData(imageData, metadata: nil) { (metadata, error) in
@@ -125,7 +122,7 @@ class AddChildViewController: UIViewController {
                         }
                     }
                 }
-            }
+             }
           }
        }
     
@@ -150,7 +147,7 @@ class AddChildViewController: UIViewController {
                              "ParentID" : UID ,
                              "ChildName" : ChildName,
                              "ChildPhoneNumber" : ChildPhoneNumber,
-                             "ImageURL" : self.ImageURL ?? "", ] as [String : Any]
+                             "ImageURL" : self.ImageURL ?? "" ] as [String : Any]
                      Database.database().reference().child("users").child(childId).updateChildValues(childInfo) { (error, reference) in
                 if let error = error{print(error.localizedDescription)}
                 self.childInfoReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
@@ -204,7 +201,7 @@ extension AddChildViewController : UIImagePickerControllerDelegate, UINavigation
 }
 extension AddChildViewController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        UploadData()
+        uploadData()
         textField.resignFirstResponder()
         return true
     }

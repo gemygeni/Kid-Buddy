@@ -29,18 +29,26 @@
         var childsID = [String]()
         var AuthHandler : AuthStateDidChangeListenerHandle?
         var annotationImage : UIImage?
+        var fetchedImageView :  UIImageView?{
+            didSet{
+//                fetchedImageView?.layer.frame.size.height = 60
+//                fetchedImageView?.layer.frame.size.width = 60
+//                fetchedImageView?.layer.cornerRadius = 0
+            }
+        }
         var trackedChild : Child?{
             didSet{
                 self.annotationImage = nil
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                     if let childImageURl = self.trackedChild?.ImageURL {
-    let fetchedImageView =  UIImageView()
-        fetchedImageView.loadImageUsingCacheWithUrlString(childImageURl)
-                        self.annotationImage = fetchedImageView.image
+    
+                        
+                        self.fetchedImageView?.loadImageUsingCacheWithUrlString(childImageURl)
+                        self.annotationImage = self.fetchedImageView?.image
+                        
                         self.fetchChildLocation()
 
                     }
-                   
                 }
             }
         }
@@ -57,10 +65,10 @@
             }
         
         
-        override var preferredStatusBarStyle: UIStatusBarStyle {
-            return .lightContent
-        }
-      
+//        override var preferredStatusBarStyle: UIStatusBarStyle {
+//            return .lightContent
+//        }
+//
         
         @IBOutlet weak var childsCollectionView: UICollectionView!
         
@@ -68,21 +76,14 @@
         let LocationManager = LocationHandler.shared.locationManager
         
         
-        @IBAction func MapType(_ sender: UISegmentedControl) {
-            if sender.selectedSegmentIndex == 0 {
-                mapView.mapType = .standard
-            }
-            else if sender.selectedSegmentIndex == 1 {
-                mapView.mapType = .satellite
-            }
-        }
+       
         
         
         @IBAction func changeMapTypeButtonPressed(_ sender: Any) {
             if mapView.mapType == .standard{
-                mapView.mapType = .satellite
+                mapView.mapType = .hybrid
             }
-            else if mapView.mapType == .satellite{
+            else if mapView.mapType == .hybrid {
                 mapView.mapType = .standard
             }
         }
@@ -109,17 +110,17 @@
         
         
         
-//        override func viewDidLoad() {
-//            super.viewDidLoad()
-//            childsCollectionView.delegate = self
-//            childsCollectionView.dataSource = self
-//            fetchUserInfo()
-//
-//            if accountType == .parent {
-//            fetchChildLocation()
-//         }
-//        }
-//
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            childsCollectionView.delegate = self
+            childsCollectionView.dataSource = self
+           
+            configureMapView()
+            centerMapOnUserLocation()
+
+
+        }
+
 
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(true)
@@ -129,9 +130,7 @@
             configureMapView()
             if accountType == .parent {
                 print("hey iam parent and i willappear")
-                
                 fetchChildLocation()
-                   
             }
        
             else if accountType == .child {
@@ -140,8 +139,7 @@
                }
             AuthHandler =  Auth.auth().addStateDidChangeListener({ (_, user) in
                 if user == nil {
-                    
-                    self.updateMapView()
+                    self.centerMapOnUserLocation()
                     self.childsCollectionView.isHidden = true
                     self.addChildButton.isHidden = true
                    // self.childsCollectionView.removeFromSuperview()
@@ -155,18 +153,22 @@
         }
          
         
-        func updateMapView(){
-            self.mapView.removeAnnotations( self.mapView.annotations)
-            let Location = self.LocationManager?.location?.coordinate
-            let region = MKCoordinateRegion(center: Location ?? CLLocationCoordinate2D() , span: MKCoordinateSpan(latitudeDelta: 20, longitudeDelta: 20))
-            self.mapView.setRegion(region, animated: true)
-self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeInsets(top: 100.0, left:100.0, bottom: 100.0, right: 100.0), animated: true)
-            print("map reset")
-            
-            
+//        func updateMapView(){
+//            self.mapView.removeAnnotations( self.mapView.annotations)
+//            let Location = self.LocationManager?.location?.coordinate
+//            let region = MKCoordinateRegion(center: Location ?? CLLocationCoordinate2D() , span: MKCoordinateSpan(latitudeDelta: 20, longitudeDelta: 20))
+//            self.mapView.setRegion(region, animated: true)
+//self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeInsets(top: 100.0, left:100.0, bottom: 100.0, right: 100.0), animated: true)
+//            print("map reset")
+//        }
+        
+        func centerMapOnUserLocation() {
+            guard let coordinate = self.LocationManager?.location?.coordinate else { return }
+            let region = MKCoordinateRegion(center: coordinate,
+                                            latitudinalMeters: 2000,
+                                            longitudinalMeters: 2000)
+            mapView.setRegion(region, animated: true)
         }
-        
-        
         
         func fetchChildLocation()  {
            if IsLoggedIn{
@@ -194,7 +196,8 @@ self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeI
               }
             }
             else{
-                updateMapView()
+               // updateMapView()
+                centerMapOnUserLocation()
             }
         }
         
@@ -237,9 +240,7 @@ self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeI
         
         func configureMapView(){
             mapView.delegate = self
-            if accountType == .child {
-                self.mapView.showsUserLocation = true
-            }
+            self.mapView.showsUserLocation = true
             mapView.userTrackingMode = .follow
             mapView.isZoomEnabled = true
         }
@@ -255,6 +256,7 @@ self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeI
             LocationManager?.delegate = self
             LocationManager?.requestWhenInUseAuthorization()
             LocationManager?.requestAlwaysAuthorization()
+            
             if LocationManager?.authorizationStatus == .authorizedAlways{
                 LocationManager?.startUpdatingLocation()
                 LocationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -326,7 +328,7 @@ self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, edgePadding: UIEdgeI
             if let cell = childsCollectionView.cellForItem(at: indexPath) as? ChildsCollectionViewCell {
                 self.annotationImage = nil
                 DispatchQueue.main.async {
-                    self.annotationImage = cell.profileImageView.image?.resize(70 , 70)
+                    self.annotationImage = cell.profileImageView.image?.resize(60 , 60)
                 }
             }
             fetchChildLocation()

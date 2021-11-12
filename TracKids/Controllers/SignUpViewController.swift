@@ -36,7 +36,7 @@ class SignUpViewController: UIViewController {
         view.endEditing(true)
     }
     @IBOutlet weak var userTypeControl: UISegmentedControl!
-    let location = LocationHandler.shared.locationManager.location
+    let location = LocationHandler.shared.locationManager?.location
     
     @IBAction func signUpPressed(_ sender: UIButton) {
         print("location\(String(describing: location))")

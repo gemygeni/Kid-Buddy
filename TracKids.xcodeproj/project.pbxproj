@@ -29,10 +29,12 @@
 		EF5F98FE26E378CB000B61D8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5F98FD26E378CB000B61D8 /* Extensions.swift */; };
 		EF67B5F826F6C1FB00741054 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67B5F726F6C1FB00741054 /* ChatViewController.swift */; };
 		EF68FE59270EB4010056F8A0 /* ChildsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF68FE58270EB4010056F8A0 /* ChildsCollectionViewCell.swift */; };
+		EF87DE6E27302F0900AC4E37 /* AddObservedPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF87DE6D27302F0900AC4E37 /* AddObservedPlacesViewController.swift */; };
+		EF87DE7127302F5E00AC4E37 /* ObservedPlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF87DE7027302F5E00AC4E37 /* ObservedPlacesTableViewController.swift */; };
 		EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470B25CBA30300806D45 /* DataHandler.swift */; };
 		EF95470F25CBB45F00806D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470E25CBB45F00806D45 /* User.swift */; };
 		EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */; };
-		EFAEDFAD27243F67008D35AB /* ObservedPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAEDFAC27243F67008D35AB /* ObservedPlacesViewController.swift */; };
+		EFD1F5D62735E75300F288FB /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1F5D52735E75300F288FB /* SearchViewController.swift */; };
 		EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */; };
 		EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */; };
 		EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */; };
@@ -65,10 +67,12 @@
 		EF5F98FD26E378CB000B61D8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Pods/Extensions.swift; sourceTree = SOURCE_ROOT; };
 		EF67B5F726F6C1FB00741054 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		EF68FE58270EB4010056F8A0 /* ChildsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildsCollectionViewCell.swift; sourceTree = "<group>"; };
+		EF87DE6D27302F0900AC4E37 /* AddObservedPlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddObservedPlacesViewController.swift; sourceTree = SOURCE_ROOT; };
+		EF87DE7027302F5E00AC4E37 /* ObservedPlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObservedPlacesTableViewController.swift; path = TracKids/Views/ObservedPlacesTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		EF95470B25CBA30300806D45 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
-		EFAEDFAC27243F67008D35AB /* ObservedPlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObservedPlacesViewController.swift; path = TracKids/Views/ObservedPlacesViewController.swift; sourceTree = SOURCE_ROOT; };
+		EFD1F5D52735E75300F288FB /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = SOURCE_ROOT; };
 		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,7 +117,9 @@
 		EF55672326797E1800077ACF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				EFAEDFAC27243F67008D35AB /* ObservedPlacesViewController.swift */,
+				EFD1F5D52735E75300F288FB /* SearchViewController.swift */,
+				EF87DE7027302F5E00AC4E37 /* ObservedPlacesTableViewController.swift */,
+				EF87DE6D27302F0900AC4E37 /* AddObservedPlacesViewController.swift */,
 				EF54A17C26F6C34300E9ADCC /* ChildProfileViewController.swift */,
 				EF54A17B26F6C34300E9ADCC /* ChildsListTableViewController.swift */,
 				EF67B5F726F6C1FB00741054 /* ChatViewController.swift */,
@@ -318,6 +324,7 @@
 				EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */,
 				EF5B0EF625BE492200890F4B /* ListViewController.swift in Sources */,
 				EF54A17E26F6C34400E9ADCC /* ChildProfileViewController.swift in Sources */,
+				EFD1F5D62735E75300F288FB /* SearchViewController.swift in Sources */,
 				EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */,
 				EF5B0EF225BE492200890F4B /* AppDelegate.swift in Sources */,
 				EF27376225D0C166002A5601 /* LocationHandler.swift in Sources */,
@@ -327,13 +334,14 @@
 				EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */,
 				EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */,
 				EF68FE59270EB4010056F8A0 /* ChildsCollectionViewCell.swift in Sources */,
+				EF87DE6E27302F0900AC4E37 /* AddObservedPlacesViewController.swift in Sources */,
 				EF5F98FE26E378CB000B61D8 /* Extensions.swift in Sources */,
 				EF3A9A7425DB6DCC00BE1C8A /* ChildAnnotation.swift in Sources */,
 				EF447EA326D86CD9000786F1 /* Child.swift in Sources */,
+				EF87DE7127302F5E00AC4E37 /* ObservedPlacesTableViewController.swift in Sources */,
 				EF54A17D26F6C34400E9ADCC /* ChildsListTableViewController.swift in Sources */,
 				EF5B0F0925BF5FEE00890F4B /* SignUpViewController.swift in Sources */,
 				EF5F98F626E06DCB000B61D8 /* ChildsListTableViewCell.swift in Sources */,
-				EFAEDFAD27243F67008D35AB /* ObservedPlacesViewController.swift in Sources */,
 				EF67B5F826F6C1FB00741054 /* ChatViewController.swift in Sources */,
 				EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */,
 			);
