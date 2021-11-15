@@ -15,6 +15,8 @@ let ChildLocationReference = DBReference.child("childLocation")
 let TrackedChildsReference = DBReference.child("TrackedChilds")
 let MessagesReference = DBReference.child("Messages")
 let ObservedPlacesReference = DBReference.child("ObservedPlaces")
+var FetchedPlaces = [CLLocation]()
+
 struct DataHandler{
     static  let shared  = DataHandler()
     
@@ -32,30 +34,52 @@ struct DataHandler{
     func fetchChildLocation(for childID : String, completion : @escaping (CLLocation?) -> Void){
         let geofire = GeoFire(firebaseRef: ChildLocationReference)
         ChildLocationReference.observe(.value) { (snapshot) in
-            print("oooo 88 \(String(describing: snapshot.value))")
+            print("Debug : \(String(describing: snapshot.value))")
             geofire.getLocationForKey(childID) { (location, error) in
                 if error != nil {print(error!.localizedDescription) }
                 guard let childLocation = location else {return}
-               // print("\(childLocation)")
                 completion(childLocation)
             }
         }
     }
     
-    func fetchObservedPlaces(for childID : String, completion : @escaping (CLLocation?) -> Void){
+//    func fetchObservedPlaces(for childID : String, completion : @escaping ([CLLocation]?) -> Void){
+//        let geofire = GeoFire(firebaseRef: ObservedPlacesReference.child(childID))
+//
+//        ObservedPlacesReference.child(childID).observe(.childAdded) { (snapShot) in
+//            let key = snapShot.key
+//            geofire.getLocationForKey(key) { (location, error) in
+//                if error != nil {print(error!.localizedDescription) }
+//                guard let FetchedPlace = location else {return}
+//
+//                FetchedPlaces.append(FetchedPlace)
+//                completion(FetchedPlaces)
+//                print("Debug count ddd :  \(String(describing: FetchedPlaces.last))")
+//            }
+//        }
+//    }
+    
+    func fetchObservedPlaces(for childID : String, completion : @escaping ([CLLocation]?) -> Void){
+        FetchedPlaces = []
         let geofire = GeoFire(firebaseRef: ObservedPlacesReference.child(childID))
+        
         ObservedPlacesReference.child(childID).observe(.childAdded) { (snapShot) in
-            print("snapshot key is  \(String(describing: snapShot.key))")
-            let key = snapShot.key
             
+            let key = snapShot.key
             geofire.getLocationForKey(key) { (location, error) in
                 if error != nil {print(error!.localizedDescription) }
                 guard let FetchedPlace = location else {return}
-                print("ooo 666 \(FetchedPlace.coordinate.latitude)")
-                completion(FetchedPlace)
+                
+                FetchedPlaces.append(FetchedPlace)
+                completion(FetchedPlaces)
+                print("Debug count ddd :  \(String(describing: FetchedPlaces.last))")
             }
         }
     }
+    
+    
+    
+    
     
     func fetchChildInfo(completion : @escaping (Child , _ childID : String) -> Void)  {
         guard let uid = Auth.auth().currentUser?.uid else {return}
@@ -69,10 +93,6 @@ struct DataHandler{
     
    
     
-    
-    
-   
-    
     func uploadObservedPlace(_ location : CLLocation, for Child : String){
         let placeReference = ObservedPlacesReference.child(Child)
         let key = ObservedPlacesReference.childByAutoId().key
@@ -80,8 +100,6 @@ struct DataHandler{
         let geoFire = GeoFire(firebaseRef: placeReference)
         geoFire.setLocation(location, forKey: key ?? "no key")
            }
-    
-    
     
     
     func uploadMessageWithInfo(_ messageText : String , _ recipient : String)  {
@@ -99,10 +117,6 @@ struct DataHandler{
                }
              }
          }
-    
-    
-    
-    
     
     }
     

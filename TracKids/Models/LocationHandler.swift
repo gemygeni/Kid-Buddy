@@ -77,13 +77,14 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
         print(error.localizedDescription)
     }
     
-//    func searchForLocation (with query : String , completion : @escaping(([Location]) -> Void)){
-//        self.places = []er = CLGeocoder()
-    //            geocoder.geocodeAddressString(query) { (placemarks, error) in
-    //                guard let placemarks = placemarks , error == nil else {completion([])
-        
-    //
-//        let geocod              return}
+//    func searchForLocationddd (with query : String , completion : @escaping(([Location]) -> Void)){
+//        self.places = []
+//    let geocoder = CLGeocoder()
+//                geocoder.geocodeAddressString(query) { (placemarks, error) in
+//                    guard let placemarks = placemarks , error == nil else {completion([])
+//        
+//
+//                      return}
 //
 //                let places : [Location] = placemarks.compactMap ({ placeData  in
 //                    var name = ""
@@ -113,7 +114,7 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
 //                completion(places)
 //        }
 //    }
-    
+//
     func searchForLocation (with query : String , completion : @escaping(([Location]) -> Void)){
         self.places = []
 

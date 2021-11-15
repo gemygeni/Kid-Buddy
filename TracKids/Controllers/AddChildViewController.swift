@@ -138,7 +138,7 @@ class AddChildViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
                 self.childMailTextField.text = nil
                 self.childPasswordTextField.text = nil
-            }
+                   }
             guard let childId = result?.user.uid else {return}
             let childInfo = ["email" : email,
                              "phoneNumber" : ChildPhoneNumber,
