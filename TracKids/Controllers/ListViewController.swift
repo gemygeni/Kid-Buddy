@@ -35,23 +35,6 @@ class ListViewController: UIViewController {
     }
     var AuthHandler : AuthStateDidChangeListenerHandle?
 
-//    override func viewWillAppear(_ animated: Bool) {
-//               super.viewWillAppear(true)
-//   
-//        AuthHandler = Auth.auth().addStateDidChangeListener { _, user in
-//             if user == nil {
-//               // print("user nilll user nilll user nilll user nilll")
-//                if let TrackingController = self.navigationController?.rootViewController as? TrackingViewController{
-//                    TrackingController.fetchUserInfo()
-//                    TrackingController.mapView.removeAnnotations(TrackingController.mapView.annotations)
-//                    TrackingController.configureMapView()
-//                }
-//             }
-//             else {
-//              //  print("user not nilll user not nilll user not nilll ")
-//             }
-//           }
-//       }
     @IBOutlet weak var childsButton: UIButton!
     
     @IBOutlet weak var settingsButton: UIButton!
@@ -83,17 +66,6 @@ class ListViewController: UIViewController {
             }
             print("signed out successfully")
         }
-//        DispatchQueue.main.async {
-//
-//                print("signed out successfully")
-//                if let TrackingController = self.navigationController?.rootViewController as? TrackingViewController{
-//                    TrackingController.user = nil
-//                    TrackingViewController.trackedChildUId = nil
-//
-//                        print("configured tracking controller")
-//
-//                    }
-//             }
     }
     
     @IBAction func childsButtonPressed(_ sender: UIButton) {
@@ -109,7 +81,5 @@ class ListViewController: UIViewController {
         //activity.popoverPresentationController?.barButtonItem = sender
         present(activity, animated: true, completion: nil)
     }
-    
-    
 }
 

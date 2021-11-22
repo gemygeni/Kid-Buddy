@@ -47,12 +47,14 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
             
         case .authorizedWhenInUse:
             locationManager?.startUpdatingLocation()
+            locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
             locationManager?.requestAlwaysAuthorization()
         @unknown default:
             print("default")
             break
         }
     }
+    var count : Int = 0
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let geofire = GeoFire(firebaseRef: ChildLocationReference)
@@ -62,10 +64,10 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
             guard   let UId =  Auth.auth().currentUser?.uid else {return}
             DataHandler.shared.fetchUserInfo() { (user) in
                 let currentUser = user
-                if currentUser.accountType == 1 {
+                if  currentUser.accountType == 1 {
                     geofire.setLocation(lastLocation, forKey: UId) { (error) in
-                        print("new child created")
-                        if error != nil {print(error!.localizedDescription )}
+                    if error != nil {print(error!.localizedDescription )}
+                        self.count += 1
                     }
                 }
             }
@@ -77,52 +79,72 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
         print(error.localizedDescription)
     }
     
-//    func searchForLocationddd (with query : String , completion : @escaping(([Location]) -> Void)){
-//        self.places = []
-//    let geocoder = CLGeocoder()
-//                geocoder.geocodeAddressString(query) { (placemarks, error) in
-//                    guard let placemarks = placemarks , error == nil else {completion([])
-//        
-//
-//                      return}
-//
-//                let places : [Location] = placemarks.compactMap ({ placeData  in
-//                    var name = ""
-//                    if let streetDetails = placeData.subThoroughfare{
-//                        name += streetDetails
-//                    }
-//                    if let street = placeData.thoroughfare{
-//                        name += " \(street)"
-//                    }
-//                    if let locality = placeData.locality{
-//                        name += ", \(locality)"
-//                    }
-//
-//                    if let adminRegion = placeData.administrativeArea {
-//                        name += ", \(adminRegion)"
-//                    }
-//
-//                    if let country = placeData.country{
-//                        name += ", \(country)"
-//                    }
-//                    print("Debug : \n \(placeData) \n\n")
-//
-//                    let place = Location(title: name, coordinates: placeData.location?.coordinate ?? CLLocationCoordinate2D())
-//                    return place
-//                })
-//                print("Debug : \n \(places) \n\n")
-//                completion(places)
-//        }
-//    }
-//
+    func locationManager(
+      _ manager: CLLocationManager,
+      monitoringDidFailFor region: CLRegion?,
+      withError error: Error
+    ) {
+      guard let region = region else {
+        print("Monitoring failed for unknown region")
+        return
+      }
+      print("Monitoring failed for region with identifier: \(region.identifier)")
+    }
+
+    
+    var geofences = [CLCircularRegion]()
+    func configureGeofencing(for location : CLLocation) {
+            var identifier : String = " "
+             DataHandler.shared.convertLocationToAdress(for: location) { (place) in
+                identifier = "\(place?.title ?? "monitord place")"
+                print("Deebug: identifier into  \(identifier)")
+                var fenceRegion: CLCircularRegion {
+                    let region = CLCircularRegion(
+                        center: location.coordinate,
+                        radius: 1000,
+                        identifier: identifier)
+                    
+                    region.notifyOnEntry =  true
+                    region.notifyOnExit = true
+                    return region
+                   }
+                self.geofences.append(fenceRegion)
+                if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+                    print("Debug: geofencing not supportted in this device")
+                    return
+                 }
+                self.locationManager?.startMonitoring(for: fenceRegion)
+                print("geofencing enabled in this device")
+                print("Deebug: identifier after  \(identifier)")
+
+            }
+    }
+    
+    
+    func StartObservingPlaces(){
+        DataHandler.shared.fetchUserInfo { (user) in
+            if user.accountType == 1{
+                 let currentUser = user.uid
+                DataHandler.shared.fetchObservedPlaces(for: currentUser) { (locations) in
+                    guard let locations = locations else {return}
+                    for location in locations{
+                        self.configureGeofencing(for: location)
+                        print("geofencing started")
+                            }
+                    for fenceRegion in self.geofences{
+                        self.locationManager?.startMonitoring(for: fenceRegion)
+                        print("ooo \(String(describing: self.locationManager?.monitoredRegions.first?.identifier))")
+                                    }
+                                }
+                        }
+                  }
+            }
+
+ 
     func searchForLocation (with query : String , completion : @escaping(([Location]) -> Void)){
         self.places = []
 
         let request = MKLocalSearch.Request()
-//        guard let regionLocation = currentCoordinate else{
-//            print("Debug : NOOO LOcation")
-//            return}
-        //let region = MKCoordinateRegion(center: regionLocation, latitudinalMeters: 10000, longitudinalMeters: 10000)
         let region = MKCoordinateRegion(center: currentCoordinate ?? CLLocationCoordinate2D(), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
         request.region = region
         request.naturalLanguageQuery = query
@@ -143,4 +165,4 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
           }
         }
     }
-}
+ }

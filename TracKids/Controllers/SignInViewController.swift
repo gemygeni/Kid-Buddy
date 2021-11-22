@@ -9,23 +9,6 @@ import UIKit
 import  Firebase
 
 class SignInViewController: UIViewController  {
-//var handle : AuthStateDidChangeListenerHandle?
-    
-//    override func viewWillAppear(_ animated: Bool) {
-    //        super.viewWillAppear(true)
-//
-//        handle = Auth.auth().addStateDidChangeListener { _, user in
-//          if user == nil {
-//            self.emailTextField.text = nil
-//            self.passwordTextField.text = nil
-//          }
-//          else {
-//           // self.performSegue(withIdentifier: self.loginToList, sender: nil)
-//            self.emailTextField.text = nil
-//            self.passwordTextField.text = nil
-//          }
-//        }
-//    }
     
     
     @IBOutlet weak var emailTextField: UITextField!{

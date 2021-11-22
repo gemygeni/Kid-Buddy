@@ -10,10 +10,11 @@
 		9A418323D3EE13D15A330643 /* Pods_TracKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */; };
 		EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16107526E79FFB007BA5ED /* MessageCell.swift */; };
 		EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF16107626E79FFB007BA5ED /* MessageCell.xib */; };
+		EF1C84C127435A6800033A65 /* Apple.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EF1C84C027435A6800033A65 /* Apple.gpx */; };
+		EF1C84C427435A8500033A65 /* Google.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EF1C84C327435A8500033A65 /* Google.gpx */; };
 		EF27376225D0C166002A5601 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27376125D0C166002A5601 /* LocationHandler.swift */; };
 		EF3A9A6F25D8C3CF00BE1C8A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF3A9A6E25D8C3CF00BE1C8A /* GoogleService-Info.plist */; };
 		EF3A9A7425DB6DCC00BE1C8A /* ChildAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3A9A7325DB6DCC00BE1C8A /* ChildAnnotation.swift */; };
-		EF447EA326D86CD9000786F1 /* Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF447EA226D86CD9000786F1 /* Child.swift */; };
 		EF54A17D26F6C34400E9ADCC /* ChildsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54A17B26F6C34300E9ADCC /* ChildsListTableViewController.swift */; };
 		EF54A17E26F6C34400E9ADCC /* ChildProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54A17C26F6C34300E9ADCC /* ChildProfileViewController.swift */; };
 		EF54A18326F717CE00E9ADCC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54A18226F717CE00E9ADCC /* Message.swift */; };
@@ -38,6 +39,7 @@
 		EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */; };
 		EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */; };
 		EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */; };
+		EFFCA0382746F1A100B14C81 /* SimulatedLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,10 +48,11 @@
 		9A758AE6DBFF2BD4185F6F0F /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
 		EF16107526E79FFB007BA5ED /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		EF16107626E79FFB007BA5ED /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		EF1C84C027435A6800033A65 /* Apple.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Apple.gpx; sourceTree = "<group>"; };
+		EF1C84C327435A8500033A65 /* Google.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Google.gpx; sourceTree = "<group>"; };
 		EF27376125D0C166002A5601 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		EF3A9A6E25D8C3CF00BE1C8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EF3A9A7325DB6DCC00BE1C8A /* ChildAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildAnnotation.swift; sourceTree = "<group>"; };
-		EF447EA226D86CD9000786F1 /* Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Child.swift; sourceTree = "<group>"; };
 		EF54A17B26F6C34300E9ADCC /* ChildsListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildsListTableViewController.swift; sourceTree = "<group>"; };
 		EF54A17C26F6C34300E9ADCC /* ChildProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildProfileViewController.swift; sourceTree = "<group>"; };
 		EF54A18226F717CE00E9ADCC /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 		EFD1F5D52735E75300F288FB /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = SOURCE_ROOT; };
 		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
+		EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SimulatedLocations.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				EF54A18226F717CE00E9ADCC /* Message.swift */,
-				EF447EA226D86CD9000786F1 /* Child.swift */,
 				EF3A9A7325DB6DCC00BE1C8A /* ChildAnnotation.swift */,
 				EF95470B25CBA30300806D45 /* DataHandler.swift */,
 				EF27376125D0C166002A5601 /* LocationHandler.swift */,
@@ -171,6 +174,9 @@
 				EF5F98FD26E378CB000B61D8 /* Extensions.swift */,
 				EF5B0EF325BE492200890F4B /* SceneDelegate.swift */,
 				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
+				EF1C84C027435A6800033A65 /* Apple.gpx */,
+				EF1C84C327435A8500033A65 /* Google.gpx */,
+				EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */,
 				EF5B0EFA25BE492300890F4B /* Assets.xcassets */,
 				EF5B0EFC25BE492300890F4B /* LaunchScreen.storyboard */,
 			);
@@ -264,11 +270,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF1C84C127435A6800033A65 /* Apple.gpx in Resources */,
 				EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */,
 				EF5B0EFE25BE492300890F4B /* LaunchScreen.storyboard in Resources */,
+				EF1C84C427435A8500033A65 /* Google.gpx in Resources */,
 				EF3A9A6F25D8C3CF00BE1C8A /* GoogleService-Info.plist in Resources */,
 				EF5B0EFB25BE492300890F4B /* Assets.xcassets in Resources */,
 				EF5B0EF925BE492200890F4B /* Main.storyboard in Resources */,
+				EFFCA0382746F1A100B14C81 /* SimulatedLocations.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +346,6 @@
 				EF87DE6E27302F0900AC4E37 /* AddObservedPlacesViewController.swift in Sources */,
 				EF5F98FE26E378CB000B61D8 /* Extensions.swift in Sources */,
 				EF3A9A7425DB6DCC00BE1C8A /* ChildAnnotation.swift in Sources */,
-				EF447EA326D86CD9000786F1 /* Child.swift in Sources */,
 				EF87DE7127302F5E00AC4E37 /* ObservedPlacesTableViewController.swift in Sources */,
 				EF54A17D26F6C34400E9ADCC /* ChildsListTableViewController.swift in Sources */,
 				EF5B0F0925BF5FEE00890F4B /* SignUpViewController.swift in Sources */,

@@ -11,6 +11,14 @@ import GeoFire
 
 class SignUpViewController: UIViewController {
     
+    let usersReference =  Database.database().reference().child("users")
+    
+    @IBOutlet weak var nameTextField: UITextField!{
+        didSet{
+            nameTextField.delegate = self
+        }
+    }
+    
     @IBOutlet weak var emailTextField: UITextField!{
         didSet{
             emailTextField.delegate = self
@@ -39,7 +47,7 @@ class SignUpViewController: UIViewController {
     let location = LocationHandler.shared.locationManager?.location
     
     @IBAction func signUpPressed(_ sender: UIButton) {
-        print("location\(String(describing: location))")
+        
         handleSignUp()
     }
     
@@ -61,14 +69,13 @@ class SignUpViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
         }
     }
-    
-   
   
     private func handleSignUp(){
         let userType = userTypeControl.selectedSegmentIndex
-        guard let email = emailTextField.text,
+        guard let name = nameTextField.text,
+              let  email = emailTextField.text,
          let password = passwordTextField.text,
-         let phoneNumber = phoneNumberTextField.text,
+         let phoneNumber = phoneNumberTextField.text, !password.isEmpty,
         !email.isEmpty,!password.isEmpty,!phoneNumber.isEmpty
         else {return}
         
@@ -82,8 +89,8 @@ class SignUpViewController: UIViewController {
             }
             guard let UId = result?.user.uid else {return}
             
-            let UserInfo = ["userType" : userType, "email" : email, "password" : password, "phoneNumber" : phoneNumber] as [String : Any]
-            Database.database().reference().child("users").child(UId).updateChildValues(UserInfo) { (error, reference) in
+            let UserInfo = ["name" : name,"email" : email, "phoneNumber" : phoneNumber,"password" : password, "userType" : userType]   as [String : Any]
+            self.usersReference.child(UId).updateChildValues(UserInfo) { (error, reference) in
                 if let error = error{
                     print(error.localizedDescription)
                 }
@@ -103,5 +110,4 @@ extension SignUpViewController : UITextFieldDelegate{
         textField.resignFirstResponder()
         return true
     }
-    
 }

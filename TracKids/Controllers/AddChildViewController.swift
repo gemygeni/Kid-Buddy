@@ -11,7 +11,8 @@ import  Firebase
 class AddChildViewController: UIViewController {
     
 
-    let childInfoReference = Database.database().reference().child("TrackedChilds")
+    let TrackedChildsReference = Database.database().reference().child("TrackedChilds")
+    let UsersReferance = Database.database().reference().child("users")
     let storage = Storage.storage()
 
     @IBOutlet weak var ChildNameTextField: UITextField!{
@@ -69,7 +70,7 @@ class AddChildViewController: UIViewController {
     }
     
     @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil  ) {
-        print("tappingdone")
+        print("Debug: tappingdone")
         let alert = UIAlertController(title: "Profile Image", message: "How Would You Like To Select a Picture ", preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Take By Camera", style: .default, handler: {
@@ -131,30 +132,31 @@ class AddChildViewController: UIViewController {
         guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
         !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
         else {return}
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+        Auth.auth().createUser(withEmail: email, password: password) {[weak self] (result, error) in
             if let error = error {
-                let alert = UIAlertController(title: "register faild", message: error.localizedDescription, preferredStyle: .alert)
+                let alert = UIAlertController(title: "Adding faild", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true, completion: nil)
-                self.childMailTextField.text = nil
-                self.childPasswordTextField.text = nil
+                self?.present(alert, animated: true, completion: nil)
+                self?.spinnner.stopAnimating()
+                self?.childMailTextField.text = nil
+                self?.childPasswordTextField.text = nil
                    }
             guard let childId = result?.user.uid else {return}
-            let childInfo = ["email" : email,
+            let childInfo = ["name" : ChildName,
+                             "email" : email,
                              "phoneNumber" : ChildPhoneNumber,
                              "password" : password,
                              "userType" : 1,
-                             "ParentID" : UID ,
-                             "ChildName" : ChildName,
-                             "ChildPhoneNumber" : ChildPhoneNumber,
-                             "ImageURL" : self.ImageURL ?? "" ] as [String : Any]
-                     Database.database().reference().child("users").child(childId).updateChildValues(childInfo) { (error, reference) in
+                             "parentID" : UID ,
+                             "imageURL" : self?.ImageURL ?? "" ] as [String : Any]
+            
+            self?.UsersReferance.child(childId).updateChildValues(childInfo) { (error, reference) in
                 if let error = error{print(error.localizedDescription)}
-                self.childInfoReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
+                self?.TrackedChildsReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
                     if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {
-                        self.navigationController?.popViewController(animated: true)
-                        self.presentingViewController?.dismiss(animated: true, completion: {
-                        self.spinnner?.stopAnimating()
+                        self?.navigationController?.popViewController(animated: true)
+                        self?.presentingViewController?.dismiss(animated: true, completion: {
+                            self?.spinnner?.stopAnimating()
                        })
                     }
                 }

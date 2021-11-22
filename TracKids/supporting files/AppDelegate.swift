@@ -20,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         IQKeyboardManager.shared.enableAutoToolbar = false
+        let options: UNAuthorizationOptions = [.badge, .sound, .alert]
+          UNUserNotificationCenter.current()
+            .requestAuthorization(options: options) { _, error in
+              if let error = error {
+                print("Error: \(error)")
+              }
+            }
         return true
     }
 
@@ -42,6 +49,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+      application.applicationIconBadgeNumber = 0
+      UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+      UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+    }
 }
+
+
 

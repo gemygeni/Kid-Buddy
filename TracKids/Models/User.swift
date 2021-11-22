@@ -7,19 +7,24 @@
 import UIKit
 import CoreLocation
 struct User {
+    var name : String
+    var uid : String
     var email : String
     var phoneNumber : String
     var password : String
     var accountType : Int
-    var parentID : String
-    var uid : String
+    var parentID : String?
+    var imageURL : String?
+    
     init(uid : String , dictionary : [String : Any] ) {
         self.uid = uid
+        self.name = dictionary["name"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
         self.phoneNumber = dictionary["phoneNumber"] as? String ?? ""
         self.password = dictionary["password"] as? String ?? ""
-        self.accountType = dictionary["userType"] as! Int
-        self.parentID = dictionary["ParentID"] as? String ?? ""
+        self.accountType = dictionary["userType"] as? Int ?? 0
+        self.parentID = dictionary["parentID"] as? String ?? ""
+        self.imageURL = dictionary["imageURL"] as? String ?? ""
     }
 }
 
