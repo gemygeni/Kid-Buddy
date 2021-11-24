@@ -22,7 +22,6 @@ class MessageCell: UITableViewCell {
         rightImageView.layer.cornerRadius = 24
         rightImageView.contentMode = .scaleAspectFill
        //MessageBodyLabel.translatesAutoresizingMaskIntoConstraints = false
-
         MessageBodyView.layer.cornerRadius = MessageBodyView.frame.size.height / 5
         
     }

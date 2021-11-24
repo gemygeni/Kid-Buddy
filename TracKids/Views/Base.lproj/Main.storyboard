@@ -493,10 +493,10 @@
             </objects>
             <point key="canvasLocation" x="-1030.4347826086957" y="249.77678571428569"/>
         </scene>
-        <!--history-->
+        <!--History-->
         <scene sceneID="r3x-Yv-cHa">
             <objects>
-                <viewController id="FhS-eD-9Hm" customClass="testVC" customModule="TracKids" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="FhS-eD-9Hm" customClass="HistoryViewController" customModule="TracKids" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Buy-z0-h0N">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -506,31 +506,26 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="bold"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="z1B-wV-hfn">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fj2-9Z-c7A">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="769"/>
-                                        <connections>
-                                            <action selector="testpressed:" destination="FhS-eD-9Hm" eventType="touchUpInside" id="Efr-y9-sS7"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eOS-uc-lcS">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                            </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yad-7C-QnT"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                         <constraints>
-                            <constraint firstItem="yad-7C-QnT" firstAttribute="bottom" secondItem="z1B-wV-hfn" secondAttribute="bottom" id="Hn0-ZN-Lxr"/>
-                            <constraint firstItem="z1B-wV-hfn" firstAttribute="top" secondItem="yad-7C-QnT" secondAttribute="top" id="WXv-LV-faD"/>
-                            <constraint firstItem="z1B-wV-hfn" firstAttribute="leading" secondItem="yad-7C-QnT" secondAttribute="leading" id="d9J-vp-tD5"/>
-                            <constraint firstItem="yad-7C-QnT" firstAttribute="trailing" secondItem="z1B-wV-hfn" secondAttribute="trailing" id="dHU-ZO-f6U"/>
+                            <constraint firstItem="eOS-uc-lcS" firstAttribute="leading" secondItem="yad-7C-QnT" secondAttribute="leading" id="MON-vc-7WR"/>
+                            <constraint firstItem="eOS-uc-lcS" firstAttribute="top" secondItem="Buy-z0-h0N" secondAttribute="top" id="SVs-nB-4g4"/>
+                            <constraint firstItem="yad-7C-QnT" firstAttribute="bottom" secondItem="eOS-uc-lcS" secondAttribute="bottom" id="ayQ-RJ-AEV"/>
+                            <constraint firstItem="yad-7C-QnT" firstAttribute="trailing" secondItem="eOS-uc-lcS" secondAttribute="trailing" id="dBi-Wl-Jeg"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="history" id="mgx-qA-Rka">
+                    <tabBarItem key="tabBarItem" title="History" id="mgx-qA-Rka">
                         <imageReference key="image" image="clock" catalog="system" symbolScale="large" renderingMode="original"/>
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="mapView" destination="eOS-uc-lcS" id="LP0-Se-gPK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uf5-1E-JpN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1059,7 +1054,7 @@
                     <connections>
                         <outlet property="childNameLabel" destination="44F-WL-U6s" id="uz3-9S-ZzH"/>
                         <outlet property="profileImageView" destination="iqz-gC-PHv" id="XyO-EU-qz8"/>
-                        <segue destination="OPM-Kp-6a6" kind="presentation" identifier="ShowChatSegue" id="ipL-q5-XNr"/>
+                        <segue destination="OPM-Kp-6a6" kind="show" identifier="ShowChatSegue" id="ipL-q5-XNr"/>
                         <segue destination="ElQ-VL-hik" kind="show" identifier="ShowObservedPlacesSegue" id="CMq-3d-bVg"/>
                     </connections>
                 </viewController>
@@ -1109,17 +1104,17 @@
             <objects>
                 <viewController id="OPM-Kp-6a6" customClass="ChatViewController" customModule="TracKids" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" alpha="0.90000000000000002" contentMode="scaleToFill" id="a8G-5N-N3I">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KQB-5y-ScE">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="743"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="559"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                 <color key="tintColor" red="0.17136007140000001" green="1" blue="0.39771998980000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="separatorColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KIo-sB-X62">
-                                <rect key="frame" x="0.0" y="743" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="699" width="414" height="60"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Write a message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mbl-zH-VDk">
                                         <rect key="frame" x="20" y="20" width="314" height="35"/>

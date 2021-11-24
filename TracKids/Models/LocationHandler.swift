@@ -54,25 +54,57 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
             break
         }
     }
-    var count : Int = 0
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let geofire = GeoFire(firebaseRef: ChildLocationReference)
+       
         guard let lastLocation = locations.last else {return}
         currentCoordinate = lastLocation.coordinate
+        uploadChildLocation(for: lastLocation)
+        self.uploadLocationHistory(for: lastLocation)
+    }
+    
+    func uploadChildLocation(for location : CLLocation)  {
+        let geofire = GeoFire(firebaseRef: ChildLocationReference)
         ChildLocationReference.observe(.value) { (snapshot) in
             guard   let UId =  Auth.auth().currentUser?.uid else {return}
             DataHandler.shared.fetchUserInfo() { (user) in
                 let currentUser = user
                 if  currentUser.accountType == 1 {
-                    geofire.setLocation(lastLocation, forKey: UId) { (error) in
+                    geofire.setLocation(location, forKey: UId) { (error) in
                     if error != nil {print(error!.localizedDescription )}
-                        self.count += 1
                     }
                 }
             }
         }
     }
+    
+    func uploadLocationHistory(for location : CLLocation){
+        HistoryReference.observe(.value) { (snapshot) in
+            DataHandler.shared.fetchUserInfo { (user) in
+                if user.accountType == 1{
+                    let UId = user.uid
+                    let historyReference = HistoryReference.child(UId)
+                    let key = HistoryReference.childByAutoId().key
+                    let geoFire = GeoFire(firebaseRef: historyReference)
+                    geoFire.setLocation(location, forKey: key ?? "no key")
+                }
+            }
+        }
+    }
+    var count = 0
+    func fetchLocationHistory(for child : String)  {
+        let geofire = GeoFire(firebaseRef: ChildLocationReference)
+        HistoryReference.observe(.value) { (snapshot) in
+            let hany = "qrN5d96VlualbijfhdBCxLSnv5b2"
+              geofire.getLocationForKey(child) { (location, error) in
+                if error != nil {print(error!.localizedDescription) }
+                guard let childLocation = location else {return}
+                self.count += 1
+              // print("www \( self.count)")
+                  }
+               }
+            }
+
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
@@ -90,7 +122,6 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
       }
       print("Monitoring failed for region with identifier: \(region.identifier)")
     }
-
     
     var geofences = [CLCircularRegion]()
     func configureGeofencing(for location : CLLocation) {
@@ -116,9 +147,8 @@ class LocationHandler : NSObject,CLLocationManagerDelegate{
                 self.locationManager?.startMonitoring(for: fenceRegion)
                 print("geofencing enabled in this device")
                 print("Deebug: identifier after  \(identifier)")
-
             }
-    }
+      }
     
     
     func StartObservingPlaces(){

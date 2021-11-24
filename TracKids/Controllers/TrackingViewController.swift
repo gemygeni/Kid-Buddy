@@ -96,6 +96,8 @@
             configureMapView()
             centerMapOnUserLocation()
             LocationHandler.shared.StartObservingPlaces()
+            let hany = "qrN5d96VlualbijfhdBCxLSnv5b2"
+            LocationHandler.shared.fetchLocationHistory(for: hany)
         }
         
         override func viewWillAppear(_ animated: Bool) {
