@@ -29,9 +29,6 @@
             locationManager?.allowsBackgroundLocationUpdates = true
             locationManager?.distanceFilter = CLLocationDistance(300)
             locationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
-            //kCLLocationAccuracyHundredMeters
-            //kCLLocationAccuracyKilometer
-            //
             locationManager?.startUpdatingLocation()
             locationManager?.startMonitoringSignificantLocationChanges()
         }
@@ -48,12 +45,12 @@
                 break
             case .authorizedAlways:
                 locationManager?.startUpdatingLocation()
-                //locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                locationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
                 print("always auth")
                 
             case .authorizedWhenInUse:
                 locationManager?.startUpdatingLocation()
-                // locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                 locationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
                 locationManager?.requestAlwaysAuthorization()
             @unknown default:
                 print("default")
@@ -128,7 +125,7 @@
                 locationHistory = []
                 let geofire = GeoFire(firebaseRef: HistoryReference.child(childID))
             HistoryReference.child(childID).observe(.childAdded) {(snapshot) in
-                 let key = snapshot.key
+                      let key = snapshot.key
                       geofire.getLocationForKey(key) {[weak self] (fetchedLocation, error) in
                         if error != nil {print(error!.localizedDescription) }
                         guard let childLocation = fetchedLocation else {return}

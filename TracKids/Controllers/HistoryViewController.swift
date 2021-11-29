@@ -23,17 +23,16 @@ class HistoryViewController: UIViewController {
         guard let childId = TrackingViewController.trackedChildUId else {
             return
         }
-        let ali = "xbfS3m7GbgPXn45fCwp8YfGw42M2"
-        LocationHandler.shared.fetchLocationHistory(for: ali) {[weak self] (locationHistory) in
+        //let ali = "xbfS3m7GbgPXn45fCwp8YfGw42M2"
+        LocationHandler.shared.fetchLocationHistory(for: childId) {[weak self] (locationHistory) in
             print("xxx \(locationHistory.count)")
-
             self?.locationHistory = locationHistory
             for location in locationHistory {
         let annotation = ChildAnnotation(uid: childId, coordinate: location.coordinate)
                 self?.mapView.addAnnotation(annotation)
                 print("xxx \(String(describing: self?.annotations))")
         }
-    }
+     }
   }
 }
 
