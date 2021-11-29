@@ -15,7 +15,7 @@ let ChildLocationReference = DBReference.child("childLocation")
 let TrackedChildsReference = DBReference.child("TrackedChilds")
 let MessagesReference = DBReference.child("Messages")
 let ObservedPlacesReference = DBReference.child("ObservedPlaces")
-let HistoryReference = DBReference.child("History")
+let HistoryReference = DBReference.child("LocationHistory")
 var FetchedPlaces = [CLLocation]()
 
 struct DataHandler{
@@ -56,8 +56,8 @@ struct DataHandler{
     func fetchObservedPlaces(for childID : String, completion : @escaping ([CLLocation]?) -> Void){
         FetchedPlaces = []
         let geofire = GeoFire(firebaseRef: ObservedPlacesReference.child(childID))
-        ObservedPlacesReference.child(childID).observe(.childAdded) { (snapShot) in
-            let key = snapShot.key
+        ObservedPlacesReference.child(childID).observe(.childAdded) { (snapshot) in
+            let key = snapshot.key
             geofire.getLocationForKey(key) { (location, error) in
                 if error != nil {print(error!.localizedDescription) }
                 guard let FetchedPlace = location else {return}
@@ -67,7 +67,6 @@ struct DataHandler{
         }
     }
     
-    
     func uploadObservedPlace(_ location : CLLocation, for Child : String){
         let placeReference = ObservedPlacesReference.child(Child)
         let key = ObservedPlacesReference.childByAutoId().key
@@ -75,22 +74,26 @@ struct DataHandler{
         geoFire.setLocation(location, forKey: key ?? "no key")
            }
     
-    
     func uploadMessageWithInfo(_ messageText : String , _ recipient : String)  {
         let sender = Auth.auth().currentUser?.uid
         let messageBody = messageText
         let recipient = recipient
         let timestamp = Int(Date().timeIntervalSince1970)
-        let messsageInfo = ["sender" : sender!, "body"  : messageBody,"recipient" : recipient, "timestamp" : timestamp] as [String : Any]
-        fetchUserInfo { (user) in
+        
+        let messsageInfo = ["sender" : sender!,
+                            "body"  : messageBody,
+                            "recipient" : recipient,
+                            "timestamp" : timestamp] as [String : Any]
+        self.fetchUserInfo { (user) in
+            print("zzz \(user.accountType)")
             if user.accountType == 0 {
                 MessagesReference.child(sender!).child(recipient).childByAutoId().updateChildValues(messsageInfo)
-            }
-            else if user.accountType == 1{
+                 }
+            else if user.accountType == 1 {
                 MessagesReference.child(user.parentID!).child(sender!).childByAutoId().updateChildValues(messsageInfo)
                  }
-             }
-         }
+              }
+          }
     
     func convertLocationToAdress(for location : CLLocation?, completion : @escaping((Location?) -> Void)) {
         let geocoder = CLGeocoder()

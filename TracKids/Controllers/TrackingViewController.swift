@@ -96,8 +96,11 @@
             configureMapView()
             centerMapOnUserLocation()
             LocationHandler.shared.StartObservingPlaces()
-            let hany = "qrN5d96VlualbijfhdBCxLSnv5b2"
-            LocationHandler.shared.fetchLocationHistory(for: hany)
+           // let amr = "LAJVtf2Z2GWfma2N6U40bnHL4Ok1"
+         //  LocationHandler.shared.fetchLocationHistory(for: hany)
+           // HistoryReference.child(hany).removeAllObservers()
+
+            //HistoryReference.removeAllObservers()
         }
         
         override func viewWillAppear(_ animated: Bool) {
@@ -115,17 +118,17 @@
                 print("hey iam child and i willappear")
                 handleLocationServices()
             }
-            AuthHandler =  Auth.auth().addStateDidChangeListener({ (_, user) in
+            AuthHandler =  Auth.auth().addStateDidChangeListener({ [weak self] (_, user) in
                 if user == nil {
-                    self.centerMapOnUserLocation()
-                    self.childsCollectionView.isHidden = true
-                    self.addChildButton.isHidden = true
+                    self?.centerMapOnUserLocation()
+                    self?.childsCollectionView.isHidden = true
+                    self?.addChildButton.isHidden = true
                     // self.childsCollectionView.removeFromSuperview()
                     // self.addChildButton.removeFromSuperview()
                 }
                 else{
-                    self.childsCollectionView.isHidden = false
-                    self.addChildButton.isHidden = false
+                    self?.childsCollectionView.isHidden = false
+                    self?.addChildButton.isHidden = false
                 }
             })
         }
@@ -170,8 +173,8 @@
         }
         
         func fetchUserInfo(){
-            DataHandler.shared.fetchUserInfo() { (user) in
-                self.user = user
+            DataHandler.shared.fetchUserInfo { [weak self] (user) in
+                self?.user = user
             }
         }
         
@@ -182,12 +185,13 @@
                 performSegue(withIdentifier: "showSignIn", sender: sender)
                 print("please log in")
             }
-            else {
+            else if IsLoggedIn {
                 if accountType == .parent{
                     performSegue(withIdentifier: "AddChildSegue", sender: sender)
                     print("you are logged in")
                   } else if accountType == .child{
-                    // performSegue(withIdentifier: "showAddParentSegue", sender: sender)
+                    print("child are logged in")
+                   // howww
             }
         }
     }
@@ -251,11 +255,11 @@
         func fetchChildsItems(){
             childs = []
             childsID = []
-            DataHandler.shared.fetchChildInfo() { (child,childID) in
-                self.childs.append(child)
-                self.childsID.append(childID)
+            DataHandler.shared.fetchChildInfo() {[weak self] (child,childID) in
+                self?.childs.append(child)
+                self?.childsID.append(childID)
                 DispatchQueue.main.async {
-                    self.childsCollectionView.reloadData()
+                    self?.childsCollectionView.reloadData()
                 }
             }
         }

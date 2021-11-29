@@ -54,13 +54,14 @@
         
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(true)
+            
             configureTableView()
             DataHandler.shared.fetchUserInfo { (user) in
+                print("ddd \(user.accountType)")
                 self.accountType = AccountType(rawValue: user.accountType)
                 self.parentID = user.parentID
-                self.downloadMessages()
-            }
-            
+               self.downloadMessages()
+               }
             if let  trackedChildUId = TrackingViewController.trackedChildUId{
                 uniqueID = trackedChildUId
                }
@@ -72,22 +73,19 @@
                                                                             self?.downloadMessages()
                                                                           })
                                                                   }
-        
                 
         override func viewDidLoad() {
             super.viewDidLoad()
             print("chat downloaded")
             configureTableView()
+            
             DataHandler.shared.fetchUserInfo { (user) in
                 self.accountType = AccountType(rawValue: user.accountType)
                 self.parentID = user.parentID
-                self.downloadMessages()
-            }
-            
+              }
             if let  trackedChildUId = TrackingViewController.trackedChildUId{
                 uniqueID = trackedChildUId
-            }
-            
+             }
             navigationItem.title = childName
         }
         
@@ -126,23 +124,32 @@
         
         @IBAction func sendMessagePressed(_ sender: UIButton) {
             handleSendingMessage()
+            downloadMessages()
         }
         
         func handleSendingMessage(){
+            
             guard let messageText = messageTextfield.text, !messageText.isEmpty  else {return}
             
             if self.accountType == .parent{
+                print("ddd parent")
                 if let childID = self.uniqueID{
+                    print("ddd parent2")
                     DataHandler.shared.uploadMessageWithInfo(messageText, childID)
                 }
             }
             else if self.accountType == .child{
+                
                 if let parentID = self.parentID{
+                    print("ddd child2")
                     DataHandler.shared.uploadMessageWithInfo(messageText, parentID)
                 }
             }
             messageTextfield.text = ""
         }
+        
+        
+        
     }
 
     extension ChatViewController : UITableViewDataSource, UITableViewDelegate{
@@ -162,8 +169,6 @@
                 formatter.dateFormat = "yy-MM-dd HH:mm a"
                    // "hh:mm a"
 //    let s = String(format: "%@,%f,%f,%@\n", dateString, locValue.latitude, locValue.longitude, self.currentDevice)
-
-                  
                 
                 cell.timeLabel.numberOfLines = 0
                 cell.timeLabel.text = formatter.string(from: messageDate)
@@ -183,7 +188,7 @@
     extension ChatViewController : UITextFieldDelegate{
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             handleSendingMessage()
-            textField.resignFirstResponder()
+            
             return true
         }
     }

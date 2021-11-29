@@ -467,7 +467,7 @@
                         <barButtonItem key="leftBarButtonItem" title="list" width="100" id="xin-wj-fgR">
                             <imageReference key="image" image="list.triangle" catalog="system" symbolScale="large"/>
                             <inset key="largeContentSizeImageInsets" minX="0.0" minY="69" maxX="0.0" maxY="47"/>
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" systemColor="systemRedColor"/>
                             <connections>
                                 <segue destination="PEL-v1-FtV" kind="show" id="RrN-yo-g6T"/>
                             </connections>
@@ -506,7 +506,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="bold"/>
                             </imageView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eOS-uc-lcS">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOS-uc-lcS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                             </mapView>
                         </subviews>
@@ -873,7 +873,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jh-cf-hNG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="409" y="310"/>
+            <point key="canvasLocation" x="113" y="225"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="OhN-QN-3dx">

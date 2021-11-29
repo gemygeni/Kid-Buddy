@@ -22,7 +22,7 @@ class ListViewController: UIViewController {
     }
     
     func fetchUserInfo(){
-        DataHandler.shared.fetchUserInfo() { (user) in
+        DataHandler.shared.fetchUserInfo { (user) in
             self.user = user
             if user.accountType == 1{
                 self.childsButton.isHidden = true

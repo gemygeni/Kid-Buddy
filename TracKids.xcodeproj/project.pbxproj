@@ -112,8 +112,6 @@
 			children = (
 				EF54A18226F717CE00E9ADCC /* Message.swift */,
 				EF3A9A7325DB6DCC00BE1C8A /* ChildAnnotation.swift */,
-				EF95470B25CBA30300806D45 /* DataHandler.swift */,
-				EF27376125D0C166002A5601 /* LocationHandler.swift */,
 				EF95470E25CBB45F00806D45 /* User.swift */,
 			);
 			path = Models;
@@ -161,6 +159,7 @@
 		EF5B0EF025BE492200890F4B /* TracKids */ = {
 			isa = PBXGroup;
 			children = (
+				EF92A708275352B3003566E4 /* utilities */,
 				EF55672326797E1800077ACF /* Controllers */,
 				EF16107A26E7A01C007BA5ED /* Views */,
 				EF5B0EFF25BE492300890F4B /* Info.plist */,
@@ -184,6 +183,15 @@
 				EF5B0EFC25BE492300890F4B /* LaunchScreen.storyboard */,
 			);
 			path = "supporting files";
+			sourceTree = "<group>";
+		};
+		EF92A708275352B3003566E4 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				EF95470B25CBA30300806D45 /* DataHandler.swift */,
+				EF27376125D0C166002A5601 /* LocationHandler.swift */,
+			);
+			path = utilities;
 			sourceTree = "<group>";
 		};
 		F6594CC00AB2089641DFF0A8 /* Frameworks */ = {

@@ -10,6 +10,8 @@ import MapKit
 class ChildAnnotation: NSObject, MKAnnotation {
    dynamic var coordinate: CLLocationCoordinate2D
     var uid : String
+    var title: String?
+    var subtitle: String?
     init(uid : String ,coordinate : CLLocationCoordinate2D) {
         self.coordinate = coordinate
         self.uid = uid
