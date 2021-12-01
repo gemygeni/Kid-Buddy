@@ -59,6 +59,7 @@ class HistoryViewController: UIViewController {
      }
   }
     
+    
     func drawOverlay(with points : [CLLocationCoordinate2D] ){
         
          let historyPoints = self.historyPoints
@@ -69,6 +70,7 @@ class HistoryViewController: UIViewController {
         polylineRect.size.height *= 1.1
         self.mapView.setRegion(MKCoordinateRegion(polylineRect), animated: true)
      }
+    
 }
 
 extension HistoryViewController : MKMapViewDelegate{
@@ -101,4 +103,26 @@ extension HistoryViewController : MKMapViewDelegate{
         renderer.lineWidth = 5.0
         return renderer
     }
+
+    
 }
+
+
+//func addAnnotationFromHistory(_ annotation: MKAnnotation) {
+//
+//    let span = MKCoordinateSpan.init(latitudeDelta: 0.015, longitudeDelta: 0.015)
+//    let region = MKCoordinateRegion(center: annotation.coordinate, span: span)
+//    self.mapView.addAnnotation(annotation)
+//    self.mapView.selectAnnotation(annotation, animated: true)
+//    self.mapView.setRegion(region, animated: true)
+//}
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
