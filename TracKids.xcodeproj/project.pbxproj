@@ -38,6 +38,8 @@
 		EF95470F25CBB45F00806D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470E25CBB45F00806D45 /* User.swift */; };
 		EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */; };
 		EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */; };
+		EFF37EA62757049700E808DE /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF37EA52757049700E808DE /* ChattingViewController.swift */; };
+		EFF37EA927570C9B00E808DE /* LocationHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF37EA827570C9B00E808DE /* LocationHistoryViewController.swift */; };
 		EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */; };
 		EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */; };
 		EFFCA0382746F1A100B14C81 /* SimulatedLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */; };
@@ -78,6 +80,8 @@
 		EF95470B25CBA30300806D45 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
+		EFF37EA52757049700E808DE /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
+		EFF37EA827570C9B00E808DE /* LocationHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHistoryViewController.swift; sourceTree = "<group>"; };
 		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SimulatedLocations.gpx; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 				EF54A17B26F6C34300E9ADCC /* ChildsListTableViewController.swift */,
 				EF2EA3A3274E0665005ED00F /* AddObservedPlacesViewController.swift */,
 				EF67B5F726F6C1FB00741054 /* ChatViewController.swift */,
+				EFF37EA52757049700E808DE /* ChattingViewController.swift */,
+				EFF37EA827570C9B00E808DE /* LocationHistoryViewController.swift */,
 				EF2EA3A0274E063A005ED00F /* HistoryViewController.swift */,
 				EF5B0EF525BE492200890F4B /* ListViewController.swift */,
 				EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */,
@@ -341,6 +347,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFF37EA927570C9B00E808DE /* LocationHistoryViewController.swift in Sources */,
+				EFF37EA62757049700E808DE /* ChattingViewController.swift in Sources */,
 				EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */,
 				EF5B0EF625BE492200890F4B /* ListViewController.swift in Sources */,
 				EF54A17E26F6C34400E9ADCC /* ChildProfileViewController.swift in Sources */,
