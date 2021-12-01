@@ -92,3 +92,27 @@ extension UIImageView {
     }
 }
 
+extension NSNumber {
+   func convertDateFormatter() -> String {
+        
+    let timeBySeconds = self.doubleValue
+            let date = Date(timeIntervalSince1970: timeBySeconds)
+            let formatter = DateFormatter()
+            formatter.timeZone = TimeZone.current
+            formatter.dateFormat = "MM-dd  HH:mm a"
+               let dateString = formatter.string(from: date)
+            
+            return dateString
+           }
+    //    let s = String(format: "%@,%f,%f,%@\n", dateString, locValue.latitude, locValue.longitude, self.currentDevice)
+  
+}
+extension Date{
+    func convertDateFormatter() -> String {
+             let formatter = DateFormatter()
+             formatter.timeZone = TimeZone.current
+             formatter.dateFormat = "MM-dd  HH:mm a"
+                let dateString = formatter.string(from: self)
+             return dateString
+            }
+}

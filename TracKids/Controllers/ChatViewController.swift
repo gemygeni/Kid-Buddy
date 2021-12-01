@@ -162,17 +162,8 @@
             cell.backgroundColor = UIColor.clear
             let message = messages[indexPath.row]
             cell.MessageBodyLabel.text = message.body
-            if let timeBySeconds = message.timestamp?.doubleValue {
-                let messageDate = Date(timeIntervalSince1970: timeBySeconds)
-                let formatter = DateFormatter()
-                formatter.timeZone = TimeZone.current
-                formatter.dateFormat = "yy-MM-dd HH:mm a"
-                   // "hh:mm a"
-//    let s = String(format: "%@,%f,%f,%@\n", dateString, locValue.latitude, locValue.longitude, self.currentDevice)
-                
-                cell.timeLabel.numberOfLines = 0
-                cell.timeLabel.text = formatter.string(from: messageDate)
-               }
+            cell.timeLabel.numberOfLines = 0
+            cell.timeLabel.text = message.timestamp?.convertDateFormatter()
             if message.sender == Auth.auth().currentUser?.uid{
                 cell.MessageBodyLabel.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
                 cell.rightImageView.isHidden = true
