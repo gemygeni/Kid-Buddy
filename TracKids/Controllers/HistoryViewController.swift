@@ -28,10 +28,6 @@ class HistoryViewController: UIViewController {
     var count22 = 0
     
     
-    
-    
-    
-    
     func fetchLocationHistory(){
         
         count11 += 1
@@ -44,9 +40,7 @@ class HistoryViewController: UIViewController {
         }
         LocationHandler.shared.fetchLocationHistory(for: childId) {[weak self] (fetchedLocations) in
             self?.historyPoints = []
-           
             for location in fetchedLocations {
-               
                 self?.count22 += 1
                 print("nnn222 \(String(describing: self?.count22))")
         let annotation = ChildAnnotation(uid: childId, coordinate: location.coordinate)
@@ -109,18 +103,6 @@ extension HistoryViewController : MKMapViewDelegate{
         renderer.lineWidth = 5.0
         return renderer
     }
-
-    
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
-    }
-    
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        
-        
-    }
-    
-
 
     
 }
