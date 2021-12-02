@@ -24,15 +24,8 @@ class HistoryViewController: UIViewController {
         mapView.userTrackingMode = .follow
         mapView.isZoomEnabled = true
     }
-   var count11 = 0
-    var count22 = 0
-    
     
     func fetchLocationHistory(){
-        
-        count11 += 1
-        print("nnn111 \(String(describing: count11))")
-
         self.mapView.removeAnnotations(self.mapView.annotations)
         self.mapView.removeOverlays(self.mapView.overlays)
         guard let childId = TrackingViewController.trackedChildUId else {
@@ -41,8 +34,6 @@ class HistoryViewController: UIViewController {
         LocationHandler.shared.fetchLocationHistory(for: childId) {[weak self] (fetchedLocations) in
             self?.historyPoints = []
             for location in fetchedLocations {
-                self?.count22 += 1
-                print("nnn222 \(String(describing: self?.count22))")
         let annotation = ChildAnnotation(uid: childId, coordinate: location.coordinate)
                 self?.mapView.addAnnotation(annotation)
                 let timestamp = location.timestamp

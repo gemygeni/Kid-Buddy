@@ -46,7 +46,6 @@ struct DataHandler{
             geofire.getLocationForKey(childID) { (location, error) in
                 if error != nil {print(error!.localizedDescription) }
                 guard let childLocation = location else {return}
-              // print("www \(childLocation.timestamp)")
                 completion(childLocation)
             }
          }

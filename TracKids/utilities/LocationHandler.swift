@@ -21,17 +21,14 @@
         var locationManager : CLLocationManager?
         var locationHistory = [CLLocation]()
         var places = [Location]()
-        var currentCoordinate: CLLocationCoordinate2D?
         override init() {
             super.init()
             locationManager = CLLocationManager()
             locationManager?.delegate = self
             locationManager?.allowsBackgroundLocationUpdates = true
-            locationManager?.distanceFilter = CLLocationDistance(300)
-            locationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
-            locationManager?.startUpdatingLocation()
-            locationManager?.startMonitoringSignificantLocationChanges()
-        }
+            locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            locationManager?.distanceFilter = CLLocationDistance(100)
+                   }
         
         func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
             switch manager.authorizationStatus {
@@ -44,13 +41,18 @@
                 print("restricted")
                 break
             case .authorizedAlways:
-                locationManager?.startUpdatingLocation()
-                locationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
-                print("always auth")
+                DataHandler.shared.fetchUserInfo { [weak self](user) in
+                    if user.accountType == 1 {
+                        self?.locationManager?.startUpdatingLocation()
+                        self?.locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                        print("always auth")
+                    }
+                }
+                
                 
             case .authorizedWhenInUse:
-                locationManager?.startUpdatingLocation()
-                 locationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
+//                locationManager?.startUpdatingLocation()
+//                 locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
                 locationManager?.requestAlwaysAuthorization()
             @unknown default:
                 print("default")
@@ -63,62 +65,37 @@
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             self.count1 += 1
             print("zzz11 \(self.count1)")
-            manager.distanceFilter = CLLocationDistance(300)
             guard let lastLocation = locations.first else {return}
-           // guard let accuracy = manager.location?.horizontalAccuracy else { return }
-            //self.uploadChildLocation(for: lastLocation)
-            self.uploadLocationHistory(for: lastLocation)
+            self.uploadChildLocation(for: lastLocation)
+           self.uploadLocationHistory(for: lastLocation)
+      //      guard let accuracy = manager.location?.horizontalAccuracy else { return }
 //            if (accuracy > CLLocationAccuracy(300)){
 //                return
 //                 }
            }
         
         func uploadLocationHistory(for location : CLLocation){
+            
+
             guard let UId =  Auth.auth().currentUser?.uid else {return}
             let historyReference = HistoryReference.child(UId)
             let key = HistoryReference.childByAutoId().key
             let geoFire = GeoFire(firebaseRef: historyReference)
-           DataHandler.shared.fetchUserInfo { (user) in
-                if user.accountType == 1{
-                    HistoryReference.observe(.value) { (snapshot) in
-                                geoFire.setLocation(location, forKey: key ?? "no key")
-                                self.count2 += 1
-                                print("zzz22 \(self.count2)")
-                      }
-                   }
-                }
+                self.count2 += 1
+                print("zzz22 \(self.count2)")
+          geoFire.setLocation(location, forKey: key ?? "locationkey")
+   //check this  MessagesReference.child(sender!).child(recipient).childByAutoId().updateChildValues(messsageInfo)
+       // }
             }
-        
-        
-//        func uploadLocationHistory(for location : CLLocation){
-//            HistoryReference.observe(.value) { (snapshot) in
-//                DataHandler.shared.fetchUserInfo { (user) in
-//                    if user.accountType == 1{
-//                        let UId = user.uid
-//                        let historyReference = HistoryReference.child(UId)
-//                        let key = HistoryReference.childByAutoId().key
-//                        let geoFire = GeoFire(firebaseRef: historyReference)
-//                        geoFire.setLocation(location, forKey: key ?? "no key")
-//                        self.count2 += 1
-//                        print("zzz22 \(self.count2)")
-//                    }
-//                }
-//            }
-//        }
+
         
         func uploadChildLocation(for location : CLLocation)  {
             let geofire = GeoFire(firebaseRef: ChildLocationReference)
-            ChildLocationReference.observe(.value) { (snapshot) in
                 guard let UId =  Auth.auth().currentUser?.uid else {return}
-                DataHandler.shared.fetchUserInfo { (user) in
-                    if  user.accountType == 1 {
                         geofire.setLocation(location, forKey: UId) { (error) in
                             if error != nil {print(error!.localizedDescription )}
                         }
                     }
-                }
-            }
-        }
         
         var count = 0
         func fetchLocationHistory(for childID : String, completion : @escaping(([CLLocation]) -> Void))  {
@@ -129,11 +106,8 @@
                       geofire.getLocationForKey(key) {[weak self] (fetchedLocation, error) in
                         if error != nil {print(error!.localizedDescription) }
                         guard let childLocation = fetchedLocation else {return}
-                        
-                        print("www \(childLocation))")
                         self?.locationHistory.append(childLocation)
                         completion(self!.locationHistory)
-                        print("www \(self!.locationHistory.count))")
                           }
                        }
                     }
@@ -191,7 +165,7 @@
                         guard let locations = locations else {return}
                         for location in locations{
                             self?.configureGeofencing(for: location)
-                            print("geofencing started")
+                            print("Debug: geofencing started")
                         }
                         for fenceRegion in self!.geofences{
                             self?.locationManager?.startMonitoring(for: fenceRegion)
@@ -205,12 +179,10 @@
         
         func searchForLocation (with query : String , completion : @escaping(([Location]) -> Void)){
             self.places = []
-            
             let request = MKLocalSearch.Request()
-            let region = MKCoordinateRegion(center: currentCoordinate ?? CLLocationCoordinate2D(), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+            let region = MKCoordinateRegion(center: locationManager?.location?.coordinate ?? CLLocationCoordinate2D(), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
             request.region = region
             request.naturalLanguageQuery = query
-            
             let search = MKLocalSearch(request: request)
             search.start { [weak self] (response, error) in
                 guard let response = response else { return }

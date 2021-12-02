@@ -29,13 +29,7 @@
         var childsID = [String]()
         var AuthHandler : AuthStateDidChangeListenerHandle?
         var annotationImage : UIImage?
-        var fetchedImageView :  UIImageView?{
-            didSet{
-                //                fetchedImageView?.layer.frame.size.height = 60
-                //                fetchedImageView?.layer.frame.size.width = 60
-                //                fetchedImageView?.layer.cornerRadius = 0
-            }
-        }
+        var fetchedImageView :  UIImageView?
         var trackedChild : User?{
             didSet{
                 self.annotationImage = nil
@@ -57,7 +51,6 @@
             }
         }
         
-        
         @IBOutlet weak var childsCollectionView: UICollectionView!
         
         @IBOutlet weak var mapView: MKMapView!
@@ -77,15 +70,16 @@
                 IsLoggedIn = true
                 if let index = user?.accountType{
                     self.accountType = AccountType(rawValue: index )
-                    print("Account type is: \(self.accountType!)")
+                    print("Debug: Account type is: \(self.accountType!)")
                 }
-                if accountType == .parent {
+                if self.accountType == .parent {
                     fetchChildLocation()
                     fetchChildsItems()
                 }
-                else if accountType == .child {
-                    handleLocationServices()
-                }
+//                else if TrackingViewController.accountType == .child {
+//                    print("xxx in user init")
+//                    handleLocationServices()
+//                }
             }
         }
         
@@ -109,15 +103,15 @@
             childsCollectionView.dataSource = self
             fetchUserInfo()
             configureMapView()
-            if accountType == .parent {
+            if self.accountType == .parent {
                 print("hey iam parent and i willappear")
                 fetchChildLocation()
             }
             
-            else if accountType == .child {
-                print("hey iam child and i willappear")
-                handleLocationServices()
-            }
+//            else if TrackingViewController.accountType == .child {
+//                print("hey iam child and i willappear")
+//                handleLocationServices()
+//            }
             AuthHandler =  Auth.auth().addStateDidChangeListener({ [weak self] (_, user) in
                 if user == nil {
                     self?.centerMapOnUserLocation()
@@ -144,12 +138,11 @@
         
         func fetchChildLocation()  {
             if IsLoggedIn{
-                if accountType == .parent {
+                if self.accountType == .parent {
                     guard let  childID = TrackingViewController.trackedChildUId else {return}
-                    print("in fetchChildLocation childID is \(childID)")
                     DataHandler.shared.fetchChildLocation(for: childID) { [weak self](location) in
                         guard let fetchedLocation = location else {return}
-                        let region = MKCoordinateRegion(center: fetchedLocation.coordinate , span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+                        let region = MKCoordinateRegion(center: fetchedLocation.coordinate , span:MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                         DispatchQueue.main.async {
                             self?.mapView.setRegion(region, animated: true)
                             let annotation = ChildAnnotation(uid: childID, coordinate: fetchedLocation.coordinate)
@@ -173,23 +166,23 @@
         }
         
         func fetchUserInfo(){
-            DataHandler.shared.fetchUserInfo { [weak self] (user) in
+            DataHandler.shared.fetchUserInfo { [weak self](user) in
                 self?.user = user
+                self?.accountType = AccountType(rawValue: user.accountType)
             }
         }
         
         @IBOutlet weak var addChildButton: UIButton!
-        
         @IBAction func AddChildPressed(_ sender: UIButton) {
             if !IsLoggedIn{
                 performSegue(withIdentifier: "showSignIn", sender: sender)
                 print("please log in")
             }
             else if IsLoggedIn {
-                if accountType == .parent{
+                if self.accountType == .parent{
                     performSegue(withIdentifier: "AddChildSegue", sender: sender)
                     print("you are logged in")
-                  } else if accountType == .child{
+                } else if self.accountType == .child{
                     print("child are logged in")
                    // howww
             }
@@ -215,28 +208,6 @@
             mapView.isZoomEnabled = true
         }
     }
-    
-    extension TrackingViewController : CLLocationManagerDelegate {
-        func handleLocationServices(){
-            guard CLLocationManager.locationServicesEnabled() else {
-                print("location services disabled")
-                return
-            }
-            locationManager?.delegate = self
-            locationManager?.requestWhenInUseAuthorization()
-            locationManager?.requestAlwaysAuthorization()
-            
-            if locationManager?.authorizationStatus == .authorizedAlways{
-                locationManager?.startUpdatingLocation()
-                locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
-                print("always authorized already")
-            }
-            else{
-                print("authorize requested")
-            }
-        }
-    }
-    
     extension TrackingViewController : MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             if let annotation = annotation as? ChildAnnotation {
