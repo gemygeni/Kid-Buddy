@@ -147,9 +147,6 @@
             }
             messageTextfield.text = ""
         }
-        
-        
-        
     }
 
     extension ChatViewController : UITableViewDataSource, UITableViewDelegate{
@@ -179,7 +176,6 @@
     extension ChatViewController : UITextFieldDelegate{
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             handleSendingMessage()
-            
             return true
         }
     }

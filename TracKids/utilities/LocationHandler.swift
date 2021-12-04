@@ -67,27 +67,23 @@
             print("zzz11 \(self.count1)")
             guard let lastLocation = locations.first else {return}
             self.uploadChildLocation(for: lastLocation)
-           self.uploadLocationHistory(for: lastLocation)
-      //      guard let accuracy = manager.location?.horizontalAccuracy else { return }
+            self.uploadLocationHistory(for: lastLocation)
+           // guard let accuracy = manager.location?.horizontalAccuracy else { return }
 //            if (accuracy > CLLocationAccuracy(300)){
 //                return
 //                 }
            }
+
         
         func uploadLocationHistory(for location : CLLocation){
-            
-
             guard let UId =  Auth.auth().currentUser?.uid else {return}
+            let timestamp = String(Int(Date().timeIntervalSince1970))
             let historyReference = HistoryReference.child(UId)
-            let key = HistoryReference.childByAutoId().key
             let geoFire = GeoFire(firebaseRef: historyReference)
-                self.count2 += 1
-                print("zzz22 \(self.count2)")
+            let key = HistoryReference.childByAutoId().child(timestamp).key
           geoFire.setLocation(location, forKey: key ?? "locationkey")
-   //check this  MessagesReference.child(sender!).child(recipient).childByAutoId().updateChildValues(messsageInfo)
-       // }
             }
-
+        
         
         func uploadChildLocation(for location : CLLocation)  {
             let geofire = GeoFire(firebaseRef: ChildLocationReference)
@@ -96,22 +92,6 @@
                             if error != nil {print(error!.localizedDescription )}
                         }
                     }
-        
-        var count = 0
-        func fetchLocationHistory(for childID : String, completion : @escaping(([CLLocation]) -> Void))  {
-                locationHistory = []
-                let geofire = GeoFire(firebaseRef: HistoryReference.child(childID))
-            HistoryReference.child(childID).observe(.childAdded) {(snapshot) in
-                      let key = snapshot.key
-                      geofire.getLocationForKey(key) {[weak self] (fetchedLocation, error) in
-                        if error != nil {print(error!.localizedDescription) }
-                        guard let childLocation = fetchedLocation else {return}
-                        self?.locationHistory.append(childLocation)
-                        completion(self!.locationHistory)
-                          }
-                       }
-                    }
-        
         
         func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
             
@@ -135,7 +115,6 @@
             var identifier : String = " "
             DataHandler.shared.convertLocationToAdress(for: location) {[weak self] (place) in
                 identifier = "\(place?.title ?? "monitord place")"
-                print("Deebug: identifier into  \(identifier)")
                 var fenceRegion: CLCircularRegion {
                     let region = CLCircularRegion(
                         center: location.coordinate,
@@ -190,8 +169,7 @@
                     let coordinates = item.placemark.location?.coordinate
                     let name = item.placemark.name
                     let details = item.placemark.title
-                    let place = Location(title: name ?? "", details: details ?? "", coordinates: coordinates ?? CLLocationCoordinate2D())
-                    
+    let place = Location(title: name ?? "", details: details ?? "", coordinates: coordinates ?? CLLocationCoordinate2D())
                     self?.places.append(place)
                     completion(self!.places)
                 }

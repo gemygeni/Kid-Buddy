@@ -7,51 +7,92 @@
 
 import UIKit
 import MapKit
+import GeoFire
 class HistoryViewController: UIViewController {
 
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var mapView: MKMapView!
-    //var locationHistory = [CLLocation]()
     var annotations = [ChildAnnotation]()
     var historyPoints = [CLLocationCoordinate2D]()
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMapView()
+        spinner.startAnimating()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         fetchLocationHistory()
     }
+    
+    
     func configureMapView(){
         mapView.delegate = self
         self.mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.isZoomEnabled = true
     }
-    
+    var count = 0
     func fetchLocationHistory(){
+        self.historyPoints = []
         self.mapView.removeAnnotations(self.mapView.annotations)
         self.mapView.removeOverlays(self.mapView.overlays)
-        guard let childId = TrackingViewController.trackedChildUId else {
-            return
-        }
-        LocationHandler.shared.fetchLocationHistory(for: childId) {[weak self] (fetchedLocations) in
-            self?.historyPoints = []
-            for location in fetchedLocations {
-        let annotation = ChildAnnotation(uid: childId, coordinate: location.coordinate)
+        guard let childId = TrackingViewController.trackedChildUId else {return}
+        let geofire = GeoFire(firebaseRef: HistoryReference.child(childId))
+        HistoryReference.child(childId).observe(.childAdded) {[weak self] (snapshot) in
+            let key = snapshot.key
+            geofire.getLocationForKey(key) { (location, error) in
+                guard let fetchedLocation = location else {return}
+                let annotation = ChildAnnotation(uid: childId, coordinate: fetchedLocation.coordinate)
                 self?.mapView.addAnnotation(annotation)
-                let timestamp = location.timestamp
-                
-                annotation.title = timestamp.convertDateFormatter()
+                let timeBySeconds = Double(key)
+                let date = Date(timeIntervalSince1970: timeBySeconds ?? 0.00)
+                let formatter = DateFormatter()
+                formatter.timeZone = TimeZone.current
+                formatter.dateFormat = "E HH:mm a"
+                let timestamp = formatter.string(from: date)
+                annotation.title = timestamp
                 DataHandler.shared.convertLocationToAdress(for: location) { (place) in
                     annotation.subtitle = place?.title
-                }
-                let point = location.coordinate
+                  }
+                let point = fetchedLocation.coordinate
                 self?.historyPoints.append(point)
-         }
-            print("jjj \(self!.historyPoints.count)")
-            self?.drawOverlay(with: self!.historyPoints)
-     }
-  }
+                self?.drawOverlay(with: self!.historyPoints)
+            }
+        }
+        self.spinner.stopAnimating()
+    }
+
+    
+ //old version
+//    func fetchLocationHistory(){
+//        self.mapView.removeAnnotations(self.mapView.annotations)
+//        self.mapView.removeOverlays(self.mapView.overlays)
+//        guard let childId = TrackingViewController.trackedChildUId else {
+//            return
+//           }
+//        LocationHandler.shared.fetchLocationHistory(for: childId) {[weak self] (fetchedLocations) in
+//            self?.historyPoints = []
+//            self?.locationHistory = fetchedLocations
+//            for location in self!.locationHistory {
+//                print("memo \(self!.locationHistory.count)")
+//        let annotation = ChildAnnotation(uid: childId, coordinate: location.coordinate)
+//                self?.mapView.addAnnotation(annotation)
+//                let timestamp = location.timestamp
+//
+//                annotation.title = timestamp.convertDateFormatter()
+//                DataHandler.shared.convertLocationToAdress(for: location) { (place) in
+//                    annotation.subtitle = place?.title
+//                  }
+//                let point = location.coordinate
+//                self?.historyPoints.append(point)
+//          }
+//            self?.drawOverlay(with: self!.historyPoints)
+//     }
+//  }
+//
     
     func drawOverlay(with points : [CLLocationCoordinate2D] ){
-        
          let historyPoints = self.historyPoints
         let polyline = MKPolyline(coordinates: historyPoints, count: historyPoints.count)
         mapView.addOverlay(polyline)
