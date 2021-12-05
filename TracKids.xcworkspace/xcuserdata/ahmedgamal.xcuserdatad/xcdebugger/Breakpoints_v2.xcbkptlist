@@ -62,8 +62,8 @@
             filePath = "TracKids/Views/ObservedPlacesTableViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "ObservedPlacesTableViewController"
             landmarkType = "3">
          </BreakpointContent>

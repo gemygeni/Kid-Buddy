@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 extension UIViewController {
     var contents : UIViewController {
         if let VC = self as? UINavigationController {
@@ -115,4 +116,19 @@ extension Date{
                 let dateString = formatter.string(from: self)
              return dateString
             }
+}
+
+
+extension CLPlacemark {
+  var abbreviation: String {
+    if let name = self.name {
+      return name
+    }
+
+    if let interestingPlace = areasOfInterest?.first {
+      return interestingPlace
+    }
+
+    return [subThoroughfare, thoroughfare].compactMap { $0 }.joined(separator: " ")
+  }
 }

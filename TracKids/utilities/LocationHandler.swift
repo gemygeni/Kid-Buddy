@@ -169,7 +169,7 @@
                     let coordinates = item.placemark.location?.coordinate
                     let name = item.placemark.name
                     let details = item.placemark.title
-    let place = Location(title: name ?? "", details: details ?? "", coordinates: coordinates ?? CLLocationCoordinate2D())
+         let place = Location(title: name ?? "", details: details ?? "", coordinates: coordinates ?? CLLocationCoordinate2D())
                     self?.places.append(place)
                     completion(self!.places)
                 }

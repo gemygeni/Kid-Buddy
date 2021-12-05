@@ -20,16 +20,12 @@ class ObservedPlacesTableViewController: UITableViewController {
     
     func fetchObservedPlaces(){
         Addresses = []
-        
         if let trackedChildId = TrackingViewController.trackedChildUId{
-            
             DataHandler.shared.fetchObservedPlaces(for: trackedChildId) {[weak self] (locations) in
                 guard let locations = locations else{return}
-               
-               
                 for location in locations{
+                    //try using foe each and check performance
                     DataHandler.shared.convertLocationToAdress(for: location) { (address) in
-
                         if   !((self?.Addresses.contains(where: { (address2) -> Bool in
                             if address2?.coordinates.latitude == address?.coordinates.latitude && address2?.coordinates.longitude == address?.coordinates.longitude {
                                 return true
@@ -38,11 +34,8 @@ class ObservedPlacesTableViewController: UITableViewController {
                         })) ?? false){
 
                             self?.Addresses.append(address)
-
                            }
-                       
                         DispatchQueue.main.async {
-                                          
                             self?.tableView.reloadData()
                           }
                         }
@@ -51,9 +44,6 @@ class ObservedPlacesTableViewController: UITableViewController {
                }
         navigationItem.rightBarButtonItem?.isEnabled = Addresses.count < 20
              }
-    
-    
-    
     
     @IBAction func AddPlacesButtonPressed(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "AddPlacesSegue", sender: self)
@@ -76,16 +66,12 @@ class ObservedPlacesTableViewController: UITableViewController {
         return 100
     }
     
- // var r = [1,2,3,4,5,6,7]
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "observedPlaceCell", for: indexPath)
-      //  DispatchQueue.main.async {
         cell.textLabel?.text = (self.Addresses[indexPath.row]?.title ?? "No address for this Location") + " " + (self.Addresses[indexPath.row]?.details ?? "")
-      //  cell.textLabel?.text = String(r[indexPath.row])
             cell.textLabel?.numberOfLines = 0
             cell.contentView.backgroundColor = .secondarySystemBackground
             cell.backgroundColor = .secondarySystemBackground
-      //  }
         return cell
     }
    
