@@ -23,6 +23,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.distanceFilter = CLLocationDistance(100)
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -56,6 +60,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 // MARK: - Location Manager Delegate
 extension SceneDelegate: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let lastLocation = locations.first else {return}
+        LocationHandler.shared.uploadChildLocation(for: lastLocation)
+        LocationHandler.shared.uploadLocationHistory(for: lastLocation)
+       }
+
+    
+    
     
   func locationManager(
     _ manager: CLLocationManager,

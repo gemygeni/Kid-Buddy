@@ -63,8 +63,6 @@
         var count2 = 0
         
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            self.count1 += 1
-            print("zzz11 \(self.count1)")
             guard let lastLocation = locations.first else {return}
             self.uploadChildLocation(for: lastLocation)
             self.uploadLocationHistory(for: lastLocation)

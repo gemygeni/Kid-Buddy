@@ -81,16 +81,16 @@ class SearchViewController: UIViewController {
         }
         return
       }
-        let location =  LocationHandler.shared.locationManager?.location
+        guard    let location =  LocationHandler.shared.locationManager?.location else{return}
             let Delta: CLLocationDegrees = 25 / 111
             let span = MKCoordinateSpan(
               latitudeDelta: Delta,
               longitudeDelta: Delta)
-            let region = MKCoordinateRegion(center: location!.coordinate, span: span)
+            let region = MKCoordinateRegion(center: location.coordinate, span: span)
             completer.region = region
           completer.queryFragment = query
         self.completionResults.forEach { (place) in
-            let address = Location(title: place.title, details: place.subtitle, coordinates: location?.coordinate ?? CLLocationCoordinate2D())
+            let address = Location(title: place.title, details: place.subtitle, coordinates: location.coordinate )
             self.places.append(address)
             self.tableView.reloadData()
         }
@@ -114,9 +114,6 @@ extension SearchViewController : UITextFieldDelegate {
                 return
             }
         searchTextField = textField
-        let location =  LocationHandler.shared.locationManager?.location
-       
-        
            }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
