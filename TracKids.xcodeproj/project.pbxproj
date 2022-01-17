@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A418323D3EE13D15A330643 /* Pods_TracKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */; };
+		8349AA53CF710227698CD176 /* Pods_TracKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7F91D583316792181191A7F /* Pods_TracKids.framework */; };
 		EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16107526E79FFB007BA5ED /* MessageCell.swift */; };
 		EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF16107626E79FFB007BA5ED /* MessageCell.xib */; };
 		EF1C84C127435A6800033A65 /* Apple.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EF1C84C027435A6800033A65 /* Apple.gpx */; };
@@ -46,9 +46,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TracKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		30C081F087F0E1B14B89321F /* Pods-TracKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.debug.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.debug.xcconfig"; sourceTree = "<group>"; };
-		9A758AE6DBFF2BD4185F6F0F /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
+		9BD920F88CED0956895B564D /* Pods-TracKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.debug.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.debug.xcconfig"; sourceTree = "<group>"; };
+		D19F6FE31EF23CD043B1B4B4 /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
+		D7F91D583316792181191A7F /* Pods_TracKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TracKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF16107526E79FFB007BA5ED /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		EF16107626E79FFB007BA5ED /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		EF1C84C027435A6800033A65 /* Apple.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Apple.gpx; sourceTree = "<group>"; };
@@ -79,6 +79,7 @@
 		EF87DE7027302F5E00AC4E37 /* ObservedPlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObservedPlacesTableViewController.swift; path = TracKids/Views/ObservedPlacesTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		EF95470B25CBA30300806D45 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		EF95DF1E2764C6C100E36731 /* TracKids.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TracKids.entitlements; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
 		EFF37EA52757049700E808DE /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
 		EFF37EA827570C9B00E808DE /* LocationHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHistoryViewController.swift; sourceTree = "<group>"; };
@@ -92,9 +93,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A418323D3EE13D15A330643 /* Pods_TracKids.framework in Frameworks */,
 				EF5A089926F15481000087EB /* MapKit.framework in Frameworks */,
 				EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */,
+				8349AA53CF710227698CD176 /* Pods_TracKids.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +148,7 @@
 		EF5B0EE525BE492200890F4B = {
 			isa = PBXGroup;
 			children = (
+				EF95DF1E2764C6C100E36731 /* TracKids.entitlements */,
 				EF5B0EF025BE492200890F4B /* TracKids */,
 				EF5B0EEF25BE492200890F4B /* Products */,
 				F8B61BF64E95AA6B7DB1AB4C /* Pods */,
@@ -204,7 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				EF5A089826F15481000087EB /* MapKit.framework */,
-				2E15F22EF9546AD5A1B6B571 /* Pods_TracKids.framework */,
+				D7F91D583316792181191A7F /* Pods_TracKids.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -212,8 +214,8 @@
 		F8B61BF64E95AA6B7DB1AB4C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				30C081F087F0E1B14B89321F /* Pods-TracKids.debug.xcconfig */,
-				9A758AE6DBFF2BD4185F6F0F /* Pods-TracKids.release.xcconfig */,
+				9BD920F88CED0956895B564D /* Pods-TracKids.debug.xcconfig */,
+				D19F6FE31EF23CD043B1B4B4 /* Pods-TracKids.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -225,11 +227,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF5B0F0225BE492300890F4B /* Build configuration list for PBXNativeTarget "TracKids" */;
 			buildPhases = (
-				C9DCB41CA2E85617DC3D7F10 /* [CP] Check Pods Manifest.lock */,
+				65B981EC5A3308E1CF987823 /* [CP] Check Pods Manifest.lock */,
 				EF5B0EEA25BE492200890F4B /* Sources */,
 				EF5B0EEB25BE492200890F4B /* Frameworks */,
 				EF5B0EEC25BE492200890F4B /* Resources */,
-				7625589453B0CE3B110EE195 /* [CP] Embed Pods Frameworks */,
+				0396205B2AA61C16BEA3BF72 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -301,7 +303,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7625589453B0CE3B110EE195 /* [CP] Embed Pods Frameworks */ = {
+		0396205B2AA61C16BEA3BF72 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -318,7 +320,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C9DCB41CA2E85617DC3D7F10 /* [CP] Check Pods Manifest.lock */ = {
+		65B981EC5A3308E1CF987823 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -515,13 +517,14 @@
 		};
 		EF5B0F0325BE492300890F4B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30C081F087F0E1B14B89321F /* Pods-TracKids.debug.xcconfig */;
+			baseConfigurationReference = 9BD920F88CED0956895B564D /* Pods-TracKids.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TracKids/TracKids.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 376L6GYCXP;
+				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = TracKids/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -537,13 +540,14 @@
 		};
 		EF5B0F0425BE492300890F4B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A758AE6DBFF2BD4185F6F0F /* Pods-TracKids.release.xcconfig */;
+			baseConfigurationReference = D19F6FE31EF23CD043B1B4B4 /* Pods-TracKids.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TracKids/TracKids.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 376L6GYCXP;
+				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = TracKids/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (

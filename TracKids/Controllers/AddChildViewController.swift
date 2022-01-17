@@ -132,6 +132,7 @@ class AddChildViewController: UIViewController {
         guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
         !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
         else {return}
+        let deviceID = ""
         Auth.auth().createUser(withEmail: email, password: password) {[weak self] (result, error) in
             if let error = error {
                 let alert = UIAlertController(title: "Adding faild", message: error.localizedDescription, preferredStyle: .alert)
@@ -148,7 +149,8 @@ class AddChildViewController: UIViewController {
                              "password" : password,
                              "userType" : 1,
                              "parentID" : UID ,
-                             "imageURL" : self?.ImageURL ?? "" ] as [String : Any]
+                             "imageURL" : self?.ImageURL ?? "",
+                             "deviceID" : deviceID] as [String : Any]
             
             self?.UsersReferance.child(childId).updateChildValues(childInfo) { (error, reference) in
                 if let error = error{print(error.localizedDescription)}

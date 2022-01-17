@@ -26,7 +26,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.distanceFilter = CLLocationDistance(100)
-
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -103,7 +102,7 @@ extension SceneDelegate: CLLocationManagerDelegate {
             } else {
               print("Geofence inactive!")
               let notificationContent   = UNMutableNotificationContent()
-                notificationContent.body  = self.message
+              notificationContent.body  = self.message
               notificationContent.sound = .default
               notificationContent.badge = UIApplication.shared
                 .applicationIconBadgeNumber + 1 as NSNumber

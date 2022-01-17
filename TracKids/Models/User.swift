@@ -15,6 +15,7 @@ struct User {
     var accountType : Int
     var parentID : String?
     var imageURL : String?
+    var deviceID : String?
     
     init(uid : String , dictionary : [String : Any] ) {
         self.uid = uid
@@ -25,6 +26,7 @@ struct User {
         self.accountType = dictionary["userType"] as? Int ?? 0
         self.parentID = dictionary["parentID"] as? String ?? ""
         self.imageURL = dictionary["imageURL"] as? String ?? ""
+        self.deviceID = dictionary["deviceID"] as? String ?? ""
     }
 }
 

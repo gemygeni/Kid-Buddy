@@ -74,22 +74,22 @@ struct DataHandler{
            }
     
     func uploadMessageWithInfo(_ messageText : String , _ recipient : String)  {
-        let sender = Auth.auth().currentUser?.uid
+        guard  let sender = Auth.auth().currentUser?.uid else{return}
         let messageBody = messageText
         let recipient = recipient
         let timestamp = Int(Date().timeIntervalSince1970)
-        
-        let messsageInfo = ["sender" : sender!,
+        let fromDevice : String? = AppDelegate.DEVICEID
+        let messsageInfo = ["sender" : sender,
                             "body"  : messageBody,
                             "recipient" : recipient,
-                            "timestamp" : timestamp] as [String : Any]
-        self.fetchUserInfo { (user) in
-            print("zzz \(user.accountType)")
+                            "timestamp" : timestamp,
+                            "fromDevice": fromDevice ?? "no device"] as [String : Any]
+           self.fetchUserInfo { (user) in
             if user.accountType == 0 {
-                MessagesReference.child(sender!).child(recipient).childByAutoId().updateChildValues(messsageInfo)
+                MessagesReference.child(sender).child(recipient).childByAutoId().updateChildValues(messsageInfo)
                  }
             else if user.accountType == 1 {
-                MessagesReference.child(user.parentID!).child(sender!).childByAutoId().updateChildValues(messsageInfo)
+                MessagesReference.child(user.parentID!).child(sender).childByAutoId().updateChildValues(messsageInfo)
                  }
               }
           }

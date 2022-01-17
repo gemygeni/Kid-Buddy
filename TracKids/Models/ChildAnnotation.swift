@@ -22,4 +22,7 @@ class ChildAnnotation: NSObject, MKAnnotation {
             self.coordinate = coordinate
         }
     }
+    
+   
+    
 }

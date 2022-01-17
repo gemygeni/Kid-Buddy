@@ -72,11 +72,13 @@ class SignUpViewController: UIViewController {
   
     private func handleSignUp(){
         let userType = userTypeControl.selectedSegmentIndex
+        let deviceID  = AppDelegate.DEVICEID 
         guard let name = nameTextField.text,
-              let  email = emailTextField.text,
+         let email = emailTextField.text,
          let password = passwordTextField.text,
-         let phoneNumber = phoneNumberTextField.text, !password.isEmpty,
-        !email.isEmpty,!password.isEmpty,!phoneNumber.isEmpty
+         let phoneNumber = phoneNumberTextField.text,
+              
+         !password.isEmpty,!email.isEmpty,!password.isEmpty,!phoneNumber.isEmpty
         else {return}
         
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
@@ -89,7 +91,7 @@ class SignUpViewController: UIViewController {
             }
             guard let UId = result?.user.uid else {return}
             
-            let UserInfo = ["name" : name,"email" : email, "phoneNumber" : phoneNumber,"password" : password, "userType" : userType]   as [String : Any]
+            let UserInfo = ["name" : name,"email" : email, "phoneNumber" : phoneNumber,"password" : password, "userType" : userType, "deviceID" : deviceID ]   as [String : Any]
             self.usersReference.child(UId).updateChildValues(UserInfo) { (error, reference) in
                 if let error = error{
                     print(error.localizedDescription)

@@ -55,15 +55,11 @@ class ChildsListTableViewController: UITableViewController {
     
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        
         if let childCell =  cell as? ChildsListTableViewCell {
-             //Configure the cell...
             let child = childs[indexPath.row]
             childCell.textLabel?.text = child.name
             childCell.detailTextLabel?.text = child.phoneNumber
-            
             if let childImageURl = child.imageURL {
-                print("Debug: \(String(describing: child.imageURL))")
                 childCell.profileImageView.loadImageUsingCacheWithUrlString(childImageURl)
             }
          }
@@ -102,10 +98,8 @@ class ChildsListTableViewController: UITableViewController {
         if  segue.identifier == "ShowChildProfileSegue"{
             if let childProfileVC = segue.destination.contents as? ChildProfileViewController{
                 if let indexPath = tableView.indexPathForSelectedRow , let cell = tableView.cellForRow(at: indexPath) as? ChildsListTableViewCell  {
-                    childProfileVC.name = cell.textLabel?.text
-                    childProfileVC.phone = cell.detailTextLabel?.text
+                    childProfileVC.childAccount = childs[indexPath.row]
                     childProfileVC.fetchedImage = cell.profileImageView.image
-                    childProfileVC.childID = childsID[indexPath.row]
                     TrackingViewController.trackedChildUId = childsID[indexPath.row]
                 }
             }
