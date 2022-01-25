@@ -24,8 +24,8 @@ class ChildsListTableViewController: UITableViewController {
            }
     
      func fetchChildInfo(){
-        DataHandler.shared.fetchChildInfo() { (child,childID) in
-            print(child.name)
+         guard let uid = Auth.auth().currentUser?.uid else {return}
+         DataHandler.shared.fetchChildsInfo(for: uid) { (child,childID) in
             self.childs.append(child)
             self.childsID.append(childID)
              DispatchQueue.main.async {
@@ -72,6 +72,12 @@ class ChildsListTableViewController: UITableViewController {
   
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        tableView.deleteRows(at: [indexPath], with: .fade)
+//
+//        DataHandler.shared.removeChild(withId: childsID[indexPath.row])
+//        // Delete the row from the data source
+//        tableView.reloadData()
+//
         // Return false if you do not want the specified item to be editable.
         return true
     }
@@ -81,14 +87,14 @@ class ChildsListTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-   
+            guard let parentId = Auth.auth().currentUser?.uid else {return}
+            DataHandler.shared.removeChild(of: parentId, withId: childsID[indexPath.row])
+          //  tableView.reloadData()
 
+        }
+    }
+//
 
     // MARK: - Navigation
 

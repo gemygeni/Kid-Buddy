@@ -29,14 +29,17 @@ struct DataHandler{
             completion(user)
         }
     }
-    
-    func fetchChildInfo(completion : @escaping (User ,  _ childID : String) -> Void)  {
-        guard let uid = Auth.auth().currentUser?.uid else {return}
+   
+
+    func fetchChildsInfo(for uid : String, completion : @escaping (User ,  _ childID : String) -> Void)  {
         TrackedChildsReference.child(uid).observe(.childAdded, with: { (snapshot) in
-            guard let childInfo = snapshot.value as? [String : Any] else {return}
+            guard let childInfo = snapshot.value as? [String : Any] else {
+                print("33 nooo info")
+                return}
             let child = User(uid: uid, dictionary: childInfo)
             let childID = snapshot.key
             completion(child,childID)
+            print("33 good info")
            })
         }
     
@@ -54,8 +57,9 @@ struct DataHandler{
     
     func fetchObservedPlaces(for childID : String, completion : @escaping ([CLLocation]?) -> Void){
         FetchedPlaces = []
-        let geofire = GeoFire(firebaseRef: ObservedPlacesReference.child(childID))
-        ObservedPlacesReference.child(childID).observe(.childAdded) { (snapshot) in
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let geofire = GeoFire(firebaseRef: ObservedPlacesReference.child(uid).child(childID))
+        ObservedPlacesReference.child(uid).child(childID).observe(.childAdded) { (snapshot) in
             let key = snapshot.key
             geofire.getLocationForKey(key) { (location, error) in
                 if error != nil {print(error!.localizedDescription) }
@@ -67,8 +71,9 @@ struct DataHandler{
     }
     
     func uploadObservedPlace(_ location : CLLocation, for Child : String){
-        let placeReference = ObservedPlacesReference.child(Child)
-        let key = ObservedPlacesReference.childByAutoId().key
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let placeReference = ObservedPlacesReference.child(uid).child(Child)
+        let key = placeReference.childByAutoId().key
         let geoFire = GeoFire(firebaseRef: placeReference)
         geoFire.setLocation(location, forKey: key ?? "no key")
            }
@@ -124,10 +129,78 @@ struct DataHandler{
                 completion(place)
             }
         }
+    func sendPushNotification(to recipientToken : String, sender : String, body : String) {
+        if let url = URL(string: AppDelegate.NOTIFICATION_URL) {
+          var request = URLRequest(url: url)
+          request.allHTTPHeaderFields = ["Content-Type":"application/json", "Authorization":"key=\(AppDelegate.SERVERKEY)"]
+          request.httpMethod = "POST"
+          request.httpBody = "{\"to\":\"\(recipientToken)\",\"notification\":{\"title\":\"\(sender)\",\"body\":\"\(body)\",\"sound\":\"default\",\"content-available\":\"1\",\"badge\":\"1\"}}".data(using: .utf8)
+          URLSession.shared.dataTask(with: request) { (data, urlresponse, error) in
+            if error != nil {
+               print("error")
+            } else {
+               print("Successfully sent!.....")
+            }
+          }.resume()
+          }
+         }
+    
+    func fetchDeviceID(for uid : String,  completion : @escaping (String) -> Void) {
+        UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String:Any] else {return}
+            let recipientDevice = dictionary["deviceID"] as! String
+            let name = dictionary["name"] as! String
+            print("device name is \(name)")
+            print("Device is \(recipientDevice)")
+            completion(recipientDevice)
+        }
     }
+     
+    
+    func removeAccount( for currentUser : String, completion : @escaping () -> Void ){
+                UserReference.child(currentUser).removeValue { error, reference in
+                    ChildLocationReference.child(currentUser).removeValue { error, reference in
+                        HistoryReference.child(currentUser).removeValue { error, reference in
+                            TrackedChildsReference.child(currentUser).removeValue { error, reference in
+                                ObservedPlacesReference.child(currentUser).removeValue { error, reference in
+                                    MessagesReference.child(currentUser).removeValue { error, reference in
+                                        completion()
+                                        print("33 completed deletion")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
     
     
-    
-    
+    func removeChild(of parentUid : String, withId uid : String){
+        fetchChildsInfo(for: parentUid) { child, childID in
+            if child.uid == uid{
+                let storage = Storage.storage()
+                if    let url = child.imageURL{
+                let storageRef = storage.reference(forURL: url)
+                storageRef.delete { error in
+                    if let error = error {
+                        print(error)
+                    } else {
+                        print("11")
+                    }
+                  }
+                }
+              }
+            }
+        guard  let parentId = Auth.auth().currentUser?.uid else{return}
+        UserReference.child(parentId).child(uid).removeValue()
+        HistoryReference.child(parentId).child(uid).removeValue()
+        MessagesReference.child(parentId).child(uid).removeValue()
+        ObservedPlacesReference.child(parentId).child(uid).removeValue()
+        ChildLocationReference.child(parentId).child(uid).removeValue()
+        TrackedChildsReference.child(parentId).child(uid).removeValue()
+        print("Account removed successfully22")
+    }
+}
+
     
 

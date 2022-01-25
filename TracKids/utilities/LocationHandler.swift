@@ -74,22 +74,28 @@
 
         
         func uploadLocationHistory(for location : CLLocation){
-            guard let UId =  Auth.auth().currentUser?.uid else {return}
-            let timestamp = String(Int(Date().timeIntervalSince1970))
-            let historyReference = HistoryReference.child(UId)
-            let geoFire = GeoFire(firebaseRef: historyReference)
-            let key = HistoryReference.childByAutoId().child(timestamp).key
-          geoFire.setLocation(location, forKey: key ?? "locationkey")
+            DataHandler.shared.fetchUserInfo { user in
+                guard let parentID = user.parentID else {return}
+               let UId = user.uid
+                let timestamp = String(Int(Date().timeIntervalSince1970))
+                let historyReference = HistoryReference.child( parentID).child(UId)
+                let geoFire = GeoFire(firebaseRef: historyReference)
+                let key = HistoryReference.childByAutoId().child(timestamp).key
+              geoFire.setLocation(location, forKey: key ?? "locationkey")
+              }
             }
         
         
         func uploadChildLocation(for location : CLLocation)  {
-            let geofire = GeoFire(firebaseRef: ChildLocationReference)
-                guard let UId =  Auth.auth().currentUser?.uid else {return}
-                        geofire.setLocation(location, forKey: UId) { (error) in
-                            if error != nil {print(error!.localizedDescription )}
-                        }
-                    }
+            DataHandler.shared.fetchUserInfo { user in
+                guard let parentID = user.parentID else{return}
+                let geofire = GeoFire(firebaseRef: ChildLocationReference.child(parentID))
+                let UId = user.uid
+                            geofire.setLocation(location, forKey: UId) { (error) in
+                                if error != nil {print(error!.localizedDescription )}
+                            }
+                         }
+                     }
         
         func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
             
@@ -174,6 +180,3 @@
             }
         }
     }
-    //   DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(5)){
-           
-    //   }

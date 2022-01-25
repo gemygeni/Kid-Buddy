@@ -65,7 +65,7 @@ import UIKit
 
     /// Asks the delegate whether a panel should be removed when dragging ended at the specified location
     ///
-    /// This delegate method is called only where `FloatingPanelController.isRemovalInteractionEnabled` is `true`.
+    /// This delegate method is called only where ``FloatingPanel/FloatingPanelController/isRemovalInteractionEnabled``  is `true`.
     /// The velocity vector is calculated from the distance to a point of the hidden state and the pan gesture's velocity.
     @objc(floatingPanel:shouldRemoveAtLocation:withVelocity:)
     optional
@@ -157,7 +157,10 @@ open class FloatingPanelController: UIViewController {
         return floatingPanel.isAttracting
     }
 
-    /// The layout object managed by the controller
+    /// The layout object that the controller manages
+    ///
+    /// You need to call ``invalidateLayout()`` if you want to apply a new layout object into the panel
+    /// immediately.
     @objc
     public var layout: FloatingPanelLayout {
         get { _layout }
@@ -169,7 +172,7 @@ open class FloatingPanelController: UIViewController {
         }
     }
 
-    /// The behavior object managed by the controller
+    /// The behavior object that the controller manages
     @objc
     public var behavior: FloatingPanelBehavior {
         get { _behavior }
@@ -189,7 +192,7 @@ open class FloatingPanelController: UIViewController {
 
     /// The behavior for determining the adjusted content offsets.
     ///
-    /// This property specifies how the content area of the tracking scroll view is modified using `adjustedContentInsets`. The default value of this property is FloatingPanelController.ContentInsetAdjustmentBehavior.always.
+    /// This property specifies how the content area of the tracking scroll view is modified using ``adjustedContentInsets``. The default value of this property is FloatingPanelController.ContentInsetAdjustmentBehavior.always.
     @objc 
     public var contentInsetAdjustmentBehavior: ContentInsetAdjustmentBehavior = .always
 
@@ -548,7 +551,7 @@ open class FloatingPanelController: UIViewController {
             addChild(vc)
 
             let surfaceView = floatingPanel.surfaceView
-            surfaceView.set(contentView: vc.view)
+            surfaceView.set(contentView: vc.view, mode: contentMode)
 
             vc.didMove(toParent: self)
         }
@@ -603,15 +606,19 @@ open class FloatingPanelController: UIViewController {
 
     // MARK: - Utilities
 
-    /// Updates the layout object from the delegate and lays out the views managed
-    /// by the controller immediately.
+    /// Invalidates all layout information of the panel and apply the ``layout`` property into it immediately.
     ///
-    /// This method updates the `FloatingPanelLayout` object from the delegate and
-    /// then it calls `layoutIfNeeded()` of the root view to force the view
-    /// to update the layout immediately. It can be called in an
-    /// animation block.
+    /// This lays out subviews of the view that the controller manages with the ``layout`` property by
+    /// calling the view's `layoutIfNeeded()`. Thus this method can be called in an animation block to
+    /// animate the panel's changes.
+    ///
+    /// If the controller has a delegate object, this will lay them out using the layout object returned by
+    /// `floatingPanel(_:layoutFor:)` delegate method for the current `UITraitCollection`.
     @objc
     public func invalidateLayout() {
+        if let newLayout = self.delegate?.floatingPanel?(self, layoutFor: traitCollection) {
+            layout = newLayout
+        }
         activateLayout(forceLayout: true)
     }
 

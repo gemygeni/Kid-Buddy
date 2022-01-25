@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
         guard let _ = (scene as? UIWindowScene) else { return }
         locationManager.delegate = self
+        UNUserNotificationCenter.current().delegate = self
         locationManager.requestAlwaysAuthorization()
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -38,6 +39,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        UserDefaults.standard.setValue(0, forKey: "badgeCount")
+        UIApplication.shared.applicationIconBadgeNumber = 0
+          print("foo 3 active")
+      UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+      UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -66,9 +73,6 @@ extension SceneDelegate: CLLocationManagerDelegate {
         LocationHandler.shared.uploadLocationHistory(for: lastLocation)
        }
 
-    
-    
-    
   func locationManager(
     _ manager: CLLocationManager,
     didEnterRegion region: CLRegion
@@ -89,12 +93,25 @@ extension SceneDelegate: CLLocationManagerDelegate {
   }
     
     func handleEvent(for region: CLRegion, withType event : String) {
-        count += 1
+        
+ 
         var childName : String = " "
         DataHandler.shared.fetchUserInfo { (user) in
             childName = user.name
             self.message = "your child  \(String(describing: childName))  \(event)  \(region.identifier)"
             print(" message in fetch  \(self.message)")
+            guard let parentID = user.parentID else{return}
+            DataHandler.shared.fetchDeviceID(for: parentID) { parentDeviceToken in
+            DataHandler.shared.sendPushNotification(to: parentDeviceToken, sender: childName, body: self.message)
+            }
+            
+            
+            
+            
+            
+            
+            
+            
             
             if UIApplication.shared.applicationState == .active {
                 self.window?.rootViewController?.showAlert(withTitle: nil, message: self.message)
@@ -122,4 +139,39 @@ extension SceneDelegate: CLLocationManagerDelegate {
              }
            }
         }
-   }
+      }
+
+extension SceneDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+      _ center: UNUserNotificationCenter,
+      willPresent notification: UNNotification,
+      withCompletionHandler completionHandler:
+      @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        if var badgeCount = UserDefaults.standard.value(forKey: "badgeCount") as? Int {
+            badgeCount += 1
+            UserDefaults.standard.setValue(badgeCount, forKey: "badgeCount")
+            UIApplication.shared.applicationIconBadgeNumber = badgeCount
+            print("foo active1 \(badgeCount)")
+        }
+        completionHandler([[.banner, .sound]])
+    }
+      
+    func userNotificationCenter(
+      _ center: UNUserNotificationCenter,
+      didReceive response: UNNotificationResponse,
+      withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+       if var badgeCount = UserDefaults.standard.value(forKey: "badgeCount") as? Int {
+            badgeCount += 1
+            UserDefaults.standard.setValue(badgeCount, forKey: "badgeCount")
+            UIApplication.shared.applicationIconBadgeNumber = badgeCount
+        }
+       
+      completionHandler()
+    }
+    
+    
+
+
+}

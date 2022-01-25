@@ -7,7 +7,6 @@
 
     import UIKit
     import Firebase
-    import Alamofire
     class ChatViewController: UIViewController{
         var messages : [Message] = []
         var childID : String?{
@@ -89,6 +88,7 @@
                 uniqueID = trackedChildUId
              }
             navigationItem.title = childName
+            resetBadgeCount()
         }
         
         override func viewDidDisappear(_ animated: Bool) {
@@ -127,19 +127,9 @@
                   }
                 }
             }
-       }
-        
-        
-        func fetchDeviceID(for uid : String,  completion : @escaping (String) -> Void) {
-            UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
-                guard let dictionary = snapshot.value as? [String:Any] else {return}
-                let recipientDevice = dictionary["deviceID"] as! String
-                let name = dictionary["name"] as! String
-                print("device name is \(name)")
-                print("Device is \(recipientDevice)")
-                completion(recipientDevice)
-            }
         }
+        
+        
         
         func handleSendingMessage(){
             guard let messageText = messageTextfield.text,let sender = self.userName, !messageText.isEmpty  else {return}
@@ -147,37 +137,30 @@
             if self.accountType == .parent{
                 if let childID = self.uniqueID{
                     DataHandler.shared.uploadMessageWithInfo(messageText, childID)
-                    fetchDeviceID(for: childID) { deviceID in
-                        self.sendPushNotification(to: deviceID, sender: sender, body: messageText)
+                    DataHandler.shared.fetchDeviceID(for: childID) { deviceID in
+                        DataHandler.shared.sendPushNotification(to: deviceID, sender: sender, body: messageText)
                     }
                 }
             }
             else if self.accountType == .child{
                 if let parentID = self.parentID{
                     DataHandler.shared.uploadMessageWithInfo(messageText, parentID)
-                    fetchDeviceID(for: parentID) { deviceID in
-                        self.sendPushNotification(to: deviceID, sender: sender, body: messageText)
+                    DataHandler.shared.fetchDeviceID(for: parentID) { deviceID in
+                        DataHandler.shared.sendPushNotification(to: deviceID, sender: sender, body: messageText)
                     }
                 }
             }
             messageTextfield.text = ""
         }
         
-   func sendPushNotification(to recipientToken : String, sender : String, body : String) {
-       if let url = URL(string: AppDelegate.NOTIFICATION_URL) {
-         var request = URLRequest(url: url)
-         request.allHTTPHeaderFields = ["Content-Type":"application/json", "Authorization":"key=\(AppDelegate.SERVERKEY)"]
-         request.httpMethod = "POST"
-         request.httpBody = "{\"to\":\"\(recipientToken)\",\"notification\":{\"title\":\"\(sender)\",\"body\":\"\(body)\",\"sound\":\"default\",\"badge\":\"1\"},\"data\": {\"customDataKey\": \"customDataValue\"}}".data(using: .utf8)
-         URLSession.shared.dataTask(with: request) { (data, urlresponse, error) in
-           if error != nil {
-              print("error")
-           } else {
-              print("Successfully sent!.....")
-           }
-         }.resume()
-         }
+        
+        
+        func resetBadgeCount() {
+            UserDefaults.standard.setValue(0, forKey: "badgeCount")
+            UIApplication.shared.applicationIconBadgeNumber = 0
         }
+
+        
     }
     extension ChatViewController : UITableViewDataSource, UITableViewDelegate{
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

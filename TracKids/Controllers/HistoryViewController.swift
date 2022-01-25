@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import Firebase
 import GeoFire
 class HistoryViewController: UIViewController {
 
@@ -38,8 +39,10 @@ class HistoryViewController: UIViewController {
         self.mapView.removeAnnotations(self.mapView.annotations)
         self.mapView.removeOverlays(self.mapView.overlays)
         guard let childId = TrackingViewController.trackedChildUId else {return}
-        let geofire = GeoFire(firebaseRef: HistoryReference.child(childId))
-        HistoryReference.child(childId).observe(.childAdded) {[weak self] (snapshot) in
+        guard let parentID = Auth.auth().currentUser?.uid else{return}
+
+        let geofire = GeoFire(firebaseRef: HistoryReference.child(parentID).child(childId))
+        HistoryReference.child(parentID).child(childId).observe(.childAdded) {[weak self] (snapshot) in
             let key = snapshot.key
             geofire.getLocationForKey(key) { (location, error) in
                 guard let fetchedLocation = location else {return}
@@ -61,6 +64,46 @@ class HistoryViewController: UIViewController {
             }
         }
         self.spinner.stopAnimating()
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        let geofire = GeoFire(firebaseRef: HistoryReference.child(childId))
+//        HistoryReference.child(childId).observe(.childAdded) {[weak self] (snapshot) in
+//            let key = snapshot.key
+//            geofire.getLocationForKey(key) { (location, error) in
+//                guard let fetchedLocation = location else {return}
+//                let annotation = ChildAnnotation(uid: childId, coordinate: fetchedLocation.coordinate)
+//                self?.mapView.addAnnotation(annotation)
+//                let timeBySeconds = Double(key)
+//                let date = Date(timeIntervalSince1970: timeBySeconds ?? 0.00)
+//                let formatter = DateFormatter()
+//                formatter.timeZone = TimeZone.current
+//                formatter.dateFormat = "E HH:mm a"
+//                let timestamp = formatter.string(from: date)
+//                annotation.title = timestamp
+//                DataHandler.shared.convertLocationToAdress(for: location) { (place) in
+//                    annotation.subtitle = place?.title
+//                  }
+//                let point = fetchedLocation.coordinate
+//                self?.historyPoints.append(point)
+//                self?.drawOverlay(with: self!.historyPoints)
+//            }
+//        }
+//        self.spinner.stopAnimating()
     }
 
     

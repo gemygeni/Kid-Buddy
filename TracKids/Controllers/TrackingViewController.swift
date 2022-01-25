@@ -90,11 +90,10 @@
             configureMapView()
             centerMapOnUserLocation()
             LocationHandler.shared.StartObservingPlaces()
-           // let amr = "LAJVtf2Z2GWfma2N6U40bnHL4Ok1"
-         //  LocationHandler.shared.fetchLocationHistory(for: hany)
-           // HistoryReference.child(hany).removeAllObservers()
+            var dict = [String: Any]()
+            dict.updateValue(0, forKey: "badgeCount")
+            UserDefaults.standard.register(defaults: dict)
 
-            //HistoryReference.removeAllObservers()
         }
         
         override func viewWillAppear(_ animated: Bool) {
@@ -226,7 +225,8 @@
         func fetchChildsItems(){
             childs = []
             childsID = []
-            DataHandler.shared.fetchChildInfo() {[weak self] (child,childID) in
+            guard let uid = Auth.auth().currentUser?.uid else {return}
+            DataHandler.shared.fetchChildsInfo(for: uid) {[weak self] (child,childID) in
                 self?.childs.append(child)
                 self?.childsID.append(childID)
                 DispatchQueue.main.async {

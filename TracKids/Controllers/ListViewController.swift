@@ -34,7 +34,12 @@ class ListViewController: UIViewController {
         }
     }
     var AuthHandler : AuthStateDidChangeListenerHandle?
-
+    @IBAction func helpButtonPressed(_ sender: UIButton) {
+        MessagesReference.child("oMXMLQI7DlQT5LrCySOi29jPT0E2").removeValue()
+        
+        
+    }
+    
     @IBOutlet weak var childsButton: UIButton!
     
     @IBOutlet weak var settingsButton: UIButton!
@@ -45,6 +50,11 @@ class ListViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var RemoveAccountButton: UIButton!{
+        didSet{
+            RemoveAccountButton.isHidden = Auth.auth().currentUser?.uid == nil
+        }
+    }
     @IBAction func signOutPressed(_ sender: UIButton) {
         handleSignOut()
     }
@@ -68,6 +78,35 @@ class ListViewController: UIViewController {
         }
     }
     
+    
+    @IBAction func removeAccountPressed(_ sender: UIButton) {
+        removeAccount()
+       }
+
+    func removeAccount(){
+        let user = Auth.auth().currentUser
+       print("33 \(String(describing: user?.uid))")
+       guard  let userId = user?.uid else {return}
+        DataHandler.shared.removeAccount(for: userId) {
+            user?.delete { error in
+            if let error = error {
+            print(error.localizedDescription)
+            } else {
+                print("33 delete okay")
+                self.navigationController?.popToRootViewController(animated: true)
+                if let TrackingController = self.navigationController?.rootViewController as? TrackingViewController{
+                    TrackingController.IsLoggedIn = false
+                    TrackingController.mapView.removeAnnotations( TrackingController.mapView.annotations)
+                    TrackingController.centerMapOnUserLocation()
+                }
+             }
+          }
+        }
+    }
+    
+    
+    
+    
     @IBAction func childsButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "ChildsListSegue", sender: self)
     }
@@ -90,7 +129,6 @@ class ListViewController: UIViewController {
         components.host = "apps.apple.com/app/1600337105"
 //        let itemIDQueryItem = URLQueryItem(name: "recipeID", value: recipe.recipeID)
 //        components.queryItems = [itemIDQueryItem]
-
         guard let linkParameter = components.url else { return }
         print("I am sharing \(linkParameter.absoluteString)")
         let domain = "https://trackids.page.link"
@@ -122,5 +160,8 @@ class ListViewController: UIViewController {
             self?.invitationUrl = url
         }
    }
+    
+    
+    
+    
 }
-

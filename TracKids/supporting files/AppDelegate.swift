@@ -21,9 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     static let SERVERKEY = "AAAAv5tBZAc:APA91bGm3eTsLaqQMDCjXHvHRfpxyIx5GqOo87Owdb8UWb1ZQyGav9eR2jk6yJgMiMK3M6rt5aS-dOl1BjupMBaTDgaDYKrT8-gI5IztH-s9ZZozPFAqp5HSmm1WI08xMCPTGLuXEqvL"
     
-    
-    
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.min)
@@ -42,25 +39,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
-    
     
     func applicationWillTerminate(_ application: UIApplication) {
-        
+        UserDefaults.standard.setValue(0, forKey: "badgeCount")
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
-    
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-      application.applicationIconBadgeNumber = 0
-      UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-      UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-    }
-    
+
     
     func application(_ app: UIApplication, open url: URL, options:
                         [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -143,41 +127,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           UIApplication.shared.registerForRemoteNotifications()
         }
       }
-        
-
-        
     }
-    func application(
-      _ application: UIApplication,
-      didFailToRegisterForRemoteNotificationsWithError error: Error
-    ) {
-      print("Failed to register: \(error)")
-    }
-
-    
-
 
 }
 
 
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-  func userNotificationCenter(
-    _ center: UNUserNotificationCenter,
-    willPresent notification: UNNotification,
-    withCompletionHandler completionHandler:
-    @escaping (UNNotificationPresentationOptions) -> Void
-  ) {
-    completionHandler([[.banner, .sound]])
-  }
-
-  func userNotificationCenter(
-    _ center: UNUserNotificationCenter,
-    didReceive response: UNNotificationResponse,
-    withCompletionHandler completionHandler: @escaping () -> Void
-  ) {
-    completionHandler()
-  }
+  
 
     
     func application(
@@ -197,7 +154,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             }
         }
     }
-}
+    
+    func application(
+      _ application: UIApplication,
+      didFailToRegisterForRemoteNotificationsWithError error: Error
+    ) {
+      print("Failed to register: \(error)")
+    }
+    
+    
+
+  }
 
 extension AppDelegate: MessagingDelegate {
   func messaging(
@@ -212,14 +179,6 @@ extension AppDelegate: MessagingDelegate {
   }
     
     
-    private func process(_ notification: UNNotification) {
-      let userInfo = notification.request.content.userInfo
-      UIApplication.shared.applicationIconBadgeNumber = 0
-    //  if let newsTitle = userInfo["newsTitle"] as? String,
-//        let newsBody = userInfo["newsBody"] as? String {
-//        let newsItem = NewsItem(title: newsTitle, body: newsBody, date: Date())
-//        NewsModel.shared.add([newsItem])
-//      }
     }
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         Messaging.messaging().token { (token, error) in
@@ -233,7 +192,3 @@ extension AppDelegate: MessagingDelegate {
                 }
             }
       }
-
-
-    
-}
