@@ -18,10 +18,14 @@ class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMapView()
-        spinner.startAnimating()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if Auth.auth().currentUser?.uid == nil{
+            historyPoints = []
+            annotations = []
+            mapView.removeAnnotations(mapView.annotations)
+        }
         super.viewWillAppear(true)
         fetchLocationHistory()
     }
@@ -35,16 +39,18 @@ class HistoryViewController: UIViewController {
     }
     var count = 0
     func fetchLocationHistory(){
+        spinner.startAnimating()
         self.historyPoints = []
         self.mapView.removeAnnotations(self.mapView.annotations)
         self.mapView.removeOverlays(self.mapView.overlays)
-        guard let childId = TrackingViewController.trackedChildUId else {return}
+        guard let childId = TrackingViewController.trackedChildUId else {
+            self.spinner.stopAnimating()
+            return}
         guard let parentID = Auth.auth().currentUser?.uid else{return}
-
         let geofire = GeoFire(firebaseRef: HistoryReference.child(parentID).child(childId))
         HistoryReference.child(parentID).child(childId).observe(.childAdded) {[weak self] (snapshot) in
             let key = snapshot.key
-            geofire.getLocationForKey(key) { (location, error) in
+            geofire.getLocationForKey(key) { [weak self] (location, error) in
                 guard let fetchedLocation = location else {return}
                 let annotation = ChildAnnotation(uid: childId, coordinate: fetchedLocation.coordinate)
                 self?.mapView.addAnnotation(annotation)
@@ -64,77 +70,8 @@ class HistoryViewController: UIViewController {
             }
         }
         self.spinner.stopAnimating()
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        let geofire = GeoFire(firebaseRef: HistoryReference.child(childId))
-//        HistoryReference.child(childId).observe(.childAdded) {[weak self] (snapshot) in
-//            let key = snapshot.key
-//            geofire.getLocationForKey(key) { (location, error) in
-//                guard let fetchedLocation = location else {return}
-//                let annotation = ChildAnnotation(uid: childId, coordinate: fetchedLocation.coordinate)
-//                self?.mapView.addAnnotation(annotation)
-//                let timeBySeconds = Double(key)
-//                let date = Date(timeIntervalSince1970: timeBySeconds ?? 0.00)
-//                let formatter = DateFormatter()
-//                formatter.timeZone = TimeZone.current
-//                formatter.dateFormat = "E HH:mm a"
-//                let timestamp = formatter.string(from: date)
-//                annotation.title = timestamp
-//                DataHandler.shared.convertLocationToAdress(for: location) { (place) in
-//                    annotation.subtitle = place?.title
-//                  }
-//                let point = fetchedLocation.coordinate
-//                self?.historyPoints.append(point)
-//                self?.drawOverlay(with: self!.historyPoints)
-//            }
-//        }
-//        self.spinner.stopAnimating()
     }
 
-    
- //old version
-//    func fetchLocationHistory(){
-//        self.mapView.removeAnnotations(self.mapView.annotations)
-//        self.mapView.removeOverlays(self.mapView.overlays)
-//        guard let childId = TrackingViewController.trackedChildUId else {
-//            return
-//           }
-//        LocationHandler.shared.fetchLocationHistory(for: childId) {[weak self] (fetchedLocations) in
-//            self?.historyPoints = []
-//            self?.locationHistory = fetchedLocations
-//            for location in self!.locationHistory {
-//                print("memo \(self!.locationHistory.count)")
-//        let annotation = ChildAnnotation(uid: childId, coordinate: location.coordinate)
-//                self?.mapView.addAnnotation(annotation)
-//                let timestamp = location.timestamp
-//
-//                annotation.title = timestamp.convertDateFormatter()
-//                DataHandler.shared.convertLocationToAdress(for: location) { (place) in
-//                    annotation.subtitle = place?.title
-//                  }
-//                let point = location.coordinate
-//                self?.historyPoints.append(point)
-//          }
-//            self?.drawOverlay(with: self!.historyPoints)
-//     }
-//  }
-//
-    
     func drawOverlay(with points : [CLLocationCoordinate2D] ){
          let historyPoints = self.historyPoints
         let polyline = MKPolyline(coordinates: historyPoints, count: historyPoints.count)

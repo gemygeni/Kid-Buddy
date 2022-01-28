@@ -10,11 +10,6 @@ import  Firebase
 
 class AddChildViewController: UIViewController {
     
-
-    let TrackedChildsReference = Database.database().reference().child("TrackedChilds")
-    let UsersReferance = Database.database().reference().child("users")
-    let storage = Storage.storage()
-
     @IBOutlet weak var ChildNameTextField: UITextField!{
         didSet{
             ChildNameTextField.delegate = self
@@ -60,25 +55,21 @@ class AddChildViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         childMailTextField.becomeFirstResponder()
-        
            ChildImageView.layer.borderColor = UIColor.lightGray.cgColor
            ChildImageView.layer.masksToBounds = true
         ChildImageView.layer.cornerRadius = ChildImageView.frame.size.width / 2.5
-          
            ChildImageView.contentMode = .scaleToFill
            ChildImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setChildPhoto(_:))))
-    }
+         }
     
-    @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil  ) {
-        print("Debug: tappingdone")
-        let alert = UIAlertController(title: "Profile Image", message: "How Would You Like To Select a Picture ", preferredStyle: .actionSheet)
+    @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil ) {
+        let alert = UIAlertController(title: "Set Profile Image", message: "How Would You Like To Select a Picture ", preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Take By Camera", style: .default, handler: {
             [weak self](actionn) in
             self?.PresentCamera()
         }))
                         
-        
         alert.addAction(UIAlertAction(title: "Select From Library", style: .default, handler: { [weak self](action) in
             self?.PresentPhotoPicker()
         }))
@@ -86,8 +77,6 @@ class AddChildViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
      }
 
-
-    
    
     @IBAction func AddChildPressed(_ sender: UIButton) {
         uploadData()
@@ -152,9 +141,9 @@ class AddChildViewController: UIViewController {
                              "imageURL" : self?.ImageURL ?? "",
                              "deviceID" : deviceID] as [String : Any]
             
-            self?.UsersReferance.child(childId).updateChildValues(childInfo) { (error, reference) in
+            UserReference.child(childId).updateChildValues(childInfo) { (error, reference) in
                 if let error = error{print(error.localizedDescription)}
-                self?.TrackedChildsReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
+               TrackedChildsReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
                     if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {
                         self?.navigationController?.popViewController(animated: true)
                         self?.presentingViewController?.dismiss(animated: true, completion: {
@@ -179,7 +168,6 @@ extension AddChildViewController : UIImagePickerControllerDelegate, UINavigation
         present(picker, animated: true)
     }
     
-    
     func PresentPhotoPicker(){
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
@@ -189,17 +177,14 @@ extension AddChildViewController : UIImagePickerControllerDelegate, UINavigation
         present(picker, animated: true)
     }
     
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.presentingViewController?.dismiss(animated: true)
     }
-    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = ((info[UIImagePickerController.InfoKey.editedImage] ?? info[UIImagePickerController.InfoKey.originalImage]) as? UIImage){
             self.ChildImageView.image = image
         }
-        
         picker.presentingViewController?.dismiss(animated: true)
     }
 }

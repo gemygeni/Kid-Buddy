@@ -93,7 +93,6 @@
             var dict = [String: Any]()
             dict.updateValue(0, forKey: "badgeCount")
             UserDefaults.standard.register(defaults: dict)
-
         }
         
         override func viewWillAppear(_ animated: Bool) {
@@ -221,12 +220,11 @@
     }
     
     extension TrackingViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-        
         func fetchChildsItems(){
             childs = []
             childsID = []
             guard let uid = Auth.auth().currentUser?.uid else {return}
-            DataHandler.shared.fetchChildsInfo(for: uid) {[weak self] (child,childID) in
+            DataHandler.shared.fetchChildsInfo(for: uid) {[weak self] child, childID in
                 self?.childs.append(child)
                 self?.childsID.append(childID)
                 DispatchQueue.main.async {
@@ -264,7 +262,6 @@
             trackedChild = childs[indexPath.item]
             print("tracked child now is \(String(describing: trackedChild?.name)) ")
             TrackingViewController.trackedChildUId = childsID[indexPath.item]
-            print("tracked child now is \(String(describing: TrackingViewController.trackedChildUId)) ")
             if let cell = childsCollectionView.cellForItem(at: indexPath) as? ChildsCollectionViewCell {
                 self.annotationImage = nil
                 DispatchQueue.main.async {

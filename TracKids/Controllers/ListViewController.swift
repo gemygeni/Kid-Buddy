@@ -56,8 +56,9 @@ class ListViewController: UIViewController {
         }
     }
     @IBAction func signOutPressed(_ sender: UIButton) {
-        handleSignOut()
-    }
+                   handleSignOut()
+        TrackingViewController.trackedChildUId = nil
+                   }
     
     @IBOutlet weak var signOutButton: UIButton!{
         didSet{
@@ -73,6 +74,9 @@ class ListViewController: UIViewController {
                 TrackingController.IsLoggedIn = false
                 TrackingController.mapView.removeAnnotations( TrackingController.mapView.annotations)
                 TrackingController.centerMapOnUserLocation()
+                if var tabVC = tabBarController?.viewControllers{
+                    tabVC.removeAll()
+                }
             }
             print("signed out successfully")
         }
@@ -92,7 +96,7 @@ class ListViewController: UIViewController {
             if let error = error {
             print(error.localizedDescription)
             } else {
-                print("33 delete okay")
+                print("Debug: Removed completed")
                 self.navigationController?.popToRootViewController(animated: true)
                 if let TrackingController = self.navigationController?.rootViewController as? TrackingViewController{
                     TrackingController.IsLoggedIn = false

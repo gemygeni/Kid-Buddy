@@ -25,16 +25,16 @@ class ChildsListTableViewController: UITableViewController {
     
      func fetchChildInfo(){
          guard let uid = Auth.auth().currentUser?.uid else {return}
-         DataHandler.shared.fetchChildsInfo(for: uid) { (child,childID) in
-            self.childs.append(child)
-            self.childsID.append(childID)
-             DispatchQueue.main.async {
-                 self.tableView.reloadData()
-                if self.childs.count > 1 {
-                let indexPath = IndexPath(row: self.childs.count - 1, section: 0)
-                self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
-                }
-             }
+         DataHandler.shared.fetchChildsInfo(for: uid) {[weak self] child, childID in
+             self?.childs.append(child)
+             self?.childsID.append(childID)
+              DispatchQueue.main.async {
+                  self?.tableView.reloadData()
+                  if (self?.childs.count)! > 1 {
+                      let indexPath = IndexPath(row: (self?.childs.count)! - 1, section: 0)
+                 self?.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+                 }
+              }
          }
      }
     
@@ -72,13 +72,6 @@ class ChildsListTableViewController: UITableViewController {
   
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        tableView.deleteRows(at: [indexPath], with: .fade)
-//
-//        DataHandler.shared.removeChild(withId: childsID[indexPath.row])
-//        // Delete the row from the data source
-//        tableView.reloadData()
-//
-        // Return false if you do not want the specified item to be editable.
         return true
     }
   
@@ -87,14 +80,13 @@ class ChildsListTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let childId = childsID[indexPath.row]
             guard let parentId = Auth.auth().currentUser?.uid else {return}
-            DataHandler.shared.removeChild(of: parentId, withId: childsID[indexPath.row])
-          //  tableView.reloadData()
-
+            DataHandler.shared.removeChild(of: parentId, withId: childId )
+            childs.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-//
 
     // MARK: - Navigation
 

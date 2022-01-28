@@ -79,6 +79,7 @@ extension SceneDelegate: CLLocationManagerDelegate {
   ) {
     if region is CLCircularRegion {
         handleEvent(for: region, withType: "arrived")
+        print("geo exit")
     }
   }
 

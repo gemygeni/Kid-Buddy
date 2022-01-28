@@ -144,7 +144,7 @@
             DataHandler.shared.fetchUserInfo { [weak self] (user) in
                 if user.accountType == 1{
                     let currentUser = user.uid
-                    DataHandler.shared.fetchObservedPlaces(for: currentUser) {[weak self] (locations) in
+                    DataHandler.shared.fetchObservedPlaces(for: currentUser) { locations, _ in
                         guard let locations = locations else {return}
                         for location in locations{
                             self?.configureGeofencing(for: location)

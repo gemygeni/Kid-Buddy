@@ -7,24 +7,25 @@
 
 import UIKit
 import CoreLocation
+import Firebase
 
 class ObservedPlacesTableViewController: UITableViewController {
     var Addresses = [Location?]()
-    
+    var placesId = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchObservedPlaces()
         self.showAlert(withTitle: "Set Location", message: "press ＋ and Tap the map at desired Location  or search by address")
-
     }
     
     func fetchObservedPlaces(){
         Addresses = []
+        placesId = []
         if let trackedChildId = TrackingViewController.trackedChildUId{
-            DataHandler.shared.fetchObservedPlaces(for: trackedChildId) {[weak self] (locations) in
+            DataHandler.shared.fetchObservedPlaces(for: trackedChildId) { [weak self] locations, placesKeys in
                 guard let locations = locations else{return}
+                self?.placesId = placesKeys
                 for location in locations{
-                    //try using foe each and check performance
                     DataHandler.shared.convertLocationToAdress(for: location) { (address) in
                         if   !((self?.Addresses.contains(where: { (address2) -> Bool in
                             if address2?.coordinates.latitude == address?.coordinates.latitude && address2?.coordinates.longitude == address?.coordinates.longitude {
@@ -41,7 +42,38 @@ class ObservedPlacesTableViewController: UITableViewController {
                         }
                      }
                   }
-               }
+            }
+            
+            
+            
+            
+            
+//            DataHandler.shared.fetchObservedPlaces(for: trackedChildId) {[weak self] (locations) in
+//                guard let locations = locations else{return}
+//                for location in locations{
+//                    DataHandler.shared.convertLocationToAdress(for: location) { (address) in
+//                        if   !((self?.Addresses.contains(where: { (address2) -> Bool in
+//                            if address2?.coordinates.latitude == address?.coordinates.latitude && address2?.coordinates.longitude == address?.coordinates.longitude {
+//                                return true
+//                            }
+//                            return false
+//                        })) ?? false){
+//
+//                            self?.Addresses.append(address)
+//                            self?.placesId
+//                           }
+//                        DispatchQueue.main.async {
+//                            self?.tableView.reloadData()
+//                          }
+//                        }
+//                     }
+//                  }
+//
+            
+            
+    
+            
+               //}
         navigationItem.rightBarButtonItem?.isEnabled = Addresses.count < 20
              }
     
@@ -79,7 +111,6 @@ class ObservedPlacesTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
     
@@ -88,12 +119,17 @@ class ObservedPlacesTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            guard let uid = Auth.auth().currentUser?.uid else {return}
+            guard let childId = TrackingViewController.trackedChildUId else {return}
+            let placeId = placesId[indexPath.row]
+           let placeReference = ObservedPlacesReference.child(uid).child(childId).child(placeId)
+            placeReference.removeValue()
+            self.Addresses.remove(at: indexPath.row)
+            self.placesId.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
+    
     
 //    func stopMonitoring(geotification: Geotification) {
 //      for region in locationManager.monitoredRegions {
