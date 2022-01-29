@@ -21,15 +21,26 @@ class HistoryViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         if Auth.auth().currentUser?.uid == nil{
             historyPoints = []
             annotations = []
             mapView.removeAnnotations(mapView.annotations)
         }
-        super.viewWillAppear(true)
+        
         fetchLocationHistory()
+        guard let childId = TrackingViewController.trackedChildUId else {return}
+        DataHandler.shared.fetchChildAccount(with: childId) {[weak self] user in
+           
+            self?.tabBarItem.title = user.name + " History"
+            self?.navigationItem.title = user.name
+        }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        self.tabBarItem.title = "History"
+    }
     
     func configureMapView(){
         mapView.delegate = self

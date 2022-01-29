@@ -115,8 +115,6 @@
                     self?.centerMapOnUserLocation()
                     self?.childsCollectionView.isHidden = true
                     self?.addChildButton.isHidden = true
-                    // self.childsCollectionView.removeFromSuperview()
-                    // self.addChildButton.removeFromSuperview()
                 }
                 else{
                     self?.childsCollectionView.isHidden = false
@@ -210,7 +208,7 @@
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             if let annotation = annotation as? ChildAnnotation {
                 let view = MKAnnotationView(annotation: annotation, reuseIdentifier: "childAnnotation")
-                view.image =   annotationImage ?? #imageLiteral(resourceName: "person").resize(70 , 70)
+                view.image =  annotationImage ?? #imageLiteral(resourceName: "person").resize(70 , 70)
                 view.layer.cornerRadius = 25
                 view.clipsToBounds = true
                 return view
@@ -267,6 +265,12 @@
                 DispatchQueue.main.async {
                     self.annotationImage = cell.profileImageView.image?.resize(60 , 60)
                 }
+            }
+            guard let childId = TrackingViewController.trackedChildUId else {return}
+            DataHandler.shared.fetchChildAccount(with: childId) {[weak self] user in
+               
+                self?.tabBarItem.title = user.name + " tracked"
+                self?.navigationItem.title = user.name
             }
             fetchChildLocation()
         }

@@ -70,8 +70,8 @@ class ChatViewController: UIViewController{
         if let  trackedChildUId = TrackingViewController.trackedChildUId{
             self.uniqueID = trackedChildUId
             tableView.reloadData()
+            navigationItem.title = childName
         }
-        
         
         trackedChildObserver = NotificationCenter.default.addObserver(forName: .TrackedChildDidChange,
                                                                       object: TrackingViewController.trackedChildUId,
@@ -80,6 +80,13 @@ class ChatViewController: UIViewController{
             self?.uniqueID = TrackingViewController.trackedChildUId
             self?.downloadMessages()
         })
+        if let  trackedChildUId = TrackingViewController.trackedChildUId{
+            uniqueID = trackedChildUId
+            DataHandler.shared.fetchChildAccount(with: uniqueID!) {[weak self] user in
+                self?.navigationItem.title = user.name
+                self?.tabBarItem.title = user.name + " Chat"
+            }
+        }
     }
     
     
@@ -92,10 +99,6 @@ class ChatViewController: UIViewController{
             self?.parentID = user.parentID
         }
         
-        if let  trackedChildUId = TrackingViewController.trackedChildUId{
-            uniqueID = trackedChildUId
-        }
-        navigationItem.title = childName
         resetBadgeCount()
     }
     
@@ -104,6 +107,7 @@ class ChatViewController: UIViewController{
         if let observer = trackedChildObserver {
             NotificationCenter.default.removeObserver(observer)
         }
+        self.tabBarItem.title = "Chat"
     }
     
     func configureTableView(){
