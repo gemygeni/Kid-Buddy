@@ -29,8 +29,9 @@ class AddChildViewController: UIViewController {
     
     @IBOutlet weak var childPasswordTextField: UITextField!
     
-    @IBOutlet weak var ChildImageView: UIImageView!{
-        didSet{
+    @IBOutlet weak var ChildImageView: UIImageView!
+    //{
+      //  didSet{
            
          //   ChildImageView.translatesAutoresizingMaskIntoConstraints = false
             
@@ -42,8 +43,8 @@ class AddChildViewController: UIViewController {
 //
 //            ChildImageView.contentMode = .scaleToFill
 //            ChildImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setChildPhoto(_:))))
-        }
-    }
+//        }
+//    }
     override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
         ChildImageView.layer.masksToBounds = true
@@ -54,10 +55,10 @@ class AddChildViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        childMailTextField.becomeFirstResponder()
+           childMailTextField.becomeFirstResponder()
            ChildImageView.layer.borderColor = UIColor.lightGray.cgColor
            ChildImageView.layer.masksToBounds = true
-        ChildImageView.layer.cornerRadius = ChildImageView.frame.size.width / 2.5
+           ChildImageView.layer.cornerRadius = ChildImageView.frame.size.width / 2.5
            ChildImageView.contentMode = .scaleToFill
            ChildImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setChildPhoto(_:))))
          }
@@ -76,12 +77,10 @@ class AddChildViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         self.present(alert, animated: true, completion: nil)
      }
-
    
     @IBAction func AddChildPressed(_ sender: UIButton) {
         uploadData()
     }
-    
     
     @IBAction func CancelPressed(_ sender: UIButton) {
         self.dismiss(animated: true) {
@@ -108,7 +107,7 @@ class AddChildViewController: UIViewController {
                     if let downloadedURL = url{
                         self?.ImageURL = downloadedURL.absoluteString
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self?.AddNewChild()
+                            self?.createNewChild()
                         }
                     }
                 }
@@ -117,7 +116,7 @@ class AddChildViewController: UIViewController {
        }
     
     
-    func AddNewChild(){
+    func createNewChild(){
         guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
         !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
         else {return}

@@ -13,19 +13,22 @@ class ChildsListTableViewController: UITableViewController {
     var childs = [User]()
     var childsID = [String]()
     @IBAction func AddChildPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "AddChildSegue", sender: self)
+       performSegue(withIdentifier: "AddChildPopoverSegue", sender: self)
                }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        fetchChildInfo()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchChildsInfo()
        navigationItem.title = "Childs List"
-           }
+
+    }
     
-     func fetchChildInfo(){
+     func fetchChildsInfo(){
+         childs = []
+         childsID = []
          guard let uid = Auth.auth().currentUser?.uid else {return}
-         DataHandler.shared.fetchChildsInfo(for: uid) {[weak self] child, childID in
+         DataHandler.shared.fetchChildsInfo(for: uid) { [weak self] child, childID in
              self?.childs.append(child)
              self?.childsID.append(childID)
               DispatchQueue.main.async {

@@ -7,10 +7,13 @@
 
 import UIKit
 import Firebase
+protocol settingDelegate : AnyObject  {
+    func didChangedInfo(_ sender : ListViewController )
+}
 
 class ListViewController: UIViewController {
     
-    
+    weak var delegate : settingDelegate?
     private var user : User?
     private var invitationUrl : URL?
     override func viewDidLoad() {
@@ -43,6 +46,11 @@ class ListViewController: UIViewController {
     @IBOutlet weak var childsButton: UIButton!
     
     @IBOutlet weak var settingsButton: UIButton!
+    
+    @IBAction func settingsButton(_ sender: UIButton) {
+        
+        self.delegate?.didChangedInfo(self)
+                   }
     
     @IBOutlet weak var signInButton: UIButton!{
         didSet{

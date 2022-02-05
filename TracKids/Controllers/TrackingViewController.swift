@@ -13,17 +13,17 @@
         case parent
         case child
     }
-    
-    protocol TrackingManagerDelegate{
-        func didSelectedChild(trackedChildUId : String)
-    }
+//
+//    protocol TrackingManagerDelegate{
+//        func didSelectedChild(trackedChildUId : String)
+//    }
     extension Notification.Name{
         static let TrackedChildDidChange = Notification.Name("TrackedChildDidChange")
     }
     
     
     class TrackingViewController: UIViewController  {
-        var delegate : TrackingManagerDelegate?
+       // var delegate : TrackingManagerDelegate?
         var accountType : AccountType!
         var childs = [User?]()
         var childsID = [String]()
@@ -76,10 +76,6 @@
                     fetchChildLocation()
                     fetchChildsItems()
                 }
-//                else if TrackingViewController.accountType == .child {
-//                    print("xxx in user init")
-//                    handleLocationServices()
-//                }
             }
         }
         
@@ -106,10 +102,6 @@
                 fetchChildLocation()
             }
             
-//            else if TrackingViewController.accountType == .child {
-//                print("hey iam child and i willappear")
-//                handleLocationServices()
-//            }
             AuthHandler =  Auth.auth().addStateDidChangeListener({ [weak self] (_, user) in
                 if user == nil {
                     self?.centerMapOnUserLocation()
@@ -171,12 +163,12 @@
         @IBOutlet weak var addChildButton: UIButton!
         @IBAction func AddChildPressed(_ sender: UIButton) {
             if !IsLoggedIn{
-                performSegue(withIdentifier: "showSignIn", sender: sender)
+              //  performSegue(withIdentifier: "showSignIn", sender: sender)
                 print("please log in")
             }
             else if IsLoggedIn {
                 if self.accountType == .parent{
-                    performSegue(withIdentifier: "AddChildSegue", sender: sender)
+                  //  performSegue(withIdentifier: "AddChildSegue", sender: sender)
                     print("you are logged in")
                 } else if self.accountType == .child{
                     print("child are logged in")

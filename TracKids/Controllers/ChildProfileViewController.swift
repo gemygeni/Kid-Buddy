@@ -7,18 +7,25 @@
 
 import UIKit
 import Firebase
-import MobileCoreServices
 class ChildProfileViewController: UIViewController {
-    
     
     @IBOutlet weak var profileImageView: UIImageView!
     
     @IBOutlet weak var childNameLabel: UILabel!
     
-    
     weak var fetchedImage : UIImage?
     var invitationUrl : URL?
-    var childAccount : User?
+    var childAccount : User?{
+        didSet{
+            childName = childAccount?.name
+        }
+    }
+    var childName : String?{
+        didSet{
+            childNameLabel?.text = childName
+        }
+    }
+    
     var ProfileImage : UIImage? {
         get{
             return profileImageView.image ?? #imageLiteral(resourceName: "person")
@@ -27,14 +34,13 @@ class ChildProfileViewController: UIViewController {
             profileImageView.image = newValue ?? #imageLiteral(resourceName: "person")
             profileImageView.translatesAutoresizingMaskIntoConstraints = false
             // profileImageView.layer.cornerRadius = ((profileImageView.frame.height) + (profileImageView.frame.width)) / 4.0
-            
             profileImageView.layer.cornerRadius = profileImageView.frame.size.width/2.5
-            
             profileImageView.layer.masksToBounds = true
-            
             profileImageView.contentMode = .scaleAspectFill
         }
     }
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         profileImageView.layer.masksToBounds = true
@@ -44,12 +50,13 @@ class ChildProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ProfileImage = fetchedImage
-        profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setChildPhoto(_:))))
-
-        childNameLabel?.text = (childAccount?.name ?? "name")+"\n"+(childAccount?.phoneNumber ?? "phone")
+        childNameLabel?.text = (childName ?? "name")+"\n"+(childAccount?.phoneNumber ?? "phone")
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
     
     @IBAction func ChatButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "ShowChatSegue", sender: self)
@@ -64,12 +71,25 @@ class ChildProfileViewController: UIViewController {
         if segue.identifier == "ShowChatSegue"{
             if let chatVC = segue.destination.contents as? ChatViewController{
                 chatVC.childID = childAccount?.uid
+                print("here 101 \(String(describing: chatVC.childID))")
                 chatVC.profileImage = fetchedImage
                 chatVC.childName  = childAccount?.name ?? ""
             }
         }
-    }
+        else if segue.identifier == "showEditChildProfileSegue"{
+            if let editingVC = segue.destination as? EditChildProfileViewController{
+                editingVC.fetchedImage = fetchedImage
+                editingVC.childName = childAccount?.name ?? ""
+                editingVC.childId   = childAccount?.uid
+                editingVC.delegate = self
+                print("here 102 \(String(describing: editingVC.childId))")
+            }
+        }
+     }
     
+    @IBAction func EditButtonPressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showEditChildProfileSegue", sender: self)
+    }
     
     @IBAction func sendLinkButtonPressed(_ sender: UIButton) {
         configureDynamicLink()
@@ -122,62 +142,19 @@ class ChildProfileViewController: UIViewController {
         }
    }
     
-    
     func shareItem(with url: URL) {
       let subjectLine = "install app on your kid's device by this link"
       let activityView = UIActivityViewController(activityItems: [subjectLine, url], applicationActivities: nil)
       UIApplication.shared.windows.first?.rootViewController?.present(activityView, animated: true, completion: nil)
     }
-    
-    
-    @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil ) {
-        let alert = UIAlertController(title: "edit Profile Image", message: "How Would You Like To Select a Picture ", preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Take By Camera", style: .default, handler: {
-            [weak self](actionn) in
-            self?.PresentCamera()
-        }))
-                        
-        
-        alert.addAction(UIAlertAction(title: "Select From Library", style: .default, handler: { [weak self](action) in
-            self?.PresentPhotoPicker()
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        self.present(alert, animated: true, completion: nil)
-     }
-
   }
 
     
-extension ChildProfileViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    //func to take a photo by device camera
-    func PresentCamera() {
-        let picker = UIImagePickerController()
-        picker.sourceType = .camera
-        picker.mediaTypes = [kUTTypeImage as String]
-        picker.allowsEditing = true
-        picker.delegate = self
-        present(picker, animated: true)
-    }
-    
-    func PresentPhotoPicker(){
-        let picker = UIImagePickerController()
-        picker.sourceType = .photoLibrary
-        picker.mediaTypes = [kUTTypeImage as String]
-        picker.allowsEditing = true
-        picker.delegate = self
-        present(picker, animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.presentingViewController?.dismiss(animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = ((info[UIImagePickerController.InfoKey.editedImage] ?? info[UIImagePickerController.InfoKey.originalImage]) as? UIImage){
-            self.profileImageView.image = image
-        }
-        picker.presentingViewController?.dismiss(animated: true)
+extension ChildProfileViewController : ChangedInfoDelegate{
+    func didChangedInfo(_ sender: EditChildProfileViewController, newImage: UIImage, newName: String) {
+        print("here delegate")
+        ProfileImage = newImage
+        childName = newName
     }
 }
-
+//

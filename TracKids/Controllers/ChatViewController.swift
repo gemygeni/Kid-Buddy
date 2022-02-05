@@ -90,7 +90,6 @@ class ChatViewController: UIViewController{
     }
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
@@ -149,7 +148,6 @@ class ChatViewController: UIViewController{
     
     func handleSendingMessage(){
         guard let messageText = messageTextfield.text,let sender = self.userName, !messageText.isEmpty  else {return}
-        
         if self.accountType == .parent{
             if let childID = self.uniqueID{
                 DataHandler.shared.uploadMessageWithInfo(messageText, childID)

@@ -86,6 +86,9 @@ extension UIImageView {
                     imageCache.setObject(downloadedImage, forKey: urlString as NSString)
                     self.image = downloadedImage
                 }
+                else{
+                    self.image = #imageLiteral(resourceName: "person.png")
+                }
             })
             
         }).resume()
