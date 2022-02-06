@@ -33,11 +33,11 @@
 		EF5F98FE26E378CB000B61D8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5F98FD26E378CB000B61D8 /* Extensions.swift */; };
 		EF67B5F826F6C1FB00741054 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF67B5F726F6C1FB00741054 /* ChatViewController.swift */; };
 		EF68FE59270EB4010056F8A0 /* ChildsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF68FE58270EB4010056F8A0 /* ChildsCollectionViewCell.swift */; };
+		EF78C48B27AF5720000E0579 /* EditChildProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF78C48A27AF5720000E0579 /* EditChildProfileViewController.swift */; };
 		EF87DE7127302F5E00AC4E37 /* ObservedPlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF87DE7027302F5E00AC4E37 /* ObservedPlacesTableViewController.swift */; };
 		EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470B25CBA30300806D45 /* DataHandler.swift */; };
 		EF95470F25CBB45F00806D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470E25CBB45F00806D45 /* User.swift */; };
 		EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */; };
-		EFE4E18F27A63CB400A7044A /* EditChildProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE4E18E27A63CB400A7044A /* EditChildProfileViewController.swift */; };
 		EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */; };
 		EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */; };
 		EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */; };
@@ -75,12 +75,12 @@
 		EF5F98FD26E378CB000B61D8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = TracKids/utilities/Extensions.swift; sourceTree = SOURCE_ROOT; };
 		EF67B5F726F6C1FB00741054 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		EF68FE58270EB4010056F8A0 /* ChildsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildsCollectionViewCell.swift; sourceTree = "<group>"; };
+		EF78C48A27AF5720000E0579 /* EditChildProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditChildProfileViewController.swift; sourceTree = "<group>"; };
 		EF87DE7027302F5E00AC4E37 /* ObservedPlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObservedPlacesTableViewController.swift; path = TracKids/Views/ObservedPlacesTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		EF95470B25CBA30300806D45 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF95DF1E2764C6C100E36731 /* TracKids.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TracKids.entitlements; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
-		EFE4E18E27A63CB400A7044A /* EditChildProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditChildProfileViewController.swift; path = Pods/EditChildProfileViewController.swift; sourceTree = SOURCE_ROOT; };
 		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SimulatedLocations.gpx; sourceTree = "<group>"; };
@@ -123,10 +123,10 @@
 		EF55672326797E1800077ACF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				EFE4E18E27A63CB400A7044A /* EditChildProfileViewController.swift */,
 				EF2EA3A6274E0685005ED00F /* SearchViewController.swift */,
 				EF87DE7027302F5E00AC4E37 /* ObservedPlacesTableViewController.swift */,
 				EF54A17C26F6C34300E9ADCC /* ChildProfileViewController.swift */,
+				EF78C48A27AF5720000E0579 /* EditChildProfileViewController.swift */,
 				EF54A17B26F6C34300E9ADCC /* ChildsListTableViewController.swift */,
 				EF2EA3A3274E0665005ED00F /* AddObservedPlacesViewController.swift */,
 				EF67B5F726F6C1FB00741054 /* ChatViewController.swift */,
@@ -363,13 +363,13 @@
 				EF5F98FE26E378CB000B61D8 /* Extensions.swift in Sources */,
 				EF2EA3A4274E0665005ED00F /* AddObservedPlacesViewController.swift in Sources */,
 				EF3A9A7425DB6DCC00BE1C8A /* ChildAnnotation.swift in Sources */,
+				EF78C48B27AF5720000E0579 /* EditChildProfileViewController.swift in Sources */,
 				EF87DE7127302F5E00AC4E37 /* ObservedPlacesTableViewController.swift in Sources */,
 				EF54A17D26F6C34400E9ADCC /* ChildsListTableViewController.swift in Sources */,
 				EF5B0F0925BF5FEE00890F4B /* SignUpViewController.swift in Sources */,
 				EF5F98F626E06DCB000B61D8 /* ChildsListTableViewCell.swift in Sources */,
 				EF67B5F826F6C1FB00741054 /* ChatViewController.swift in Sources */,
 				EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */,
-				EFE4E18F27A63CB400A7044A /* EditChildProfileViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
