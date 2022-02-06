@@ -12,7 +12,7 @@
         func didChangedInfo(_ sender : EditChildProfileViewController ,newImage : UIImage, newName: String)
     }
 
-
+ 
     class EditChildProfileViewController: UIViewController {
         weak var fetchedImage : UIImage?
         weak var delegate : ChangedInfoDelegate?
@@ -26,12 +26,8 @@
             set {
                 profileImageView.image = newValue ?? #imageLiteral(resourceName: "person")
                 profileImageView.translatesAutoresizingMaskIntoConstraints = false
-                // profileImageView.layer.cornerRadius = ((profileImageView.frame.height) + (profileImageView.frame.width)) / 4.0
-                
                 profileImageView.layer.cornerRadius = profileImageView.frame.size.width/2.5
-                
                 profileImageView.layer.masksToBounds = true
-                
                 profileImageView.contentMode = .scaleAspectFill
             }
         }
