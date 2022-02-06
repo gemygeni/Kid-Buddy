@@ -214,7 +214,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BlT-fZ-GIe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3015.9420289855075" y="1968.75"/>
+            <point key="canvasLocation" x="2594" y="2018"/>
         </scene>
         <!--Add Child View Controller-->
         <scene sceneID="klz-4a-Mbs">
@@ -372,7 +372,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Si-bb-w7x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2332" y="1167"/>
+            <point key="canvasLocation" x="-3033" y="1167"/>
         </scene>
         <!--Edit Child Profile View Controller-->
         <scene sceneID="gmD-5A-qQJ">
@@ -473,7 +473,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSx-fm-bTF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="271.01449275362319" y="1977.4553571428571"/>
+            <point key="canvasLocation" x="54" y="2018"/>
         </scene>
         <!--Tracking View Controller-->
         <scene sceneID="ikJ-BR-IQd">
@@ -504,10 +504,7 @@
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="40" scale="large" weight="thin"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="AddChildPressed:" destination="Itp-8e-3LK" eventType="touchUpInside" id="VJi-pz-5Hc"/>
-                                                    <segue destination="jpA-SM-bGd" kind="popoverPresentation" identifier="AddChildPopoverSegue" popoverAnchorView="Y8T-MY-zSY" id="I8a-v8-neJ">
-                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                                    </segue>
+                                                    <action selector="AddChildPressed:" destination="Itp-8e-3LK" eventType="touchUpInside" id="Qju-gW-8XF"/>
                                                 </connections>
                                             </button>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Qxc-eh-JKp">
@@ -589,11 +586,12 @@
                         <outlet property="childsCollectionView" destination="Qxc-eh-JKp" id="2Ap-P5-Pob"/>
                         <outlet property="mapView" destination="agh-Ds-crQ" id="Lxo-rK-j4X"/>
                         <segue destination="zu5-A9-fYx" kind="show" identifier="showSignIn" id="966-xM-PZK"/>
+                        <segue destination="jpA-SM-bGd" kind="presentation" identifier="AddChildSegue" id="fnv-E1-P1c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LB4-ga-C0q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1852" y="281"/>
+            <point key="canvasLocation" x="-2977" y="353"/>
         </scene>
         <!--History-->
         <scene sceneID="r3x-Yv-cHa">
@@ -638,7 +636,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uf5-1E-JpN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="725" y="-477"/>
+            <point key="canvasLocation" x="930" y="-438"/>
         </scene>
         <!--Childs List Table View Controller-->
         <scene sceneID="mNH-ka-XFr">
@@ -688,7 +686,7 @@
                             <color key="tintColor" systemColor="labelColor"/>
                             <connections>
                                 <action selector="AddChildPressed:" destination="S0w-2p-h99" id="HHU-tK-lVb"/>
-                                <segue destination="jpA-SM-bGd" kind="popoverPresentation" identifier="AddChildSegue" popoverAnchorBarButtonItem="uDF-6s-4Tc" id="4iy-KT-tKw">
+                                <segue destination="jpA-SM-bGd" kind="popoverPresentation" identifier="AddChildPopoverSegue" popoverAnchorBarButtonItem="uDF-6s-4Tc" id="4iy-KT-tKw">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                 </segue>
                             </connections>
@@ -864,7 +862,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="da5-NY-O8F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2106" y="1167"/>
+            <point key="canvasLocation" x="1910" y="1167"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="eQq-Yh-sp1">
@@ -1001,7 +999,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jh-cf-hNG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-214" y="259"/>
+            <point key="canvasLocation" x="-1548" y="353"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="OhN-QN-3dx">
@@ -1215,7 +1213,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amc-Xc-Hyw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="255" y="1167"/>
+            <point key="canvasLocation" x="55" y="1167"/>
         </scene>
         <!--Observed Places Table View Controller-->
         <scene sceneID="59C-4J-gOT">
@@ -1252,7 +1250,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yp7-OG-Fj9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1767" y="1977"/>
+            <point key="canvasLocation" x="1529" y="2018"/>
         </scene>
         <!--Chat-->
         <scene sceneID="ASc-KP-peu">
@@ -1416,14 +1414,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Cp-F7-ibu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="725" y="2689"/>
+            <point key="canvasLocation" x="1529" y="2856"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="iHc-15-WqC"/>
-        <segue reference="WZU-q8-wgU"/>
+        <segue reference="966-xM-PZK"/>
         <segue reference="Uhr-oB-kLM"/>
-        <segue reference="I8a-v8-neJ"/>
+        <segue reference="fnv-E1-P1c"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemGreenColor"/>
     <resources>

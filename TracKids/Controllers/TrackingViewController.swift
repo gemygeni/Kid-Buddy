@@ -163,16 +163,14 @@
         @IBOutlet weak var addChildButton: UIButton!
         @IBAction func AddChildPressed(_ sender: UIButton) {
             if !IsLoggedIn{
-              //  performSegue(withIdentifier: "showSignIn", sender: sender)
+                performSegue(withIdentifier: "showSignIn", sender: sender)
                 print("please log in")
             }
             else if IsLoggedIn {
                 if self.accountType == .parent{
-                  //  performSegue(withIdentifier: "AddChildSegue", sender: sender)
-                    print("you are logged in")
-                } else if self.accountType == .child{
-                    print("child are logged in")
-                   // howww
+                   performSegue(withIdentifier: "AddChildSegue", sender: sender)
+                }
+                else if self.accountType == .child{
             }
         }
     }

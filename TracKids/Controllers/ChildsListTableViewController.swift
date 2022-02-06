@@ -13,6 +13,7 @@ class ChildsListTableViewController: UITableViewController {
     var childs = [User]()
     var childsID = [String]()
     @IBAction func AddChildPressed(_ sender: UIBarButtonItem) {
+        print("AddChildPopoverSegue performed")
        performSegue(withIdentifier: "AddChildPopoverSegue", sender: self)
                }
     
@@ -21,7 +22,6 @@ class ChildsListTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         fetchChildsInfo()
        navigationItem.title = "Childs List"
-
     }
     
      func fetchChildsInfo(){
