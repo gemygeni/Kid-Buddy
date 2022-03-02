@@ -54,10 +54,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if isDynamicLink {
             let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)
+        print("dynamic with allready installed")
         return handleDynamicLink(dynamicLink)
  
       // Handle incoming URL with other methods as necessary
       // ...
+           
+            
         }
       return false
     }
@@ -68,7 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let dynamicLinks = DynamicLinks.dynamicLinks()
       let handled = dynamicLinks.handleUniversalLink(userActivity.webpageURL!) { (dynamicLink, error) in
         if (dynamicLink != nil) && !(error != nil) {
-          self.handleDynamicLink(dynamicLink)
+            print("dynamic with non installed")
+            self.handleDynamicLink(dynamicLink)
         }
       }
         
@@ -90,19 +94,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else {
           return false
         }
-      let queryItems = URLComponents(url: deepLink, resolvingAgainstBaseURL: true)?.queryItems
-        guard let email = queryItems?.filter({(item) in item.name == "childEmail"}).first?.value else {return false}
-        guard  let password = queryItems?.filter({(item) in item.name == "childPasssword"}).first?.value else {return false}
-
-     
-        Auth.auth().signInAnonymously() { (user, error) in
-            let credential = EmailAuthProvider.credential(withEmail: email, password: password)
-            if let user = Auth.auth().currentUser {
-              user.link(with: credential) { (user, error) in
-                // Complete any post sign-up tasks here.
-              }
-            }
-        }
+     // let queryItems = URLComponents(url: deepLink, resolvingAgainstBaseURL: true)?.queryItems
+//        guard let email = queryItems?.filter({(item) in item.name == "childEmail"}).first?.value else {return false}
+//        guard  let password = queryItems?.filter({(item) in item.name == "childPasssword"}).first?.value else {return false}
+        
+//        Auth.auth().signInAnonymously() { (user, error) in
+//            let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+//            if let user = Auth.auth().currentUser {
+//              user.link(with: credential) { (user, error) in
+//                // Complete any post sign-up tasks here.
+//              }
+//            }
+//        }
       return true
     }
     
@@ -117,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard granted else { return }
             self?.getNotificationSettings()
           }
-    }
+     }
 
     func getNotificationSettings() {
       UNUserNotificationCenter.current().getNotificationSettings { settings in
@@ -128,15 +131,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
       }
     }
-
 }
 
 
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-  
-
-    
     func application(
       _ application: UIApplication,
       didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
@@ -161,9 +160,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
       print("Failed to register: \(error)")
     }
-    
-    
-
   }
 
 extension AppDelegate: MessagingDelegate {
@@ -191,4 +187,4 @@ extension AppDelegate: MessagingDelegate {
                     Reference.updateChildValues(["deviceID" : newToken])
                 }
             }
-      }
+       }

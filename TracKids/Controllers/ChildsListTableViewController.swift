@@ -33,7 +33,7 @@ class ChildsListTableViewController: UITableViewController {
              self?.childsID.append(childID)
               DispatchQueue.main.async {
                   self?.tableView.reloadData()
-                  if (self?.childs.count)! > 1 {
+                  if self?.childs.count ?? 0 > 1 {
                       let indexPath = IndexPath(row: (self?.childs.count)! - 1, section: 0)
                  self?.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
                  }

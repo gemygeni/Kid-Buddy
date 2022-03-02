@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import SwiftOTP
 class ChildProfileViewController: UIViewController {
     
     @IBOutlet weak var profileImageView: UIImageView!
@@ -82,10 +83,9 @@ class ChildProfileViewController: UIViewController {
                 editingVC.childName = childAccount?.name ?? ""
                 editingVC.childId   = childAccount?.uid
                 editingVC.delegate = self
-                print("here 102 \(String(describing: editingVC.childId))")
             }
         }
-     }
+    }
     
     @IBAction func EditButtonPressed(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "showEditChildProfileSegue", sender: self)
@@ -95,21 +95,17 @@ class ChildProfileViewController: UIViewController {
         configureDynamicLink()
     }
     
-//    func handleSharing(){
-//        let activity = UIActivityViewController(activityItems: ["install app on yor kid device by this link"], applicationActivities: nil)
-//        //activity.popoverPresentationController?.barButtonItem = sender
-//        present(activity, animated: true, completion: nil)
-//        configureDynamicLink()
-//    }
+    func handleSharing(){
+        let activity = UIActivityViewController(activityItems: ["install app on your kid device by this link"], applicationActivities: nil)
+        //        activity.popoverPresentationController?.barButtonItem = sender
+        present(activity, animated: true, completion: nil)
+        configureDynamicLink()
+    }
     
     func configureDynamicLink(){
-        guard let childEmail = childAccount?.email , let childPasssword = childAccount?.password  else {return}
         var components = URLComponents()
         components.scheme = "https"
         components.host = "apps.apple.com/app/1600337105"
-        let childEmailQueryItem = URLQueryItem(name: "childEmail", value: childEmail )
-        let childPassswordQueryItem = URLQueryItem(name: "childPasssword", value: childPasssword )
-        components.queryItems = [childEmailQueryItem, childPassswordQueryItem]
         guard let linkParameter = components.url else { return }
         print("I am sharing \(linkParameter.absoluteString)")
         let domain = "https://trackids.page.link"
@@ -122,39 +118,44 @@ class ChildProfileViewController: UIViewController {
         }
         linkBuilder.iOSParameters?.appStoreID = "1600337105"
         linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
-        linkBuilder.socialMetaTagParameters?.title = "Join kid buddy with this link"
+        guard let uid =   Auth.auth().currentUser?.uid else{return}
+        guard let data = Data(base64Encoded: uid) else{return}
+        if let totp = TOTP(secret: data) {
+            let otpString = totp.generate(time: Date())
+            linkBuilder.socialMetaTagParameters?.title = "Join kid buddy with this code \(String(describing: otpString)) "
+            print("otp is \(String(describing: otpString))")
+        }
+
         linkBuilder.socialMetaTagParameters?.descriptionText = "if you recieved this link from your parents number install kid buddy to share your location info with them "
         guard let longURL = linkBuilder.url else { return }
         print("The long dynamic link is \(longURL.absoluteString)")
         linkBuilder.shorten {[weak self] url, warnings, error in
-          if let error = error {
-            print("Oh no! Got an error! \(error)")
-            return
-          }
-          if let warnings = warnings {
-            for warning in warnings {
-              print("Warning: \(warning)")
+            if let error = error {
+                print("Oh no! Got an error! \(error)")
+                return
             }
-          }
-          guard let url = url else { return }
-          print("I have a short url to share! \(url.absoluteString)")
+            if let warnings = warnings {
+                for warning in warnings {
+                    print("Warning: \(warning)")
+                }
+            }
+            guard let url = url else { return }
+            print("I have a short dynamic link to share! \(url.absoluteString)")
             self?.shareItem(with: url)
         }
-   }
+    }
     
     func shareItem(with url: URL) {
-      let subjectLine = "install app on your kid's device by this link"
-      let activityView = UIActivityViewController(activityItems: [subjectLine, url], applicationActivities: nil)
-      UIApplication.shared.windows.first?.rootViewController?.present(activityView, animated: true, completion: nil)
+        let subjectLine = "install app on your kid's device by this link"
+        let activityView = UIActivityViewController(activityItems: [subjectLine, url], applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(activityView, animated: true, completion: nil)
     }
-  }
+}
 
-    
+
 extension ChildProfileViewController : ChangedInfoDelegate{
     func didChangedInfo(_ sender: EditChildProfileViewController, newImage: UIImage, newName: String) {
-        print("here delegate")
         ProfileImage = newImage
         childName = newName
     }
 }
-//

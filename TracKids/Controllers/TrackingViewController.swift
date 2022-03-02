@@ -9,6 +9,7 @@
     import MapKit
     import Firebase
     
+    
     enum AccountType : Int  {
         case parent
         case child
@@ -21,7 +22,7 @@
         static let TrackedChildDidChange = Notification.Name("TrackedChildDidChange")
     }
     
-    
+
     class TrackingViewController: UIViewController  {
        // var delegate : TrackingManagerDelegate?
         var accountType : AccountType!
@@ -89,16 +90,17 @@
             var dict = [String: Any]()
             dict.updateValue(0, forKey: "badgeCount")
             UserDefaults.standard.register(defaults: dict)
+                
         }
         
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(true)
-            childsCollectionView.delegate = self
-            childsCollectionView.dataSource = self
             fetchUserInfo()
             configureMapView()
             if self.accountType == .parent {
                 print("hey iam parent and i willappear")
+             //   fetchChildsItems()
+                self.childsCollectionView.reloadData()
                 fetchChildLocation()
             }
             
@@ -174,6 +176,15 @@
             }
         }
     }
+       
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "AddChildSegue" {
+                if let addChildVC = segue.destination as? AddChildViewController{
+                    addChildVC.delegate = self
+                }
+            }
+        }
+        
         
         func CheckLogIn() -> Bool {
             if user?.uid == nil {
@@ -265,3 +276,10 @@
             fetchChildLocation()
         }
     }
+extension TrackingViewController : AddedChildDelegate{
+    func didAddChild(_ sender: AddChildViewController) {
+        self.fetchChildsItems()
+    }
+    
+    
+}

@@ -50,7 +50,6 @@
                 let childID = snapshot.key
                 let child = User(uid: childID, dictionary: childInfo)
                 completion(child,childID)
-                print("33 good info")
             })
         }
         

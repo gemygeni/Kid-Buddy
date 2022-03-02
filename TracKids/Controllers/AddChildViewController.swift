@@ -7,9 +7,12 @@
 import UIKit
 import MobileCoreServices
 import  Firebase
+protocol AddedChildDelegate : AnyObject  {
+    func didAddChild(_ sender : AddChildViewController)
+}
 
 class AddChildViewController: UIViewController {
-    
+    weak var delegate : AddedChildDelegate?
     @IBOutlet weak var ChildNameTextField: UITextField!{
         didSet{
             ChildNameTextField.delegate = self
@@ -121,6 +124,7 @@ class AddChildViewController: UIViewController {
         !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
         else {return}
         let deviceID = ""
+        let originalUser = Auth.auth().currentUser
         Auth.auth().createUser(withEmail: email, password: password) {[weak self] (result, error) in
             if let error = error {
                 let alert = UIAlertController(title: "Adding faild", message: error.localizedDescription, preferredStyle: .alert)
@@ -139,18 +143,27 @@ class AddChildViewController: UIViewController {
                              "parentID" : UID ,
                              "imageURL" : self?.ImageURL ?? "",
                              "deviceID" : deviceID] as [String : Any]
-            
-            UserReference.child(childId).updateChildValues(childInfo) { (error, reference) in
-                if let error = error{print(error.localizedDescription)}
-               TrackedChildsReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
-                    if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {
-                        self?.navigationController?.popViewController(animated: true)
-                        self?.presentingViewController?.dismiss(animated: true, completion: {
-                            self?.spinnner?.stopAnimating()
-                       })
-                    }
+            Auth.auth().updateCurrentUser(originalUser!) { error in
+                if let error = error {
+                    print(error)
                 }
+                else {
+                    UserReference.child(childId).updateChildValues(childInfo) { (error, reference) in
+                        if let error = error{print(error.localizedDescription)}
+                       TrackedChildsReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
+                            if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {
+                                self?.navigationController?.popViewController(animated: true)
+                                self?.presentingViewController?.dismiss(animated: true, completion: {
+                                    self?.spinnner?.stopAnimating()
+                                    self?.delegate?.didAddChild(self!)
+                               })
+                            }
+                        }
+                    }
+
+                    print("original user uid is \(originalUser!.uid)")}
             }
+
         }
    }
 }
