@@ -601,9 +601,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KTN-Kr-TtK">
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KTN-Kr-TtK">
                                 <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="926" id="e0r-RG-lQ7"/>
+                                </constraints>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="bold"/>
                             </imageView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOS-uc-lcS">
@@ -612,16 +614,46 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="964-EZ-l2T">
                                 <rect key="frame" x="188.66666666666666" y="429.66666666666669" width="37" height="37"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6DP-zF-yxH">
+                                <rect key="frame" x="319.33333333333331" y="40" width="74.666666666666686" height="57"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="67" id="K5T-q9-Xf7"/>
+                                    <constraint firstAttribute="height" constant="57" id="vJa-4x-dQH"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" imagePlacement="leading">
+                                    <imageReference key="image" image="trash" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="medium" weight="medium"/>
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="clear">
+                                            <attributes>
+                                                <font key="NSFont" size="10" name="Helvetica"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="clearHistoryPressed:" destination="FhS-eD-9Hm" eventType="touchUpInside" id="LoS-D3-ZaB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yad-7C-QnT"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                         <constraints>
+                            <constraint firstItem="yad-7C-QnT" firstAttribute="trailing" secondItem="6DP-zF-yxH" secondAttribute="trailing" constant="20" id="JF2-69-Tar"/>
                             <constraint firstItem="eOS-uc-lcS" firstAttribute="leading" secondItem="yad-7C-QnT" secondAttribute="leading" id="MON-vc-7WR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KTN-Kr-TtK" secondAttribute="trailing" constant="-34" id="QxY-Wt-KBQ"/>
                             <constraint firstItem="eOS-uc-lcS" firstAttribute="top" secondItem="Buy-z0-h0N" secondAttribute="top" id="SVs-nB-4g4"/>
+                            <constraint firstItem="6DP-zF-yxH" firstAttribute="top" secondItem="eOS-uc-lcS" secondAttribute="top" constant="40" id="ZQm-5h-XWk"/>
                             <constraint firstItem="yad-7C-QnT" firstAttribute="bottom" secondItem="eOS-uc-lcS" secondAttribute="bottom" id="ayQ-RJ-AEV"/>
                             <constraint firstItem="yad-7C-QnT" firstAttribute="trailing" secondItem="eOS-uc-lcS" secondAttribute="trailing" id="dBi-Wl-Jeg"/>
+                            <constraint firstItem="KTN-Kr-TtK" firstAttribute="leading" secondItem="eOS-uc-lcS" secondAttribute="leading" id="iBC-QD-Yf2"/>
                             <constraint firstItem="964-EZ-l2T" firstAttribute="centerX" secondItem="Buy-z0-h0N" secondAttribute="centerX" id="jPf-sJ-TFh"/>
                             <constraint firstItem="964-EZ-l2T" firstAttribute="centerY" secondItem="Buy-z0-h0N" secondAttribute="centerY" id="mM2-cZ-z1s"/>
+                            <constraint firstItem="KTN-Kr-TtK" firstAttribute="top" secondItem="eOS-uc-lcS" secondAttribute="top" id="ugQ-de-d5y"/>
+                            <constraint firstItem="6DP-zF-yxH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Buy-z0-h0N" secondAttribute="leading" constant="20" symbolic="YES" id="wI2-6X-CXQ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="History" id="mgx-qA-Rka">
@@ -636,7 +668,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uf5-1E-JpN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="930" y="-438"/>
+            <point key="canvasLocation" x="931.88405797101461" y="-490.17857142857139"/>
         </scene>
         <!--Childs List Table View Controller-->
         <scene sceneID="mNH-ka-XFr">

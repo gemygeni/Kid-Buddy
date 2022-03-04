@@ -31,7 +31,6 @@ class HistoryViewController: UIViewController {
         fetchLocationHistory()
         guard let childId = TrackingViewController.trackedChildUId else {return}
         DataHandler.shared.fetchChildAccount(with: childId) {[weak self] user in
-           
             self?.tabBarItem.title = user.name + " History"
             self?.navigationItem.title = user.name
         }
@@ -92,6 +91,31 @@ class HistoryViewController: UIViewController {
         polylineRect.size.height *= 1.1
         self.mapView.setRegion(MKCoordinateRegion(polylineRect), animated: true)
      }
+    
+    func clearHistory(){
+        LocationHandler.shared.clearHistory {[weak self] in
+            guard let coordinate = LocationHandler.shared.locationManager?.location?.coordinate else { return }
+            let region = MKCoordinateRegion(center: coordinate,
+                                            latitudinalMeters: 2000,
+                                            longitudinalMeters: 2000)
+            self?.mapView.setRegion(region, animated: true)
+            if  self?.mapView.overlays != nil{
+                self?.mapView.removeOverlays((self?.mapView.overlays)!)
+             }
+            if  self?.mapView.annotations != nil{
+                        self?.mapView.removeAnnotations((self?.mapView.annotations)!)
+                }
+          }
+    }
+    
+    
+    @IBAction func clearHistoryPressed(_ sender: Any) {
+        print("Debug: clear history pressed")
+        clearHistory()
+    }
+    
+    
+    
 }
 
 extension HistoryViewController : MKMapViewDelegate{

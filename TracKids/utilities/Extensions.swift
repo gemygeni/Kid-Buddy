@@ -115,7 +115,7 @@ extension Date{
     func convertDateFormatter() -> String {
              let formatter = DateFormatter()
              formatter.timeZone = TimeZone.current
-             formatter.dateFormat = "MM-dd  HH:mm a"
+             formatter.dateFormat = "MM-dd            HH:mm a"
                 let dateString = formatter.string(from: self)
              return dateString
             }

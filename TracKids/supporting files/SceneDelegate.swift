@@ -68,7 +68,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 extension SceneDelegate: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let lastLocation = locations.first else {return}
+        guard let lastLocation = locations.last else {return}
         LocationHandler.shared.uploadChildLocation(for: lastLocation)
         LocationHandler.shared.uploadLocationHistory(for: lastLocation)
        }

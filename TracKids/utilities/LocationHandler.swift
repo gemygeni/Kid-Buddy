@@ -59,8 +59,7 @@
                 break
             }
         }
-        var count1 = 0
-        var count2 = 0
+        
         
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             guard let lastLocation = locations.first else {return}
@@ -72,18 +71,44 @@
 //                 }
            }
 
-        
+        var count1 = 0
         func uploadLocationHistory(for location : CLLocation){
-            DataHandler.shared.fetchUserInfo { user in
+            count1 += 1
+            print("count out is \(count1)")
+            DataHandler.shared.fetchUserInfo { [weak self] user in
                 guard let parentID = user.parentID else {return}
                let UId = user.uid
                 let timestamp = String(Int(Date().timeIntervalSince1970))
                 let historyReference = HistoryReference.child( parentID).child(UId)
+                if self?.count1 == 1 {
+                    print("count inside is \(String(describing: self?.count1))")
+                    historyReference.observe(.childAdded) { snapshot in
+                        let locationTime = snapshot.key
+                        if Int(timestamp)! - (24*60*60) >  Int(locationTime)! {
+                            historyReference.child(locationTime).removeValue()
+                        }
+                    }
+                }
                 let geoFire = GeoFire(firebaseRef: historyReference)
                 let key = HistoryReference.childByAutoId().child(timestamp).key
               geoFire.setLocation(location, forKey: key ?? "locationkey")
               }
             }
+        
+        func clearHistory (completion : @escaping () -> Void){
+            guard let uid = Auth.auth().currentUser?.uid else {return}
+            guard let trackedChildID = TrackingViewController.trackedChildUId else {return}
+            let historyReference = HistoryReference.child( uid).child(trackedChildID)
+            historyReference.removeValue { error, reference in
+                if  error != nil {
+                    print(error?.localizedDescription)
+                }
+                else{
+                    completion()
+                }
+            }
+        }
+        
         
         
         func uploadChildLocation(for location : CLLocation)  {
