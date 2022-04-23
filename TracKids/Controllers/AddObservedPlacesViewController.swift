@@ -11,7 +11,8 @@
     
     import FloatingPanel
 
-    class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, SearchViewControllerDelegate {
+class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, SearchViewControllerDelegate {
+    
         let panel = FloatingPanelController()
         var observedPlaces = [CLLocationCoordinate2D]()
         var ObservedLocation = CLLocation()
@@ -26,8 +27,8 @@
             panel.addPanel(toParent: self)
             panel.move(to: .tip , animated: false)
         }
-
     
+
         
         @IBOutlet weak var mapView: MKMapView!
         
@@ -36,7 +37,6 @@
         }
         @IBAction func AddButtonPressed(_ sender: UIButton) {
             uploadObservedPlaceData()
-            
         }
         
         @IBAction func changeMapTypeButtonPressed(_ sender: Any) {
@@ -97,7 +97,10 @@
             mapView.removeOverlays(mapView.overlays)
             addRadiusOverlay(for: ObservedLocation)
         }
-        
+    func didBeginsearching(_ VC: SearchViewController) {
+        self.panel.move(to: .full, animated: true)
+    }
+
         
         func uploadObservedPlaceData(){
             if let trackedChildId = TrackingViewController.trackedChildUId{

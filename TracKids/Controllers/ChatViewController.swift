@@ -7,22 +7,33 @@
 
 import UIKit
 import Firebase
+import MobileCoreServices
 class ChatViewController: UIViewController{
+    var trackedChildObserver : NSObjectProtocol?
     var messages : [Message] = []
-    var messagesId : [String] = []
+    var messagesIds : [String] = []
+    let leadingScreensForBatching:CGFloat = 2.0
+    var fetchingMore = false
+    var endReached = false
+    var trackedChildChanged = false
+    private var ImageURL : String?
     var childID : String?{
         didSet{
             self.uniqueID = childID
         }
     }
     var childName : String = "child"
-    var trackedChildObserver : NSObjectProtocol?
     var uniqueID : String?
     var parentID : String?
     var userName : String?
     var profileImage : UIImage?
+    var imageMessage : UIImage?
     var accountType : AccountType!
     var trackingVC = TrackingViewController()
+    var sendPressed = false
+    var counter1 = 0
+    var counter2 = 0
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextfield: UITextField!{
         didSet{
@@ -30,8 +41,11 @@ class ChatViewController: UIViewController{
         }
     }
     
-    var messageReference = DatabaseReference()
+    @IBAction func pickPhotoPressed(_ sender: UIButton) {
+        selectPhoto()
+    }
     
+    var messageReference = DatabaseReference()
     func configureMessageReference(childID : String? = nil, parentId : String? = nil ) ->  DatabaseReference{
         if let UId = Auth.auth().currentUser?.uid{
             var  messageReference = DatabaseReference()
@@ -53,10 +67,11 @@ class ChatViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+        self.trackedChildChanged = true
+        print("hey will appear")
         if Auth.auth().currentUser?.uid == nil{
             messages = []
-            messagesId = []
+            messagesIds = []
             tableView.reloadData()
         }
         
@@ -65,21 +80,19 @@ class ChatViewController: UIViewController{
             self?.accountType = AccountType(rawValue: user.accountType)
             self?.parentID = user.parentID
             self?.userName = user.name
-            self?.downloadMessages()
+            self?.beginBatchFetch(completion: {
+            self?.trackedChildChanged = false
+                print("fetch Done ")
+            })
+
+            print("messages count \(String(describing: self?.messages.count))")
         }
         if let  trackedChildUId = TrackingViewController.trackedChildUId{
             self.uniqueID = trackedChildUId
-            tableView.reloadData()
             navigationItem.title = childName
         }
         
-        trackedChildObserver = NotificationCenter.default.addObserver(forName: .TrackedChildDidChange,
-                                                                      object: TrackingViewController.trackedChildUId,
-                                                                      queue: OperationQueue.main,
-                                                                      using: { [weak self] (notification) in
-            self?.uniqueID = TrackingViewController.trackedChildUId
-            self?.downloadMessages()
-        })
+        
         if let  trackedChildUId = TrackingViewController.trackedChildUId{
             uniqueID = trackedChildUId
             DataHandler.shared.fetchChildAccount(with: uniqueID!) {[weak self] user in
@@ -87,25 +100,17 @@ class ChatViewController: UIViewController{
                 self?.tabBarItem.title = user.name + " Chat"
             }
         }
+        resetBadgeCount()
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
-        DataHandler.shared.fetchUserInfo {[weak self] user in
-            self?.accountType = AccountType(rawValue: user.accountType)
-            self?.parentID = user.parentID
-        }
-        
-        resetBadgeCount()
+
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
-        if let observer = trackedChildObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
+        trackedChildChanged = false
         self.tabBarItem.title = "Chat"
     }
     
@@ -117,48 +122,83 @@ class ChatViewController: UIViewController{
         tableView.allowsMultipleSelectionDuringEditing = true
         messageTextfield.becomeFirstResponder()
     }
-    
     @IBAction func sendMessagePressed(_ sender: UIButton) {
-        handleSendingMessage()
-        downloadMessages()
+        self.handleSendingMessage()
     }
     
-    func downloadMessages(){
-        self.messages = []
-        self.messagesId = []
+    func downloadMessages(completion : @escaping (_  : [Message] , _  : [String])->()){
+        let firstMessage = messages.first
+        let firstMessageId = messagesIds.first
+        var queryRef : DatabaseQuery
         messageReference = configureMessageReference(childID: uniqueID, parentId: parentID)
-        messageReference.observe(.childAdded) { [weak self](snapshot) in
-            let messageId = snapshot.key
-            self?.messagesId.append(messageId)
-            if let messageInfo = snapshot.value as? [String : Any] {
-                let message = Message( messageInfo)
-                self?.messages.append(message)
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                    if self!.messages.count > 1{
-                        let indexPath = IndexPath(row: self!.messages.count - 1, section: 0)
-                        self?.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+        if firstMessage != nil {
+            print("last message not nil")
+            let firstTimestamp = firstMessage?.timestamp
+            
+            queryRef = messageReference.queryOrdered(byChild: "timestamp").queryEnding(atValue: firstTimestamp ).queryLimited(toLast: 20)
+        }
+        else {
+            print("last message is nil")
+            queryRef = messageReference.queryOrderedByValue().queryLimited(toLast: 20)
+        }
+    queryRef.observe(.value) { (snapshot) in
+                    var fetchedMessages = [Message]()
+                    var fetchedMessagesIds = [String]()
+                    let index = fetchedMessages.count
+                    for child in snapshot.children {
+                        if let childSnapshot = child as? DataSnapshot,
+                            let messageInfo = childSnapshot.value as? [String:Any]
+                             {
+                            let messageId = childSnapshot.key
+                            print("message ID \(messageId) ")
+                            if messageId != firstMessageId {
+                                print("not equal snapkey is \(messageId) and last post id is \(String(describing: firstMessageId)) and last massage is \(String(describing: firstMessage?.body))")
+        
+                                let message = Message( messageInfo)
+                                print("fetched message is \(String(describing: message.body))")
+                                 fetchedMessagesIds.insert(messageId, at: index )
+                              fetchedMessages.insert(message, at: index)
+                            }
+                        }
                     }
-                }
-            }
+                    print("first in fetched \(String(describing: fetchedMessages.first?.body)) and last in fetched \(String(describing: fetchedMessages.last?.body))" )
+        
+                    completion(fetchedMessages, fetchedMessagesIds)
+            print("ss in downloadMessages 2")
         }
     }
     
-    
-    
     func handleSendingMessage(){
+        sendPressed = true
         guard let messageText = messageTextfield.text,let sender = self.userName, !messageText.isEmpty  else {return}
         if self.accountType == .parent{
             if let childID = self.uniqueID{
-                DataHandler.shared.uploadMessageWithInfo(messageText, childID)
+                self.messages = []
+                self.messagesIds = []
+
+                DataHandler.shared.uploadMessageWithInfo(messageText, childID, ImageURL: ImageURL) {[weak self] in
+
+                    self?.beginBatchFetch {
+                        self?.sendPressed = false
+                        print("fetch Done")
+                    }
+                }
                 DataHandler.shared.fetchDeviceID(for: childID) { deviceID in
-                    DataHandler.shared.sendPushNotification(to: deviceID, sender: sender, body: messageText)
+                    print("Debug: device Id is \(deviceID)")
+                DataHandler.shared.sendPushNotification(to: deviceID, sender: sender, body: messageText)
                 }
             }
         }
         else if self.accountType == .child{
             if let parentID = self.parentID{
-                DataHandler.shared.uploadMessageWithInfo(messageText, parentID)
+                self.messages = []
+               self.messagesIds = []
+                DataHandler.shared.uploadMessageWithInfo(messageText, parentID, ImageURL: ImageURL) {[weak self] in
+                  self?.beginBatchFetch {
+                   self?.sendPressed = false
+                   print("fetch Done")
+                   }
+                }
                 DataHandler.shared.fetchDeviceID(for: parentID) { deviceID in
                     DataHandler.shared.sendPushNotification(to: deviceID, sender: sender, body: messageText)
                 }
@@ -172,9 +212,51 @@ class ChatViewController: UIViewController{
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
+     func selectPhoto() {
+        let alert = UIAlertController(title: "Select Image", message: "How Would You Like To Select The Image ", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Take By Camera", style: .default, handler: {
+            [weak self](actionn) in
+            self?.PresentCamera()
+        }))
+                        
+        alert.addAction(UIAlertAction(title: "Select From Photo Library", style: .default, handler: { [weak self](action) in
+            self?.PresentPhotoPicker()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        self.present(alert, animated: true, completion: nil)
+     }
+    
+    
+    func uploadImageData(){
+        let storageReference = storage.reference()
+        let UId = Auth.auth().currentUser?.uid
+
+        let imageName = NSUUID().uuidString
+        let imageReference  = storageReference.child("Messages/\(String(describing: UId))/\(imageName).jpg")
+
+        if let imageData =  self.imageMessage?.jpegData(compressionQuality: 0.3){
+            imageReference.putData(imageData, metadata: nil) { (metadata, error) in
+                if error != nil {print(error!.localizedDescription)}
+                imageReference.downloadURL { [weak self](url, error) in
+                    if error != nil {print(error!.localizedDescription)}
+                    if let downloadedURL = url{
+                        self?.ImageURL = downloadedURL.absoluteString
+                        print("Debug: url is \(String(describing: self?.ImageURL))")
+                        self?.messageTextfield.text = "okay good"
+                        self?.handleSendingMessage()
+                        self?.beginBatchFetch(completion: {
+                            print("Debug: fetch Done")
+                        })
+                    }
+                }
+             }
+          }
+       }
     
 }
-extension ChatViewController : UITableViewDataSource, UITableViewDelegate{
+
+extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         messages.count
     }
@@ -184,17 +266,18 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate{
         cell.backgroundColor = UIColor.clear
         let message = messages[indexPath.row]
         cell.MessageBodyLabel.text = message.body
+//        if let ImageURl = message.imageURL {
+//            cell.MessageImageView.loadImageUsingCacheWithUrlString(ImageURl)
+//        }
         cell.timeLabel.numberOfLines = 0
         cell.timeLabel.text = message.timestamp?.convertDateFormatter()
         if message.sender == Auth.auth().currentUser?.uid{
-            cell.MessageBodyLabel.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
-            cell.rightImageView.isHidden = true
+            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+            cell.MessageBodyView.leftAnchor.constraint(equalTo: cell.MessageBodyView.superview!.leftAnchor , constant: 50).isActive = true
         }
         else{
-            cell.MessageBodyLabel.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-            if let profileImage = self.profileImage{
-                cell.rightImageView.image = profileImage
-            }        }
+            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        }
         return cell
     }
     
@@ -204,20 +287,129 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-            let messageId = messagesId[indexPath.row]
+            let messageId = messagesIds[indexPath.row]
             let selectedReference =  self.messageReference.child(messageId)
             selectedReference.removeValue()
             messages.remove(at: indexPath.row)
-            messagesId.remove(at: indexPath.row)
+            messagesIds.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
+    
+    
+
+//    var cellHeights: [IndexPath : CGFloat] = [:]
+
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        cellHeights[indexPath] = cell.frame.size.height
+//    }
+//
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return cellHeights[indexPath] ?? 70.0
+//    }
+
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+         let contentOffSetY = scrollView.contentOffset.y
+         let contentHeight = scrollView.contentSize.height
+         let tableHeight = tableView.contentSize.height
+         let scrollHeight =  scrollView.frame.size.height
+         if  tableHeight + contentOffSetY - scrollHeight <=  contentHeight - 200   {
+             if counter1 > 1 {
+                 self.tableView.tableHeaderView = createSpinnerHeader()
+             }
+             if !fetchingMore && !endReached {
+                 beginBatchFetch {
+                     print("Debug: fetch Done")
+                 }
+             }
+             else if endReached {
+                 self.tableView.tableHeaderView  = nil
+             }
+         }
+    }
+    
+                
+    func beginBatchFetch(completion : @escaping () -> Void ) {
+        fetchingMore = true
+        self.counter2 += 1
+        if trackedChildChanged == true{
+            messages = []
+            messagesIds = []
+        }
+        print("Debug: begun fetch triggered out \(self.counter2)")
+        downloadMessages {[weak self] newMessages, newMessagesIds in
+            self?.fetchingMore = false
+            self?.endReached = newMessages.count == 0
+                for messageId in  newMessagesIds{
+                    self!.messagesIds.insert(messageId, at: 0)
+                }
+                for message in  newMessages{
+                    self!.messages.insert(message, at: 0)
+                }
+            UIView.performWithoutAnimation {
+                if self?.trackedChildChanged == true{
+                    self?.tableView.reloadData()
+                }
+               else if self?.trackedChildChanged == false {
+                   self?.tableView.reloadDataAndKeepOffset()
+                              }
+                if ((self?.messages.count)! > 1 && self?.counter2 == 1) || ((self?.messages.count)! > 1 && self?.trackedChildChanged == true || ((self?.messages.count)! > 1 && self?.sendPressed == true )) {
+                    self?.tableView.scrollToBottomRow()
+                 }
+            }
+            completion()
+        }
+    }
+    
+    private func createSpinnerHeader() -> UIView{
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        spinner.center = headerView.center
+        headerView.addSubview(spinner)
+        spinner.startAnimating()
+        return headerView
+    }
+    
 }
 
-extension ChatViewController : UITextFieldDelegate{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        extension ChatViewController : UITextFieldDelegate{
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleSendingMessage()
         return true
+        }
+    }
+
+extension ChatViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    //func to take a photo by device camera
+    func PresentCamera() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.mediaTypes = [kUTTypeImage as String]
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    func PresentPhotoPicker(){
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.mediaTypes = [kUTTypeImage as String]
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.presentingViewController?.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = ((info[UIImagePickerController.InfoKey.editedImage] ?? info[UIImagePickerController.InfoKey.originalImage]) as? UIImage){
+            self.imageMessage = image
+            uploadImageData()
+        }
+        picker.presentingViewController?.dismiss(animated: true)
     }
 }
 

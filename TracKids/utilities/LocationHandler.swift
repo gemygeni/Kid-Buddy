@@ -101,14 +101,13 @@
             let historyReference = HistoryReference.child( uid).child(trackedChildID)
             historyReference.removeValue { error, reference in
                 if  error != nil {
-                    print(error?.localizedDescription)
+                    print(error!.localizedDescription)
                 }
                 else{
                     completion()
                 }
             }
         }
-        
         
         
         func uploadChildLocation(for location : CLLocation)  {
@@ -160,7 +159,7 @@
                 }
                 self?.locationManager?.startMonitoring(for: fenceRegion)
                 print("geofencing enabled in this device")
-                print("Deebug: identifier after  \(identifier)")
+                print("Debug: identifier after  \(identifier)")
             }
         }
         

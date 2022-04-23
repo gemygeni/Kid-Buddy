@@ -51,7 +51,7 @@ class ChildProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ProfileImage = fetchedImage
-        childNameLabel?.text = (childName ?? "name")+"\n"+(childAccount?.phoneNumber ?? "phone")
+        childNameLabel?.text = (childName ?? "name")+"\n"+(childAccount?.email ?? "email")
     }
     
     

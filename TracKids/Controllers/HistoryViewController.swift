@@ -108,14 +108,10 @@ class HistoryViewController: UIViewController {
           }
     }
     
-    
     @IBAction func clearHistoryPressed(_ sender: Any) {
         print("Debug: clear history pressed")
         clearHistory()
     }
-    
-    
-    
 }
 
 extension HistoryViewController : MKMapViewDelegate{

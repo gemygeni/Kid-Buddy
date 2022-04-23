@@ -9,22 +9,12 @@
     import MapKit
     import Firebase
     
-    
     enum AccountType : Int  {
         case parent
         case child
     }
-//
-//    protocol TrackingManagerDelegate{
-//        func didSelectedChild(trackedChildUId : String)
-//    }
-    extension Notification.Name{
-        static let TrackedChildDidChange = Notification.Name("TrackedChildDidChange")
-    }
     
-
     class TrackingViewController: UIViewController  {
-       // var delegate : TrackingManagerDelegate?
         var accountType : AccountType!
         var childs = [User?]()
         var childsID = [String]()
@@ -45,12 +35,7 @@
         }
         var IsLoggedIn : Bool = false
         
-        static var trackedChildUId : String?{
-            didSet{
-                
-                NotificationCenter.default.post(name: .TrackedChildDidChange, object: TrackingViewController.trackedChildUId)
-            }
-        }
+        static var trackedChildUId : String?
         
         @IBOutlet weak var childsCollectionView: UICollectionView!
         
@@ -267,6 +252,7 @@
                     self.annotationImage = cell.profileImageView.image?.resize(60 , 60)
                 }
             }
+
             guard let childId = TrackingViewController.trackedChildUId else {return}
             DataHandler.shared.fetchChildAccount(with: childId) {[weak self] user in
                

@@ -11,25 +11,18 @@ class MessageCell: UITableViewCell {
     
     @IBOutlet weak var MessageBodyView: UIView!
     @IBOutlet weak var MessageBodyLabel: UILabel!
-    
+    @IBOutlet weak var MessageImageView: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var rightImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
+       // MessageImageView.translatesAutoresizingMaskIntoConstraints = false
         MessageBodyView.translatesAutoresizingMaskIntoConstraints = false
-        rightImageView.translatesAutoresizingMaskIntoConstraints = false
-        rightImageView.layer.masksToBounds = true
-        rightImageView.layer.cornerRadius = 24
-        rightImageView.contentMode = .scaleAspectFill
-       //MessageBodyLabel.translatesAutoresizingMaskIntoConstraints = false
         MessageBodyView.layer.cornerRadius = MessageBodyView.frame.size.height / 5
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
     
 }

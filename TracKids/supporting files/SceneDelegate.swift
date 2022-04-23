@@ -105,15 +105,7 @@ extension SceneDelegate: CLLocationManagerDelegate {
             DataHandler.shared.fetchDeviceID(for: parentID) { parentDeviceToken in
             DataHandler.shared.sendPushNotification(to: parentDeviceToken, sender: childName, body: self.message)
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
             if UIApplication.shared.applicationState == .active {
                 self.window?.rootViewController?.showAlert(withTitle: nil, message: self.message)
               print("Geofence active")

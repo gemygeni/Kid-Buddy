@@ -10,6 +10,8 @@ import MapKit
 import CoreLocation
 protocol SearchViewControllerDelegate : AnyObject  {
     func searchViewController(_ VC : SearchViewController , didSelectLocationWith coordinates : CLLocationCoordinate2D?)
+    func didBeginsearching(_ VC : SearchViewController)
+
 }
 
 class SearchViewController: UIViewController {
@@ -29,6 +31,8 @@ class SearchViewController: UIViewController {
         let searchTextField = UITextField()
         searchTextField.layer.cornerRadius = 9
         searchTextField.placeholder = "Search For Loacation"
+        searchTextField.isUserInteractionEnabled = true
+        
         searchTextField.backgroundColor = .tertiarySystemBackground
         searchTextField.leftView = UIView(frame: CGRect(x: 10, y: 10, width: 10, height: 50))
         searchTextField.leftViewMode = .always
@@ -50,8 +54,6 @@ class SearchViewController: UIViewController {
           action: #selector(textFieldDidChange(_:)),
           for: .editingChanged
         )
-
-        searchTextField.becomeFirstResponder()
         completer.delegate = self
         view.backgroundColor = .secondarySystemBackground
         view.addSubview(label)
@@ -102,10 +104,6 @@ class SearchViewController: UIViewController {
 // MARK: - UITextFieldDelegate
 extension SearchViewController : UITextFieldDelegate {
     
-    
-    
-    
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         searchTextField.text = ""
         self.places = []
@@ -115,6 +113,11 @@ extension SearchViewController : UITextFieldDelegate {
             }
         searchTextField = textField
            }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        self.delegate?.didBeginsearching(self)
+        return true
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.places = []

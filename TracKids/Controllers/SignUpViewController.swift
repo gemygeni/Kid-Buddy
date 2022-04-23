@@ -31,11 +31,6 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var phoneNumberTextField: UITextField!{
-        didSet{
-            phoneNumberTextField.delegate = self
-        }
-    }
     func tapRecognnizer(){
         let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(taprecognizer)
@@ -76,9 +71,7 @@ class SignUpViewController: UIViewController {
         guard let name = nameTextField.text,
          let email = emailTextField.text,
          let password = passwordTextField.text,
-         let phoneNumber = phoneNumberTextField.text,
-              
-         !password.isEmpty,!email.isEmpty,!password.isEmpty,!phoneNumber.isEmpty
+         !password.isEmpty,!email.isEmpty,!password.isEmpty
         else {return}
         
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
@@ -91,7 +84,7 @@ class SignUpViewController: UIViewController {
             }
             guard let UId = result?.user.uid else {return}
             
-            let UserInfo = ["name" : name,"email" : email, "phoneNumber" : phoneNumber,"password" : password, "userType" : userType, "deviceID" : deviceID ]   as [String : Any]
+            let UserInfo = ["name" : name,"email" : email ,"password" : password, "userType" : userType, "deviceID" : deviceID ]   as [String : Any]
             self.usersReference.child(UId).updateChildValues(UserInfo) { (error, reference) in
                 if let error = error{
                     print(error.localizedDescription)

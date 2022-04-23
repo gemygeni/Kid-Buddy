@@ -13,6 +13,7 @@ protocol AddedChildDelegate : AnyObject  {
 
 class AddChildViewController: UIViewController {
     weak var delegate : AddedChildDelegate?
+    private var ImageURL : String?
     @IBOutlet weak var ChildNameTextField: UITextField!{
         didSet{
             ChildNameTextField.delegate = self
@@ -20,13 +21,6 @@ class AddChildViewController: UIViewController {
     }
 
     @IBOutlet weak var spinnner: UIActivityIndicatorView!
-    
-    @IBOutlet weak var ChildPhoneTextField: UITextField!{
-        didSet{
-            ChildPhoneTextField.delegate = self
-        }
-    }
-    
     
     @IBOutlet weak var childMailTextField: UITextField!
     
@@ -54,7 +48,7 @@ class AddChildViewController: UIViewController {
         ChildImageView.layer.cornerRadius = ChildImageView.frame.size.width/2.5
     }
     
-    private var ImageURL : String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,14 +61,14 @@ class AddChildViewController: UIViewController {
          }
     
     @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil ) {
-        let alert = UIAlertController(title: "Set Profile Image", message: "How Would You Like To Select a Picture ", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Set Profile Image", message: "How Would You Like To Select The Image ", preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Take By Camera", style: .default, handler: {
             [weak self](actionn) in
             self?.PresentCamera()
         }))
                         
-        alert.addAction(UIAlertAction(title: "Select From Library", style: .default, handler: { [weak self](action) in
+        alert.addAction(UIAlertAction(title: "Select From Photo Library", style: .default, handler: { [weak self](action) in
             self?.PresentPhotoPicker()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -93,8 +87,8 @@ class AddChildViewController: UIViewController {
     
     func uploadData(){
         spinnner?.startAnimating()
-        guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
-        !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, !password.isEmpty ,!email.isEmpty,
+        guard let ChildName = ChildNameTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
+        !ChildName.isEmpty , !password.isEmpty ,!email.isEmpty,
         let UID = Auth.auth().currentUser?.uid
         else {
             spinnner?.stopAnimating()
@@ -102,7 +96,7 @@ class AddChildViewController: UIViewController {
         let storageReference = storage.reference()
         let childName = ChildNameTextField.text ?? ""
         let imageReference  = storageReference.child("ChildsPictures/\(UID)/\(childName).jpg")
-        if let imageData =   ChildImageView.image!.jpegData(compressionQuality: 0.3){
+        if let imageData = ChildImageView.image!.jpegData(compressionQuality: 0.3){
             imageReference.putData(imageData, metadata: nil) { (metadata, error) in
                 if error != nil {print(error!.localizedDescription)}
                 imageReference.downloadURL { [weak self](url, error) in
@@ -120,8 +114,8 @@ class AddChildViewController: UIViewController {
     
     
     func createNewChild(){
-        guard let ChildName = ChildNameTextField.text, let ChildPhoneNumber = ChildPhoneTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
-        !ChildName.isEmpty , !ChildPhoneNumber.isEmpty, let UID = Auth.auth().currentUser?.uid
+        guard let ChildName = ChildNameTextField.text, let email = childMailTextField.text, let password = childPasswordTextField.text,
+        !ChildName.isEmpty, let UID = Auth.auth().currentUser?.uid
         else {return}
         let deviceID = ""
         let originalUser = Auth.auth().currentUser
@@ -137,7 +131,6 @@ class AddChildViewController: UIViewController {
             guard let childId = result?.user.uid else {return}
             let childInfo = ["name" : ChildName,
                              "email" : email,
-                             "phoneNumber" : ChildPhoneNumber,
                              "password" : password,
                              "userType" : 1,
                              "parentID" : UID ,
@@ -151,7 +144,7 @@ class AddChildViewController: UIViewController {
                     UserReference.child(childId).updateChildValues(childInfo) { (error, reference) in
                         if let error = error{print(error.localizedDescription)}
                        TrackedChildsReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
-                            if !ChildName.isEmpty && !ChildPhoneNumber.isEmpty {
+                            if !ChildName.isEmpty {
                                 self?.navigationController?.popViewController(animated: true)
                                 self?.presentingViewController?.dismiss(animated: true, completion: {
                                     self?.spinnner?.stopAnimating()
@@ -160,7 +153,6 @@ class AddChildViewController: UIViewController {
                             }
                         }
                     }
-
                     print("original user uid is \(originalUser!.uid)")}
             }
         }

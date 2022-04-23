@@ -18,7 +18,7 @@
     let HistoryReference = DBReference.child("LocationHistory")
     let storage = Storage.storage()
     var FetchedPlaces = [CLLocation]()
-    var placesId = [String]()
+    var placesIds = [String]()
 
     struct DataHandler{
         static  let shared  = DataHandler()
@@ -67,17 +67,17 @@
         
         func fetchObservedPlaces(for childID : String, completion : @escaping ([CLLocation]?, [String]) -> Void){
             FetchedPlaces = []
-            placesId = []
+            placesIds = []
             guard let uid = Auth.auth().currentUser?.uid else {return}
             let geofire = GeoFire(firebaseRef: ObservedPlacesReference.child(uid).child(childID))
             ObservedPlacesReference.child(uid).child(childID).observe(.childAdded) { (snapshot) in
                 let key = snapshot.key
-                placesId.append(key)
+                placesIds.append(key)
                 geofire.getLocationForKey(key) { (location, error) in
                     if error != nil {print(error!.localizedDescription) }
                     guard let FetchedPlace = location else {return}
                     FetchedPlaces.append(FetchedPlace)
-                    completion(FetchedPlaces,placesId)
+                    completion(FetchedPlaces,placesIds)
                 }
             }
         }
@@ -90,7 +90,7 @@
             geoFire.setLocation(location, forKey: key ?? "no key")
         }
         
-        func uploadMessageWithInfo(_ messageText : String , _ recipient : String)  {
+        func uploadMessageWithInfo(_ messageText : String , _ recipient : String, ImageURL : String? ,completion : @escaping(() -> Void) )  {
             guard  let sender = Auth.auth().currentUser?.uid else{return}
             let messageBody = messageText
             let recipient = recipient
@@ -100,13 +100,28 @@
                                 "body"  : messageBody,
                                 "recipient" : recipient,
                                 "timestamp" : timestamp,
-                                "fromDevice": fromDevice ?? "no device"] as [String : Any]
+                                "fromDevice": fromDevice ?? "no device",
+                                "imageURL" : ImageURL ?? ""] as [String : Any]
             self.fetchUserInfo { (user) in
                 if user.accountType == 0 {
-                    MessagesReference.child(sender).child(recipient).childByAutoId().updateChildValues(messsageInfo)
+                    MessagesReference.child(sender).child(recipient).childByAutoId().updateChildValues(messsageInfo) { error, reference in
+                        if error != nil {
+                            print(error?.localizedDescription as Any)
+                        }
+                        else {
+                            completion()
+                        }
+                    }
                 }
                 else if user.accountType == 1 {
-                    MessagesReference.child(user.parentID!).child(sender).childByAutoId().updateChildValues(messsageInfo)
+                    MessagesReference.child(user.parentID!).child(sender).childByAutoId().updateChildValues(messsageInfo) { error, reference in
+                        if error != nil {
+                            print(error?.localizedDescription as Any)
+                        }
+                        else {
+                            completion()
+                        }
+                    }
                 }
             }
         }
@@ -152,12 +167,38 @@
                     if error != nil {
                         print("error")
                     } else {
-                        print("Successfully sent!.....")
+                        print("Successfully sent notification!.....")
                     }
                 }.resume()
             }
         }
         
+//
+//        "alert": "This is a Critical Alert!",
+//        "badge": 1,
+//        "sound": {
+//          "critical": 1,
+//          "name": "your_custom_sound.aiff",
+//          "volume": 1.0
+        func sendCriticalAlert(to recipientToken : String, sender : String, body : String) {
+            if let url = URL(string: AppDelegate.NOTIFICATION_URL) {
+                var request = URLRequest(url: url)
+                request.allHTTPHeaderFields = ["Content-Type":"application/json", "Authorization":"key=\(AppDelegate.SERVERKEY)"]
+                request.httpMethod = "POST"
+                request.httpBody = "{\"to\":\"\(recipientToken)\",\"alert\":{\"title\":\"\(sender)\",\"body\":\"\(body)\",\"sound\":{\"critical\":\"1\",\"name\":\"criticalAlert.aiff\",\"volume\":\"1.0\"} ,\"content-available\":\"1\",\"badge\":\"1\"}}".data(using: .utf8)
+                URLSession.shared.dataTask(with: request) { (data, urlresponse, error) in
+                    if error != nil {
+                        print("error")
+                    } else {
+                        print("Successfully sent critical alert!.....")
+                    }
+                }.resume()
+            }
+        }
+            
+     //   \"sound\":{\"critical\":\"1\",\"name\":\"criticalAlert.wav\",\"volume\":\"1.0\"}
+            
+
         func fetchDeviceID(for uid : String,  completion : @escaping (String) -> Void) {
             UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
                 guard let dictionary = snapshot.value as? [String:Any] else {return}
@@ -168,7 +209,6 @@
                 completion(recipientDevice)
             }
         }
-        
         
         
         func removeAccount( for currentUser : String, completion : @escaping () -> Void ){
@@ -252,7 +292,6 @@
                 }
             }
         }
-        
     }
 
 

@@ -61,7 +61,7 @@ class ChildsListTableViewController: UITableViewController {
         if let childCell =  cell as? ChildsListTableViewCell {
             let child = childs[indexPath.row]
             childCell.textLabel?.text = child.name
-            childCell.detailTextLabel?.text = child.phoneNumber
+            childCell.detailTextLabel?.text = child.email
             if let childImageURl = child.imageURL {
                 childCell.profileImageView.loadImageUsingCacheWithUrlString(childImageURl)
             }

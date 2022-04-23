@@ -135,3 +135,87 @@ extension CLPlacemark {
     return [subThoroughfare, thoroughfare].compactMap { $0 }.joined(separator: " ")
   }
 }
+
+extension UITableView {
+
+    func reloadWithoutAnimation() {
+        let lastScrollOffset = contentOffset
+        beginUpdates()
+        endUpdates()
+        layer.removeAllAnimations()
+        setContentOffset(lastScrollOffset, animated: false)
+    }
+    
+    
+    public func reloadDataAndKeepOffset() {
+        // stop scrolling
+        setContentOffset(contentOffset, animated: false)
+            
+        // calculate the offset and reloadData
+        let beforeContentSize = contentSize
+        reloadData()
+        layoutIfNeeded()
+        let afterContentSize = contentSize
+            
+        // reset the contentOffset after data is updated
+        let newOffset = CGPoint(
+            x: contentOffset.x + (afterContentSize.width - beforeContentSize.width),
+            y: contentOffset.y + (afterContentSize.height - beforeContentSize.height))
+        setContentOffset(newOffset, animated: false)
+    }
+    
+    func scrollToBottomRow() {
+        DispatchQueue.main.async {
+            guard self.numberOfSections > 0 else { return }
+
+            // Make an attempt to use the bottom-most section with at least one row
+            var section = max(self.numberOfSections - 1, 0)
+            var row = max(self.numberOfRows(inSection: section) - 1, 0)
+            var indexPath = IndexPath(row: row, section: section)
+
+            // Ensure the index path is valid, otherwise use the section above (sections can
+            // contain 0 rows which leads to an invalid index path)
+            while !self.indexPathIsValid(indexPath) {
+                section = max(section - 1, 0)
+                row = max(self.numberOfRows(inSection: section) - 1, 0)
+                indexPath = IndexPath(row: row, section: section)
+
+                // If we're down to the last section, attempt to use the first row
+                if indexPath.section == 0 {
+                    indexPath = IndexPath(row: 0, section: 0)
+                    break
+                }
+            }
+
+            // In the case that [0, 0] is valid (perhaps no data source?), ensure we don't encounter an
+            // exception here
+            guard self.indexPathIsValid(indexPath) else { return }
+
+            self.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        }
+    }
+
+    func indexPathIsValid(_ indexPath: IndexPath) -> Bool {
+        let section = indexPath.section
+        let row = indexPath.row
+        return section < self.numberOfSections && row < self.numberOfRows(inSection: section)
+    }
+
+
+
+    
+    func scrollToBottom(animated: Bool) {
+        guard let dataSource = dataSource else { return }
+        var lastSectionWithAtLeastOneElement = (dataSource.numberOfSections?(in: self) ?? 1) - 1
+        while dataSource.tableView(self, numberOfRowsInSection: lastSectionWithAtLeastOneElement) < 1 && lastSectionWithAtLeastOneElement > 0 {
+            lastSectionWithAtLeastOneElement -= 1
+        }
+        let lastRow = dataSource.tableView(self, numberOfRowsInSection: lastSectionWithAtLeastOneElement) - 1
+        guard lastSectionWithAtLeastOneElement > -1 && lastRow > -1 else { return }
+        let bottomIndex = IndexPath(item: lastRow, section: lastSectionWithAtLeastOneElement)
+        scrollToRow(at: bottomIndex, at: .bottom, animated: animated)
+    }
+
+    
+    
+} 

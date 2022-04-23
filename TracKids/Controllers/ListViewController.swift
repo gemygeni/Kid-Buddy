@@ -78,10 +78,13 @@ class ListViewController: UIViewController {
         do {
             try! Auth.auth().signOut()
             self.navigationController?.popToRootViewController(animated: true)
-            if let TrackingController = self.navigationController?.rootViewController as? TrackingViewController{
-                TrackingController.IsLoggedIn = false
-                TrackingController.mapView.removeAnnotations( TrackingController.mapView.annotations)
-                TrackingController.centerMapOnUserLocation()
+            if let TrackingVC = self.navigationController?.rootViewController as? TrackingViewController{
+                TrackingVC.IsLoggedIn = false
+                TrackingVC.mapView.removeAnnotations( TrackingVC.mapView.annotations)
+                TrackingVC.centerMapOnUserLocation()
+                TrackingVC.tabBarItem.title = ""
+                TrackingVC.navigationItem.title = ""
+
                 if var tabVC = tabBarController?.viewControllers{
                     tabVC.removeAll()
                 }
@@ -174,6 +177,26 @@ class ListViewController: UIViewController {
    }
     
     
+    @IBAction func SOSButtonPressed(_ sender: Any) {
+        sendCriticalAlert()
+    }
     
-    
+    func sendCriticalAlert(){
+        DataHandler.shared.fetchUserInfo { user in
+            let sender = user.name
+            if user.accountType == 0 {
+                if let childId = TrackingViewController.trackedChildUId{
+                    DataHandler.shared.fetchDeviceID(for: childId) { deviceToken in
+                        DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: sender, body: "respond to \(sender) call ")
+                    }
+                }
+            }
+            else  if user.accountType == 1 {
+                guard let parentId = user.parentID  else{return}
+                DataHandler.shared.fetchDeviceID(for: parentId) { deviceToken in
+                    DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: sender, body: " \(sender) NEEDS HELP ")
+                }
+            }
+        }
+    }
 }
