@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		688FC0B5C51D4804254658E4 /* Pods_TracKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB365BC9EDEB1C31C0365A9 /* Pods_TracKids.framework */; };
+		2070B3873871E44D38CC47E6 /* Pods_TracKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3BBAAFF2B4240FC7DF3166 /* Pods_TracKids.framework */; };
 		EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16107526E79FFB007BA5ED /* MessageCell.swift */; };
 		EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF16107626E79FFB007BA5ED /* MessageCell.xib */; };
 		EF1C84C127435A6800033A65 /* Apple.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EF1C84C027435A6800033A65 /* Apple.gpx */; };
@@ -48,9 +48,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		178A77301FD1B118B0101FE8 /* Pods-TracKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.debug.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.debug.xcconfig"; sourceTree = "<group>"; };
-		3CB365BC9EDEB1C31C0365A9 /* Pods_TracKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TracKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB19A0294FF6FF5EED83C61C /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
+		2D3BBAAFF2B4240FC7DF3166 /* Pods_TracKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TracKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		47024EDCB501B5CFC8D319BD /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
+		E6695A53566D9C87398A9655 /* Pods-TracKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.debug.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.debug.xcconfig"; sourceTree = "<group>"; };
 		EF16107526E79FFB007BA5ED /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		EF16107626E79FFB007BA5ED /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		EF1C84C027435A6800033A65 /* Apple.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Apple.gpx; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 				EF5A089926F15481000087EB /* MapKit.framework in Frameworks */,
 				EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */,
 				EFA8956B27C1FB9C00DD99CF /* SwiftOTP in Frameworks */,
-				688FC0B5C51D4804254658E4 /* Pods_TracKids.framework in Frameworks */,
+				2070B3873871E44D38CC47E6 /* Pods_TracKids.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				EF5A089826F15481000087EB /* MapKit.framework */,
-				3CB365BC9EDEB1C31C0365A9 /* Pods_TracKids.framework */,
+				2D3BBAAFF2B4240FC7DF3166 /* Pods_TracKids.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -218,8 +218,8 @@
 		F8B61BF64E95AA6B7DB1AB4C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				178A77301FD1B118B0101FE8 /* Pods-TracKids.debug.xcconfig */,
-				EB19A0294FF6FF5EED83C61C /* Pods-TracKids.release.xcconfig */,
+				E6695A53566D9C87398A9655 /* Pods-TracKids.debug.xcconfig */,
+				47024EDCB501B5CFC8D319BD /* Pods-TracKids.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -231,11 +231,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF5B0F0225BE492300890F4B /* Build configuration list for PBXNativeTarget "TracKids" */;
 			buildPhases = (
-				2482F6B8760F37B3D750155B /* [CP] Check Pods Manifest.lock */,
+				D53163A50C23A5BEC982F8F2 /* [CP] Check Pods Manifest.lock */,
 				EF5B0EEA25BE492200890F4B /* Sources */,
 				EF5B0EEB25BE492200890F4B /* Frameworks */,
 				EF5B0EEC25BE492200890F4B /* Resources */,
-				14290A6F1E762BD547DD5BA3 /* [CP] Embed Pods Frameworks */,
+				F633F9827A49979F2904C502 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -280,8 +280,8 @@
 			mainGroup = EF5B0EE525BE492200890F4B;
 			packageReferences = (
 				EFEB940626E5E2520059BCE6 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
-				EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor" */,
-				EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP" */,
+				EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor.git" */,
+				EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP.git" */,
 			);
 			productRefGroup = EF5B0EEF25BE492200890F4B /* Products */;
 			projectDirPath = "";
@@ -312,24 +312,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		14290A6F1E762BD547DD5BA3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2482F6B8760F37B3D750155B /* [CP] Check Pods Manifest.lock */ = {
+		D53163A50C23A5BEC982F8F2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -349,6 +332,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F633F9827A49979F2904C502 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TracKids/Pods-TracKids-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -525,7 +525,7 @@
 		};
 		EF5B0F0325BE492300890F4B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 178A77301FD1B118B0101FE8 /* Pods-TracKids.debug.xcconfig */;
+			baseConfigurationReference = E6695A53566D9C87398A9655 /* Pods-TracKids.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -550,7 +550,7 @@
 		};
 		EF5B0F0425BE492300890F4B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB19A0294FF6FF5EED83C61C /* Pods-TracKids.release.xcconfig */;
+			baseConfigurationReference = 47024EDCB501B5CFC8D319BD /* Pods-TracKids.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -597,7 +597,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor" */ = {
+		EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RNCryptor/RNCryptor.git";
 			requirement = {
@@ -605,7 +605,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
+		EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
 			requirement = {
@@ -626,12 +626,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		EFA8956727C1A05D00DD99CF /* RNCryptor */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor" */;
+			package = EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor.git" */;
 			productName = RNCryptor;
 		};
 		EFA8956A27C1FB9C00DD99CF /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP" */;
+			package = EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP.git" */;
 			productName = SwiftOTP;
 		};
 		EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */ = {

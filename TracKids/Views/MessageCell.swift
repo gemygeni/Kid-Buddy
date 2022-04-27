@@ -15,7 +15,10 @@ class MessageCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-       // MessageImageView.translatesAutoresizingMaskIntoConstraints = false
+        MessageImageView.translatesAutoresizingMaskIntoConstraints = false
+        MessageImageView.layer.cornerRadius = MessageImageView.frame.size.height / 5
+        MessageImageView.layer.masksToBounds = true
+        MessageImageView.contentMode = .scaleAspectFill
         MessageBodyView.translatesAutoresizingMaskIntoConstraints = false
         MessageBodyView.layer.cornerRadius = MessageBodyView.frame.size.height / 5
     }
@@ -24,5 +27,4 @@ class MessageCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
     }
-    
 }

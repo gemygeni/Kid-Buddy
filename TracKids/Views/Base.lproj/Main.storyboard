@@ -545,6 +545,7 @@
                             </mapView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="964-EZ-l2T">
                                 <rect key="frame" x="188.66666666666666" y="429.66666666666669" width="37" height="37"/>
+                                <color key="color" name="AccentColor"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6DP-zF-yxH">
                                 <rect key="frame" x="319.33333333333331" y="40" width="74.666666666666686" height="57"/>
@@ -1230,11 +1231,17 @@
                                     <constraint firstAttribute="height" constant="60" id="saU-qy-nUR"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="EQf-WQ-uhO">
+                                <rect key="frame" x="188.66666666666666" y="429.66666666666669" width="37" height="37"/>
+                                <color key="color" name="AccentColor"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ez3-BV-v7M"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                         <constraints>
+                            <constraint firstItem="EQf-WQ-uhO" firstAttribute="centerX" secondItem="a8G-5N-N3I" secondAttribute="centerX" id="FRx-uP-FEk"/>
                             <constraint firstItem="KQB-5y-ScE" firstAttribute="top" secondItem="ez3-BV-v7M" secondAttribute="top" id="Mcm-AO-NAb"/>
+                            <constraint firstItem="EQf-WQ-uhO" firstAttribute="centerY" secondItem="a8G-5N-N3I" secondAttribute="centerY" id="O3c-oc-biA"/>
                             <constraint firstItem="ez3-BV-v7M" firstAttribute="bottom" secondItem="KIo-sB-X62" secondAttribute="bottom" constant="5" id="S6Y-g6-V3d"/>
                             <constraint firstItem="KQB-5y-ScE" firstAttribute="leading" secondItem="ez3-BV-v7M" secondAttribute="leading" id="Vw6-pO-qzx"/>
                             <constraint firstItem="KIo-sB-X62" firstAttribute="leading" secondItem="ez3-BV-v7M" secondAttribute="leading" id="Xlm-M1-peN"/>
@@ -1249,6 +1256,7 @@
                     <navigationItem key="navigationItem" id="Aet-5g-iDw"/>
                     <connections>
                         <outlet property="messageTextfield" destination="Mbl-zH-VDk" id="vkp-CQ-9BQ"/>
+                        <outlet property="spinnerIndecator" destination="EQf-WQ-uhO" id="IxA-n9-OSn"/>
                         <outlet property="tableView" destination="KQB-5y-ScE" id="IAs-ma-NxY"/>
                     </connections>
                 </viewController>

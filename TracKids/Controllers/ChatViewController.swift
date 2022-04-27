@@ -41,6 +41,7 @@ class ChatViewController: UIViewController{
         }
     }
     
+    @IBOutlet weak var spinnerIndecator: UIActivityIndicatorView!
     @IBAction func pickPhotoPressed(_ sender: UIButton) {
         selectPhoto()
     }
@@ -152,7 +153,7 @@ class ChatViewController: UIViewController{
                             let messageId = childSnapshot.key
                             print("message ID \(messageId) ")
                             if messageId != firstMessageId {
-                                print("not equal snapkey is \(messageId) and last post id is \(String(describing: firstMessageId)) and last massage is \(String(describing: firstMessage?.body))")
+                                print("Debug: not equal snapkey is \(messageId) and last post id is \(String(describing: firstMessageId)) and last massage is \(String(describing: firstMessage?.body))")
         
                                 let message = Message( messageInfo)
                                 print("fetched message is \(String(describing: message.body))")
@@ -161,16 +162,15 @@ class ChatViewController: UIViewController{
                             }
                         }
                     }
-                    print("first in fetched \(String(describing: fetchedMessages.first?.body)) and last in fetched \(String(describing: fetchedMessages.last?.body))" )
+                    print("Debug: first in fetched \(String(describing: fetchedMessages.first?.body)) and last in fetched \(String(describing: fetchedMessages.last?.body))" )
         
                     completion(fetchedMessages, fetchedMessagesIds)
-            print("ss in downloadMessages 2")
         }
     }
     
     func handleSendingMessage(){
         sendPressed = true
-        guard let messageText = messageTextfield.text,let sender = self.userName, !messageText.isEmpty  else {return}
+        guard let messageText = messageTextfield.text,let sender = self.userName  else {return}
         if self.accountType == .parent{
             if let childID = self.uniqueID{
                 self.messages = []
@@ -179,6 +179,7 @@ class ChatViewController: UIViewController{
                 DataHandler.shared.uploadMessageWithInfo(messageText, childID, ImageURL: ImageURL) {[weak self] in
 
                     self?.beginBatchFetch {
+                        self?.spinnerIndecator.stopAnimating()
                         self?.sendPressed = false
                         print("fetch Done")
                     }
@@ -195,8 +196,9 @@ class ChatViewController: UIViewController{
                self.messagesIds = []
                 DataHandler.shared.uploadMessageWithInfo(messageText, parentID, ImageURL: ImageURL) {[weak self] in
                   self?.beginBatchFetch {
+                self?.spinnerIndecator.stopAnimating()
                    self?.sendPressed = false
-                   print("fetch Done")
+                   print("Debug: fetch Done")
                    }
                 }
                 DataHandler.shared.fetchDeviceID(for: parentID) { deviceID in
@@ -229,12 +231,11 @@ class ChatViewController: UIViewController{
     
     
     func uploadImageData(){
+        self.spinnerIndecator.startAnimating()
         let storageReference = storage.reference()
         let UId = Auth.auth().currentUser?.uid
-
         let imageName = NSUUID().uuidString
         let imageReference  = storageReference.child("Messages/\(String(describing: UId))/\(imageName).jpg")
-
         if let imageData =  self.imageMessage?.jpegData(compressionQuality: 0.3){
             imageReference.putData(imageData, metadata: nil) { (metadata, error) in
                 if error != nil {print(error!.localizedDescription)}
@@ -243,17 +244,13 @@ class ChatViewController: UIViewController{
                     if let downloadedURL = url{
                         self?.ImageURL = downloadedURL.absoluteString
                         print("Debug: url is \(String(describing: self?.ImageURL))")
-                        self?.messageTextfield.text = "okay good"
+                        self?.messageTextfield.text = ""
                         self?.handleSendingMessage()
-                        self?.beginBatchFetch(completion: {
-                            print("Debug: fetch Done")
-                        })
                     }
                 }
              }
           }
        }
-    
 }
 
 extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate{
@@ -265,13 +262,34 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
         let cell  = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! MessageCell
         cell.backgroundColor = UIColor.clear
         let message = messages[indexPath.row]
+        
+        if let ImageURl = message.imageURL {
+            if ImageURl.starts(with: "https") {
+                cell.MessageImageView.isHidden = false
+                    if cell.MessageImageView != nil {
+                        let resizeConstraints = [
+                            cell.MessageImageView.heightAnchor.constraint(equalToConstant:  300 ),
+                            cell.MessageImageView.widthAnchor.constraint(equalToConstant:  200)
+                        ]
+
+                        cell.MessageImageView.addConstraints(resizeConstraints)
+                                print("image reset")
+                    }
+
+                    print("Debug: label hidden true")
+                
+            }
+            else {
+                                cell.MessageImageView.isHidden = true
+                                print("Debug: image hidden true")
+
+            }
+            cell.MessageImageView.loadImageUsingCacheWithUrlString(ImageURl)
+        }
         cell.MessageBodyLabel.text = message.body
-//        if let ImageURl = message.imageURL {
-//            cell.MessageImageView.loadImageUsingCacheWithUrlString(ImageURl)
-//        }
         cell.timeLabel.numberOfLines = 0
         cell.timeLabel.text = message.timestamp?.convertDateFormatter()
-        if message.sender == Auth.auth().currentUser?.uid{
+        if message.sender == Auth.auth().currentUser?.uid {
             cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
             cell.MessageBodyView.leftAnchor.constraint(equalTo: cell.MessageBodyView.superview!.leftAnchor , constant: 50).isActive = true
         }
@@ -289,10 +307,18 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
         if editingStyle == .delete{
             let messageId = messagesIds[indexPath.row]
             let selectedReference =  self.messageReference.child(messageId)
-            selectedReference.removeValue()
+            
             messages.remove(at: indexPath.row)
             messagesIds.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            selectedReference.removeValue { [weak self] error, reference in
+                if error != nil{
+                    print(error?.localizedDescription as Any)
+                }
+//                self?.beginBatchFetch {
+//                    print("Debug: removed  massage successfully")
+//                }
+            }
         }
     }
     
@@ -371,7 +397,7 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
         return headerView
     }
     
-}
+    }
 
         extension ChatViewController : UITextFieldDelegate{
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
