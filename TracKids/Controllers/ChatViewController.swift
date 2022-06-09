@@ -8,13 +8,14 @@
 import UIKit
 import Firebase
 import MobileCoreServices
-class ChatViewController: UIViewController{
+class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     var trackedChildObserver : NSObjectProtocol?
     var messages : [Message] = []
     var messagesIds : [String] = []
     let leadingScreensForBatching:CGFloat = 2.0
     var fetchingMore = false
     var endReached = false
+    var rowHeights:[Int:CGFloat] = [:]
     var trackedChildChanged = false
     private var ImageURL : String?
     var childID : String?{
@@ -33,7 +34,7 @@ class ChatViewController: UIViewController{
     var sendPressed = false
     var counter1 = 0
     var counter2 = 0
-
+    var counter3 = 0
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextfield: UITextField!{
         didSet{
@@ -46,6 +47,40 @@ class ChatViewController: UIViewController{
         selectPhoto()
     }
     
+    
+    @IBOutlet weak var backgroundView: UIView!{
+        didSet{
+            backgroundView.isHidden = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomOut(_:)))
+            backgroundView.addGestureRecognizer(tapGesture)
+
+        }
+    }
+    
+    
+    var  imageView =  UIImageView(){
+        didSet{
+            imageView.sizeToFit()
+            imageView.layer.masksToBounds = true
+            scrollView?.contentSize = imageView.frame.size
+            
+        }
+    }
+    @IBOutlet weak var scrollView: UIScrollView!{
+        didSet{
+            
+            scrollView.minimumZoomScale = 1/25
+            scrollView.maximumZoomScale = 2.0
+            scrollView.delegate = self
+            scrollView.addSubview(imageView)
+            scrollView.layer.masksToBounds = true
+        }
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+
     var messageReference = DatabaseReference()
     func configureMessageReference(childID : String? = nil, parentId : String? = nil ) ->  DatabaseReference{
         if let UId = Auth.auth().currentUser?.uid{
@@ -69,7 +104,7 @@ class ChatViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.trackedChildChanged = true
-        print("hey will appear")
+        print("Debug: hey will appear")
         if Auth.auth().currentUser?.uid == nil{
             messages = []
             messagesIds = []
@@ -82,11 +117,12 @@ class ChatViewController: UIViewController{
             self?.parentID = user.parentID
             self?.userName = user.name
             self?.beginBatchFetch(completion: {
+                
             self?.trackedChildChanged = false
-                print("fetch Done ")
+                print("Debug: fetch Done1 ")
             })
 
-            print("messages count \(String(describing: self?.messages.count))")
+            print("Debug: messages count \(String(describing: self?.messages.count))")
         }
         if let  trackedChildUId = TrackingViewController.trackedChildUId{
             self.uniqueID = trackedChildUId
@@ -102,10 +138,43 @@ class ChatViewController: UIViewController{
             }
         }
         resetBadgeCount()
+        messageTextfield.becomeFirstResponder()
+        
+        
+        
+        
+        
+        
+        scrollView.contentSize = backgroundView.frame.size
+        scrollView.layer.masksToBounds = true
+        scrollView.frame.size = view.frame.size
+        scrollView.contentMode = .scaleAspectFit
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        backgroundView.contentMode = .scaleAspectFit
+        
+
+        
+        
+        
+        
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        imageView.sizeToFit()
+        backgroundView.contentMode = .scaleAspectFit
+        scrollView.contentSize = imageView.frame.size
+        scrollView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFit
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.masksToBounds = true
+        scrollView.layer.masksToBounds = true
+       // scrollView.zoomScale = 1.0
 
     }
     
@@ -121,28 +190,34 @@ class ChatViewController: UIViewController{
         tableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
         tableView.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0.7545114437)
         tableView.allowsMultipleSelectionDuringEditing = true
-        messageTextfield.becomeFirstResponder()
-    }
+        }
+    
     @IBAction func sendMessagePressed(_ sender: UIButton) {
         self.handleSendingMessage()
     }
-    
+
     func downloadMessages(completion : @escaping (_  : [Message] , _  : [String])->()){
         let firstMessage = messages.first
         let firstMessageId = messagesIds.first
         var queryRef : DatabaseQuery
         messageReference = configureMessageReference(childID: uniqueID, parentId: parentID)
         if firstMessage != nil {
-            print("last message not nil")
+            print("Debug: last message not nil")
             let firstTimestamp = firstMessage?.timestamp
             
             queryRef = messageReference.queryOrdered(byChild: "timestamp").queryEnding(atValue: firstTimestamp ).queryLimited(toLast: 20)
         }
         else {
-            print("last message is nil")
+            print("Debug: last message is nil")
             queryRef = messageReference.queryOrderedByValue().queryLimited(toLast: 20)
         }
-    queryRef.observe(.value) { (snapshot) in
+    queryRef.observe(.value) { [weak self] (snapshot) in
+        if self?.fetchingMore == false {
+            self?.messages = []
+            self?.messagesIds = []
+            print("Debug: erased message)")
+            }
+        
                     var fetchedMessages = [Message]()
                     var fetchedMessagesIds = [String]()
                     let index = fetchedMessages.count
@@ -151,39 +226,29 @@ class ChatViewController: UIViewController{
                             let messageInfo = childSnapshot.value as? [String:Any]
                              {
                             let messageId = childSnapshot.key
-                            print("message ID \(messageId) ")
                             if messageId != firstMessageId {
                                 print("Debug: not equal snapkey is \(messageId) and last post id is \(String(describing: firstMessageId)) and last massage is \(String(describing: firstMessage?.body))")
         
                                 let message = Message( messageInfo)
-                                print("fetched message is \(String(describing: message.body))")
                                  fetchedMessagesIds.insert(messageId, at: index )
                               fetchedMessages.insert(message, at: index)
                             }
                         }
                     }
                     print("Debug: first in fetched \(String(describing: fetchedMessages.first?.body)) and last in fetched \(String(describing: fetchedMessages.last?.body))" )
-        
                     completion(fetchedMessages, fetchedMessagesIds)
-        }
-    }
+                 }
+              }
     
     func handleSendingMessage(){
         sendPressed = true
         guard let messageText = messageTextfield.text,let sender = self.userName  else {return}
         if self.accountType == .parent{
             if let childID = self.uniqueID{
-                self.messages = []
-                self.messagesIds = []
-
                 DataHandler.shared.uploadMessageWithInfo(messageText, childID, ImageURL: ImageURL) {[weak self] in
-
-                    self?.beginBatchFetch {
                         self?.spinnerIndecator.stopAnimating()
                         self?.sendPressed = false
-                        print("fetch Done")
-                    }
-                }
+                 }
                 DataHandler.shared.fetchDeviceID(for: childID) { deviceID in
                     print("Debug: device Id is \(deviceID)")
                 DataHandler.shared.sendPushNotification(to: deviceID, sender: sender, body: messageText)
@@ -192,15 +257,11 @@ class ChatViewController: UIViewController{
         }
         else if self.accountType == .child{
             if let parentID = self.parentID{
-                self.messages = []
-               self.messagesIds = []
                 DataHandler.shared.uploadMessageWithInfo(messageText, parentID, ImageURL: ImageURL) {[weak self] in
-                  self?.beginBatchFetch {
-                self?.spinnerIndecator.stopAnimating()
-                   self?.sendPressed = false
-                   print("Debug: fetch Done")
-                   }
+                  self?.spinnerIndecator.stopAnimating()
+                  self?.sendPressed = false
                 }
+                
                 DataHandler.shared.fetchDeviceID(for: parentID) { deviceID in
                     DataHandler.shared.sendPushNotification(to: deviceID, sender: sender, body: messageText)
                 }
@@ -251,7 +312,39 @@ class ChatViewController: UIViewController{
              }
           }
        }
-}
+    
+    @objc func handleZoom(_ recognizer : UITapGestureRecognizer? =  nil ) {
+        if let tappedImageView = recognizer?.view as? UIImageView {
+            self.imageView.image = tappedImageView.image
+            performZoomingIn()
+            print("Debug: tapped")
+        }
+
+        
+    }
+    
+    func performZoomingIn (){
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.backgroundView.isHidden = false
+            
+        })
+    }
+    
+    
+    @objc func handleZoomOut(_ recognizer : UITapGestureRecognizer? =  nil ) {
+        
+        performZoomingOut()
+    }
+
+    func performZoomingOut (){
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.backgroundView.isHidden = true
+        })
+    }
+
+    
+    
+  }
 
 extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -260,42 +353,48 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell  = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! MessageCell
+        
         cell.backgroundColor = UIColor.clear
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoom(_:)))
+        cell.MessageImageView.addGestureRecognizer(tapGesture)
+
         let message = messages[indexPath.row]
         
         if let ImageURl = message.imageURL {
+            counter3 += 1
+
             if ImageURl.starts(with: "https") {
-                cell.MessageImageView.isHidden = false
-                    if cell.MessageImageView != nil {
-                        let resizeConstraints = [
-                            cell.MessageImageView.heightAnchor.constraint(equalToConstant:  300 ),
-                            cell.MessageImageView.widthAnchor.constraint(equalToConstant:  200)
-                        ]
-
-                        cell.MessageImageView.addConstraints(resizeConstraints)
-                                print("image reset")
-                    }
-
-                    print("Debug: label hidden true")
                 
-            }
+                cell.MessageImageView?.isHidden = false
+                    if cell.MessageImageView != nil {
+                            cell.MessageImageView?.loadImageUsingCacheWithUrlString(ImageURl)
+                                    let resizeConstraints = [
+                                        cell.MessageImageView.heightAnchor.constraint(equalToConstant:  300),
+                                        cell.MessageImageView.widthAnchor.constraint(equalToConstant:  200)
+                                    ]
+                                        cell.MessageImageView?.addConstraints(resizeConstraints)
+                                 }
+                             }
             else {
-                                cell.MessageImageView.isHidden = true
-                                print("Debug: image hidden true")
-
+                cell.MessageImageView?.isHidden = true
+                tableView.rowHeight = UITableView.automaticDimension
+                self.tableView.estimatedRowHeight = 50
+                cell.layoutIfNeeded()
             }
-            cell.MessageImageView.loadImageUsingCacheWithUrlString(ImageURl)
         }
+        
         cell.MessageBodyLabel.text = message.body
         cell.timeLabel.numberOfLines = 0
         cell.timeLabel.text = message.timestamp?.convertDateFormatter()
         if message.sender == Auth.auth().currentUser?.uid {
-            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0.4581165314, green: 0.7310858369, blue: 0.08122736961, alpha: 1)
             cell.MessageBodyView.leftAnchor.constraint(equalTo: cell.MessageBodyView.superview!.leftAnchor , constant: 50).isActive = true
         }
         else{
-            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0, green: 0.4845445156, blue: 0.9041138291, alpha: 1)
         }
+        
         return cell
     }
     
@@ -307,17 +406,16 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
         if editingStyle == .delete{
             let messageId = messagesIds[indexPath.row]
             let selectedReference =  self.messageReference.child(messageId)
-            
-            messages.remove(at: indexPath.row)
-            messagesIds.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            self.messagesIds.remove(at: indexPath.row)
+            self.messages.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            self.messages = []
+            self.messagesIds = []
             selectedReference.removeValue { [weak self] error, reference in
                 if error != nil{
                     print(error?.localizedDescription as Any)
                 }
-//                self?.beginBatchFetch {
-//                    print("Debug: removed  massage successfully")
-//                }
+                self?.tableView.reloadDataAndKeepOffset()
             }
         }
     }
@@ -340,13 +438,13 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
          let contentHeight = scrollView.contentSize.height
          let tableHeight = tableView.contentSize.height
          let scrollHeight =  scrollView.frame.size.height
-         if  tableHeight + contentOffSetY - scrollHeight <=  contentHeight - 200   {
+         if  tableHeight + contentOffSetY - scrollHeight <=  contentHeight - 260   {
              if counter1 > 1 {
                  self.tableView.tableHeaderView = createSpinnerHeader()
              }
              if !fetchingMore && !endReached {
                  beginBatchFetch {
-                     print("Debug: fetch Done")
+                     print("Debug: fetch Done4")
                  }
              }
              else if endReached {
@@ -362,16 +460,17 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
         if trackedChildChanged == true{
             messages = []
             messagesIds = []
+            print("Debug: erased 2 message")
         }
         print("Debug: begun fetch triggered out \(self.counter2)")
         downloadMessages {[weak self] newMessages, newMessagesIds in
             self?.fetchingMore = false
             self?.endReached = newMessages.count == 0
                 for messageId in  newMessagesIds{
-                    self!.messagesIds.insert(messageId, at: 0)
+                    self?.messagesIds.insert(messageId, at: 0)
                 }
                 for message in  newMessages{
-                    self!.messages.insert(message, at: 0)
+                    self?.messages.insert(message, at: 0)
                 }
             UIView.performWithoutAnimation {
                 if self?.trackedChildChanged == true{
@@ -439,3 +538,7 @@ extension ChatViewController : UIImagePickerControllerDelegate, UINavigationCont
     }
 }
 
+//        scrollView.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: 0).isActive = true
+//        scrollView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: 0).isActive = true
+//        scrollView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 0).isActive = true
+//        scrollView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 0).isActive = true

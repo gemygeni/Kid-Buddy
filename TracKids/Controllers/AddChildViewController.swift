@@ -129,6 +129,7 @@ class AddChildViewController: UIViewController {
                 self?.childPasswordTextField.text = nil
                    }
             guard let childId = result?.user.uid else {return}
+            print("out inside childId  uid is \(childId)")
             let childInfo = ["name" : ChildName,
                              "email" : email,
                              "password" : password,
@@ -136,13 +137,16 @@ class AddChildViewController: UIViewController {
                              "parentID" : UID ,
                              "imageURL" : self?.ImageURL ?? "",
                              "deviceID" : deviceID] as [String : Any]
-            Auth.auth().updateCurrentUser(originalUser!) { error in
-                if let error = error {
-                    print(error)
-                }
-                else {
+                    print("inside original user uid is \(originalUser!.uid)")
+                    print("inside childId  uid is \(childId)")
                     UserReference.child(childId).updateChildValues(childInfo) { (error, reference) in
                         if let error = error{print(error.localizedDescription)}
+                        
+                Auth.auth().updateCurrentUser(originalUser!) { error in
+                                        if let error = error {
+                                            print(error)
+                                        }
+
                        TrackedChildsReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
                             if !ChildName.isEmpty {
                                 self?.navigationController?.popViewController(animated: true)
@@ -153,9 +157,10 @@ class AddChildViewController: UIViewController {
                             }
                         }
                     }
-                    print("original user uid is \(originalUser!.uid)")}
+                    print("original user uid is \(originalUser!.uid)")
+                    
+                }
             }
-        }
    }
 }
 
@@ -193,7 +198,6 @@ extension AddChildViewController : UIImagePickerControllerDelegate, UINavigation
 }
 extension AddChildViewController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        uploadData()
         textField.resignFirstResponder()
         return true
     }

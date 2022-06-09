@@ -191,7 +191,7 @@ extension UITableView {
             // exception here
             guard self.indexPathIsValid(indexPath) else { return }
 
-            self.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            self.scrollToRow(at: indexPath, at: .none, animated: false)
         }
     }
 

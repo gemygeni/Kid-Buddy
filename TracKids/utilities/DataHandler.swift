@@ -3,11 +3,11 @@
     //  TracKids
     //
     //  Created by AHMED GAMAL  on 2/4/21.
-    //
-    import Foundation
+    import UIKit
     import Firebase
     import GeoFire
-    import UIKit
+    import CryptoKit
+
 
     let DBReference = Database.database().reference()
     let UserReference = DBReference.child("users")
@@ -172,20 +172,29 @@
                 }.resume()
             }
         }
+     //   "data": {"CRITICAL_ALERT":"YES"}
+      //,\"data\":{\"isCritical\":\"1\"}
         
-//
-//        "alert": "This is a Critical Alert!",
-//        "badge": 1,
-//        "sound": {
-//          "critical": 1,
-//          "name": "your_custom_sound.aiff",
-//          "volume": 1.0
+        
+        
+        
+        
+        
+        
+        
         func sendCriticalAlert(to recipientToken : String, sender : String, body : String) {
+           let accessToken =  getAccessToken()
             if let url = URL(string: AppDelegate.NOTIFICATION_URL) {
                 var request = URLRequest(url: url)
-                request.allHTTPHeaderFields = ["Content-Type":"application/json", "Authorization":"key=\(AppDelegate.SERVERKEY)"]
+                request.allHTTPHeaderFields = ["Content-Type":"application/json",
+                                               "Authorization":"Bearer \(accessToken)"]
                 request.httpMethod = "POST"
-                request.httpBody = "{\"to\":\"\(recipientToken)\",\"alert\":{\"title\":\"\(sender)\",\"body\":\"\(body)\",\"sound\":{\"critical\":\"1\",\"name\":\"criticalAlert.aiff\",\"volume\":\"1.0\"} ,\"content-available\":\"1\",\"badge\":\"1\"}}".data(using: .utf8)
+                request.httpBody = "{\"message\":{\"token\":\"\(recipientToken)\",\"notification\":{\"title\":\"\(sender)\",\"body\":\"\(body)\" ,\"badge\":\"1\",\"sound\":{\"critical\":\"1\",\"name\":\"criticalAlert.m4a\",\"volume\":\"1.0\",\"mutable-content\":\"1\"}}}}".data(using: .utf8)
+                
+                
+//                request.httpBody = "{\"to\":\"\(recipientToken)\",\"notification\":{\"title\":\"\(sender)\",\"body\":\"\(body)\",\"sound\":\"default\",\"content-available\":\"1\",\"badge\":\"1\"}}".data(using: .utf8)
+
+                
                 URLSession.shared.dataTask(with: request) { (data, urlresponse, error) in
                     if error != nil {
                         print("error")
@@ -196,7 +205,6 @@
             }
         }
             
-     //   \"sound\":{\"critical\":\"1\",\"name\":\"criticalAlert.wav\",\"volume\":\"1.0\"}
             
 
         func fetchDeviceID(for uid : String,  completion : @escaping (String) -> Void) {
@@ -218,8 +226,19 @@
                         TrackedChildsReference.child(currentUser).removeValue { error, reference in
                             ObservedPlacesReference.child(currentUser).removeValue { error, reference in
                                 MessagesReference.child(currentUser).removeValue { error, reference in
-                                    completion()
-                                    print("removed successfully")
+                                    
+                                    let storageReference = storage.reference()
+                                    
+       let imageMessagesReference  = storageReference.child("Messages/\(String(describing: currentUser))")
+                                    
+                                    imageMessagesReference.delete { error in
+        let childsPicturesReference  = storageReference.child("ChildsPictures/\(currentUser)")
+                                        childsPicturesReference.delete { error in
+                                            completion()
+                                            print("removed successfully")
+
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -257,6 +276,8 @@
             }
         }
         
+        
+        
         func updateChildInfo(forId childId : String, withImage newImage : UIImage, name: String, completion : @escaping () -> Void){
             guard let parenId = Auth.auth().currentUser?.uid else {return}
             self.fetchChildAccount(with: childId) { child in
@@ -292,14 +313,50 @@
                 }
             }
         }
+        
+        
+        
+        func getAccessToken() -> String {
+            let secret = "  MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCjNS3qx+zA88Zf\nP0uXRQMi960cYFeGd5LSAPVh5mv77hL14ypSDvNkuoqo2s/D4V/37YLSQ8Ur9swY\n6T26KHwXbwN0oYGxgTM1yPsEG/YdVJ/6UBAGDMwQgtN9dg4GexZgp4+Nf/sMBBZN\nOrGDeXLb6OfwoaUynKjnpQ2fWbI/swN3Bjco9lJD1InPGSKhJNY3/CLjG0Nq9Df0\nSyMDuxsBy/y4iScppA+OB/1HVl07SNiTErTBpT99UNCC5eJhnJtmiTSTrhE70qwh\nl0VSwr5jFgjWJ4Yu0fRtAWg+S+3MLGTW+d32KnfDiLNf9uoNTEk3K3jqbi1Anhme\nByUokAKbAgMBAAECggEAHzxrWFcBMgC2A766ee4kZoneoOKzfbHe8MBsNluCaUos\naNEcZW4lGS82oJCYWRYGZw4XDqUX1I08jLv/K2TaMyX1FFpg1xcyNOYNXMD5Pq3W\nnHK8Tlwepj5TudxhXM4r/z2ylNNcufUCS6+jD9WrrPkLgxt84Y3oKcWGMOxa2CPd\nRzeHJ0WvgJPj+AU/nY65YliFLfFIvvJJl7H/TXcpiJCkYOPe4blUU7zz3Kg/MUWY\nx79depBan/5GpJ01BRu/D4iHXl/yivdO4Mph++8A7SpAfs+/HZ310XuZCK807WxI\n0I4oVyfHWoY2GJV7p5KWPoeRsU/8FkseYb6a6CRwmQKBgQDfNmWuwW/Eng1WviBd\nv7DIEeZq+fNLVr+mb+r78Bn3yE/cB+PFdZ1aV+weRujoUfmhSWaGcICpBhi1km3B\nPsHj86gRS7TWCFawKUMtK9dBuRRJoMDszMsbkZn2icCLdDGbnu9mWNRdMSgLbho/\n3t17n7o5tEf4Inawvl+kprVglwKBgQC7LmJ6wRuCMTrup4z+DW30NN0M05LSF3Mn\nfRPHfPms362fYhVqZ/Rg+pFbpvgftdcacRS3GtX8XVyqpZv0wkJ0w6Y8trXr4/NN\nljabVvb7BIVGR3/Tv1vycR8u1kbllg/YFJwsw/g6kXKVZX31XrJx41Rse5w/43OB\nBW7fNr0qnQKBgAzHaHrgyC1RfyIAMIotd0l8/NwTA0LE7KPytFlIHbR521iVewzK\n9v89GV+CX8MtLkV1llEMD9Gdb7y1bWMq3J7YTD7xPqEiSRQ8yIPFhsVUezzb3y+v\nadFiPJZIvKU/ObfXGY2aeE39inVdEFOnxrZVJqw3Dge+sVzdCUy73pZxAoGAT1zk\nXl3AFxxee0/JJPJ2u0MqskSGjNNqfMS4fS2NAvI3wEsq/1miMPgsZ2rM600DLe/i\nM5yKPB0trCDZlhZDbRSDSFzDl4en4i6dapGd2GJbS6gHF7Wb+5hg+0/Y8YEFqL1c\nVlKkzdhbd+J3XHDRQh577h8e6au7jmnKT5P68rUCgYAcKpLkD5lvcawUyr+//zvo\nEifIyyxb2fcMXdsu0zZ9y4zAn7R6t78HcBhDtJzPi2cB6QHMJaghYktwQYkyfpTb\nzqdzJbBTFTVfl9UWrcI/OAhDwkg/kxTt92dzY2GunUT28WF6rTPYTlSpK2RtA6+n\n9jTsNZKzF+DhT+fCQyBxWQ=="
+            let privateKey = SymmetricKey(data: Data(secret.utf8))
+
+            let headerJSONData = try! JSONEncoder().encode(Header())
+            let headerBase64String = headerJSONData.urlSafeBase64EncodedString()
+
+            let payloadJSONData = try! JSONEncoder().encode(Payload())
+            let payloadBase64String = payloadJSONData.urlSafeBase64EncodedString()
+
+            let toSign = Data((headerBase64String + "." + payloadBase64String).utf8)
+
+            let signature = HMAC<SHA256>.authenticationCode(for: toSign, using: privateKey)
+            let signatureBase64String = Data(signature).urlSafeBase64EncodedString()
+
+            let token = [headerBase64String, payloadBase64String, signatureBase64String].joined(separator: ".")
+            print(token)
+            return token
+        }
+
     }
 
+extension Data {
+    
+    func urlSafeBase64EncodedString() -> String {
+        return base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+    }
+}
 
+struct Header: Encodable {
+    let alg = "HS256"
+    let typ = "JWT"
+}
 
-
-
-
-
-
+struct Payload: Encodable {
+    let sub = "1234567890"
+    let name = "John Doe"
+    let iat = 1516239022
+}
 
 

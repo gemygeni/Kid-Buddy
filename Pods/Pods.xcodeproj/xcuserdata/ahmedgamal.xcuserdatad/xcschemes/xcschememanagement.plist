@@ -29,11 +29,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>FirebaseCrashlytics.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>FirebaseDatabase.xcscheme</key>
 		<dict>
 			<key>isShown</key>

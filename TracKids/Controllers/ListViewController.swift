@@ -95,29 +95,36 @@ class ListViewController: UIViewController {
     
     
     @IBAction func removeAccountPressed(_ sender: UIButton) {
-        removeAccount()
+        let alert = UIAlertController(title: "are you sure you want to remove account", message: "caution: you will lose all data related to this account", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] action in
+            self?.removeAccount()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        self.present(alert, animated: true, completion: nil)
        }
 
     func removeAccount(){
         let user = Auth.auth().currentUser
-       print("33 \(String(describing: user?.uid))")
        guard  let userId = user?.uid else {return}
         DataHandler.shared.removeAccount(for: userId) {
-            user?.delete { error in
+            user?.delete {[weak self] error in
             if let error = error {
             print(error.localizedDescription)
             } else {
                 print("Debug: Removed completed")
-                self.navigationController?.popToRootViewController(animated: true)
-                if let TrackingController = self.navigationController?.rootViewController as? TrackingViewController{
+                self?.navigationController?.popToRootViewController(animated: true)
+                if let TrackingController = self?.navigationController?.rootViewController as? TrackingViewController{
                     TrackingController.IsLoggedIn = false
                     TrackingController.mapView.removeAnnotations( TrackingController.mapView.annotations)
                     TrackingController.centerMapOnUserLocation()
+                    self?.handleSignOut()
                 }
              }
           }
         }
-    }
+     }
     
     
     
@@ -194,7 +201,7 @@ class ListViewController: UIViewController {
             else  if user.accountType == 1 {
                 guard let parentId = user.parentID  else{return}
                 DataHandler.shared.fetchDeviceID(for: parentId) { deviceToken in
-                    DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: sender, body: " \(sender) NEEDS HELP ")
+                DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: sender, body: " \(sender) NEEDS HELP ")
                 }
             }
         }

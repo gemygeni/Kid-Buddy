@@ -8,10 +8,10 @@
 import UIKit
 
 class MessageCell: UITableViewCell {
-    
+    @IBOutlet weak var MessageImageView: UIImageView!
     @IBOutlet weak var MessageBodyView: UIView!
     @IBOutlet weak var MessageBodyLabel: UILabel!
-    @IBOutlet weak var MessageImageView: UIImageView!
+    
     @IBOutlet weak var timeLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,10 +21,20 @@ class MessageCell: UITableViewCell {
         MessageImageView.contentMode = .scaleAspectFill
         MessageBodyView.translatesAutoresizingMaskIntoConstraints = false
         MessageBodyView.layer.cornerRadius = MessageBodyView.frame.size.height / 5
+        MessageBodyView.layer.masksToBounds = true
+        MessageBodyView.contentMode = .scaleAspectFill
+        
+    }
+    
+
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        MessageImageView?.image = nil
+        MessageImageView?.removeConstraints(MessageImageView.constraints)
+
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
 
-    }
+    
 }

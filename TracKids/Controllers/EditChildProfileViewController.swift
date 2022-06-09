@@ -57,7 +57,7 @@
             let alert = UIAlertController(title: "edit Profile Image", message: "How Would You Like To Select a Picture ", preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Take By Camera", style: .default, handler: {
-                [weak self](actionn) in
+                [weak self](action) in
                 self?.PresentCamera()
             }))
             
@@ -93,11 +93,9 @@
             guard let childId = childId,
            let newImage = ProfileImage,
            nameTextField.text != nil , let newName = nameTextField.text else {return}
-            print("here before")
             DataHandler.shared.updateChildInfo(forId: childId, withImage: newImage, name: newName) {[weak self] in
                 self?.navigationController?.popViewController(animated: true)
                 self?.presentingViewController?.dismiss(animated: true, completion: {
-                     print("here after")
                     self?.spinnner?.stopAnimating()
                     self?.delegate?.didChangedInfo(self!, newImage: newImage, newName: newName)
                  })

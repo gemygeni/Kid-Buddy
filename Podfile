@@ -10,10 +10,9 @@ target 'TracKids' do
         pod 'Firebase/Auth'
         pod 'Firebase/Storage'
         pod 'Firebase/Messaging'
-        pod 'Firebase/DynamicLinks'
-        pod 'Firebase/Crashlytics'
         pod 'Firebase/Analytics'
+        pod 'Firebase/DynamicLinks'
         pod 'GeoFire', '~> 4.3.0'
-        pod 'FloatingPanel', '~>  2.5.1'
+        pod 'FloatingPanel'
        
 end

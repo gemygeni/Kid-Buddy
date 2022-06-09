@@ -41,7 +41,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         UserDefaults.standard.setValue(0, forKey: "badgeCount")
         UIApplication.shared.applicationIconBadgeNumber = 0
-          print("foo 3 active")
       UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
       UNUserNotificationCenter.current().removeAllDeliveredNotifications()
 
@@ -145,7 +144,6 @@ extension SceneDelegate: UNUserNotificationCenterDelegate {
             badgeCount += 1
             UserDefaults.standard.setValue(badgeCount, forKey: "badgeCount")
             UIApplication.shared.applicationIconBadgeNumber = badgeCount
-            print("foo active1 \(badgeCount)")
         }
         completionHandler([[.banner, .sound]])
     }

@@ -83,11 +83,18 @@ class ChildsListTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let childId = childsID[indexPath.row]
-            guard let parentId = Auth.auth().currentUser?.uid else {return}
-            DataHandler.shared.removeChild(of: parentId, withId: childId )
-            childs.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let alert = UIAlertController(title: "are you sure you want to remove account", message: "caution: you will lose all data related to this account", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] action in
+                let childId = self?.childsID[indexPath.row]
+                guard let parentId = Auth.auth().currentUser?.uid else {return}
+                DataHandler.shared.removeChild(of: parentId, withId: childId! )
+                self?.childs.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
@@ -106,5 +113,7 @@ class ChildsListTableViewController: UITableViewController {
             }
         }
     }
+    
+    
 }
 

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2070B3873871E44D38CC47E6 /* Pods_TracKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3BBAAFF2B4240FC7DF3166 /* Pods_TracKids.framework */; };
+		9EC2A8BB81CE6994B4F04A5D /* Pods_TracKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E88162EE49DFEB68819A6447 /* Pods_TracKids.framework */; };
 		EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16107526E79FFB007BA5ED /* MessageCell.swift */; };
 		EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF16107626E79FFB007BA5ED /* MessageCell.xib */; };
 		EF1C84C127435A6800033A65 /* Apple.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EF1C84C027435A6800033A65 /* Apple.gpx */; };
@@ -35,22 +35,35 @@
 		EF78C48B27AF5720000E0579 /* EditChildProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF78C48A27AF5720000E0579 /* EditChildProfileViewController.swift */; };
 		EF8320F227B4CEC800892F37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF8320F127B4CEC800892F37 /* GoogleService-Info.plist */; };
 		EF87DE7127302F5E00AC4E37 /* ObservedPlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF87DE7027302F5E00AC4E37 /* ObservedPlacesTableViewController.swift */; };
+		EF8BE5E5284F4FF100CD01FD /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EF8BE5E4284F4FF100CD01FD /* IQKeyboardManagerSwift */; };
 		EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470B25CBA30300806D45 /* DataHandler.swift */; };
 		EF95470F25CBB45F00806D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470E25CBB45F00806D45 /* User.swift */; };
 		EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */; };
 		EFA8956827C1A05D00DD99CF /* RNCryptor in Frameworks */ = {isa = PBXBuildFile; productRef = EFA8956727C1A05D00DD99CF /* RNCryptor */; };
 		EFA8956B27C1FB9C00DD99CF /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = EFA8956A27C1FB9C00DD99CF /* SwiftOTP */; };
 		EFEA0D5D27DB08CB00D2CE0A /* criticalAlert.aiff in Resources */ = {isa = PBXBuildFile; fileRef = EFEA0D5C27DB08CB00D2CE0A /* criticalAlert.aiff */; };
-		EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */; };
 		EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */; };
 		EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */; };
 		EFFCA0382746F1A100B14C81 /* SimulatedLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		EFC7AD3B283C510100C18186 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		2D3BBAAFF2B4240FC7DF3166 /* Pods_TracKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TracKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		47024EDCB501B5CFC8D319BD /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
-		E6695A53566D9C87398A9655 /* Pods-TracKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.debug.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.debug.xcconfig"; sourceTree = "<group>"; };
+		8FB77B4992B02F7151B6D078 /* Pods-TracKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.debug.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.debug.xcconfig"; sourceTree = "<group>"; };
+		E88162EE49DFEB68819A6447 /* Pods_TracKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TracKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9947CEFEED8A3DC64B4BBF5 /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
 		EF16107526E79FFB007BA5ED /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		EF16107626E79FFB007BA5ED /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		EF1C84C027435A6800033A65 /* Apple.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Apple.gpx; sourceTree = "<group>"; };
@@ -83,10 +96,14 @@
 		EF92B58327DB857D00A2FA64 /* TracKids.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = TracKids.entitlements; path = TracKids/TracKids.entitlements; sourceTree = "<group>"; };
 		EF95470B25CBA30300806D45 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		EF99F4A42840377D00030C81 /* critical notification.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "critical notification.entitlements"; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
+		EFC7AD35283C510100C18186 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		EFC7AD37283C510100C18186 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFEA0D5C27DB08CB00D2CE0A /* criticalAlert.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = criticalAlert.aiff; sourceTree = "<group>"; };
 		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
+		EFF8DBF02835CF7000B05783 /* criticalAlert.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = criticalAlert.m4a; sourceTree = "<group>"; };
 		EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SimulatedLocations.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,11 +112,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF8BE5E5284F4FF100CD01FD /* IQKeyboardManagerSwift in Frameworks */,
 				EFA8956827C1A05D00DD99CF /* RNCryptor in Frameworks */,
 				EF5A089926F15481000087EB /* MapKit.framework in Frameworks */,
-				EFEB940826E5E2520059BCE6 /* IQKeyboardManagerSwift in Frameworks */,
 				EFA8956B27C1FB9C00DD99CF /* SwiftOTP in Frameworks */,
-				2070B3873871E44D38CC47E6 /* Pods_TracKids.framework in Frameworks */,
+				9EC2A8BB81CE6994B4F04A5D /* Pods_TracKids.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +170,7 @@
 			children = (
 				EF92B58327DB857D00A2FA64 /* TracKids.entitlements */,
 				EF5B0EF025BE492200890F4B /* TracKids */,
+				EFC7AD34283C510100C18186 /* critical notification */,
 				EF5B0EEF25BE492200890F4B /* Products */,
 				F8B61BF64E95AA6B7DB1AB4C /* Pods */,
 				F6594CC00AB2089641DFF0A8 /* Frameworks */,
@@ -184,6 +202,7 @@
 		EF8F9B0C25F5DF2500C4BE16 /* supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				EFF8DBF02835CF7000B05783 /* criticalAlert.m4a */,
 				EF5B0EF325BE492200890F4B /* SceneDelegate.swift */,
 				EFEA0D5C27DB08CB00D2CE0A /* criticalAlert.aiff */,
 				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
@@ -206,11 +225,21 @@
 			path = utilities;
 			sourceTree = "<group>";
 		};
+		EFC7AD34283C510100C18186 /* critical notification */ = {
+			isa = PBXGroup;
+			children = (
+				EF99F4A42840377D00030C81 /* critical notification.entitlements */,
+				EFC7AD35283C510100C18186 /* NotificationService.swift */,
+				EFC7AD37283C510100C18186 /* Info.plist */,
+			);
+			path = "critical notification";
+			sourceTree = "<group>";
+		};
 		F6594CC00AB2089641DFF0A8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				EF5A089826F15481000087EB /* MapKit.framework */,
-				2D3BBAAFF2B4240FC7DF3166 /* Pods_TracKids.framework */,
+				E88162EE49DFEB68819A6447 /* Pods_TracKids.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -218,8 +247,8 @@
 		F8B61BF64E95AA6B7DB1AB4C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E6695A53566D9C87398A9655 /* Pods-TracKids.debug.xcconfig */,
-				47024EDCB501B5CFC8D319BD /* Pods-TracKids.release.xcconfig */,
+				8FB77B4992B02F7151B6D078 /* Pods-TracKids.debug.xcconfig */,
+				E9947CEFEED8A3DC64B4BBF5 /* Pods-TracKids.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -231,11 +260,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF5B0F0225BE492300890F4B /* Build configuration list for PBXNativeTarget "TracKids" */;
 			buildPhases = (
-				D53163A50C23A5BEC982F8F2 /* [CP] Check Pods Manifest.lock */,
+				D9BF31C0CFE7469C3BA620F8 /* [CP] Check Pods Manifest.lock */,
 				EF5B0EEA25BE492200890F4B /* Sources */,
 				EF5B0EEB25BE492200890F4B /* Frameworks */,
 				EF5B0EEC25BE492200890F4B /* Resources */,
-				F633F9827A49979F2904C502 /* [CP] Embed Pods Frameworks */,
+				EFC7AD3B283C510100C18186 /* Embed App Extensions */,
+				E06BC0C793F7D12A2186AF61 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -243,9 +273,9 @@
 			);
 			name = TracKids;
 			packageProductDependencies = (
-				EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */,
 				EFA8956727C1A05D00DD99CF /* RNCryptor */,
 				EFA8956A27C1FB9C00DD99CF /* SwiftOTP */,
+				EF8BE5E4284F4FF100CD01FD /* IQKeyboardManagerSwift */,
 			);
 			productName = TracKids;
 			productReference = EF5B0EEE25BE492200890F4B /* TracKids.app */;
@@ -261,7 +291,7 @@
 					New,
 					"New-1",
 				);
-				LastSwiftUpdateCheck = 1230;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
 					EF5B0EED25BE492200890F4B = {
@@ -279,9 +309,9 @@
 			);
 			mainGroup = EF5B0EE525BE492200890F4B;
 			packageReferences = (
-				EFEB940626E5E2520059BCE6 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
-				EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor.git" */,
-				EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP.git" */,
+				EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor" */,
+				EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP" */,
+				EF8BE5E3284F4FF100CD01FD /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = EF5B0EEF25BE492200890F4B /* Products */;
 			projectDirPath = "";
@@ -312,7 +342,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D53163A50C23A5BEC982F8F2 /* [CP] Check Pods Manifest.lock */ = {
+		D9BF31C0CFE7469C3BA620F8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -334,7 +364,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F633F9827A49979F2904C502 /* [CP] Embed Pods Frameworks */ = {
+		E06BC0C793F7D12A2186AF61 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -410,6 +440,7 @@
 		EF5B0F0025BE492300890F4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -471,6 +502,7 @@
 		EF5B0F0125BE492300890F4B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -525,8 +557,9 @@
 		};
 		EF5B0F0325BE492300890F4B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E6695A53566D9C87398A9655 /* Pods-TracKids.debug.xcconfig */;
+			baseConfigurationReference = 8FB77B4992B02F7151B6D078 /* Pods-TracKids.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TracKids/TracKids.entitlements;
@@ -550,8 +583,9 @@
 		};
 		EF5B0F0425BE492300890F4B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47024EDCB501B5CFC8D319BD /* Pods-TracKids.release.xcconfig */;
+			baseConfigurationReference = E9947CEFEED8A3DC64B4BBF5 /* Pods-TracKids.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TracKids/TracKids.entitlements;
@@ -597,7 +631,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor.git" */ = {
+		EF8BE5E3284F4FF100CD01FD /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
+		EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RNCryptor/RNCryptor.git";
 			requirement = {
@@ -605,7 +647,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP.git" */ = {
+		EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
 			requirement = {
@@ -613,31 +655,23 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		EFEB940626E5E2520059BCE6 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 6.5.6;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EF8BE5E4284F4FF100CD01FD /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF8BE5E3284F4FF100CD01FD /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
 		EFA8956727C1A05D00DD99CF /* RNCryptor */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor.git" */;
+			package = EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor" */;
 			productName = RNCryptor;
 		};
 		EFA8956A27C1FB9C00DD99CF /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP.git" */;
+			package = EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP" */;
 			productName = SwiftOTP;
-		};
-		EFEB940726E5E2520059BCE6 /* IQKeyboardManagerSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EFEB940626E5E2520059BCE6 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
-			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
