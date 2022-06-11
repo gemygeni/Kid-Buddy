@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import MobileCoreServices
+import Photos
 class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     var trackedChildObserver : NSObjectProtocol?
     var messages : [Message] = []
@@ -53,27 +54,15 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
             backgroundView.isHidden = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleZoomOut(_:)))
             backgroundView.addGestureRecognizer(tapGesture)
-
         }
     }
     
     
     var  imageView =  UIImageView(){
         didSet{
+            
             imageView.sizeToFit()
             imageView.layer.masksToBounds = true
-            scrollView?.contentSize = imageView.frame.size
-            
-        }
-    }
-    @IBOutlet weak var scrollView: UIScrollView!{
-        didSet{
-            
-            scrollView.minimumZoomScale = 1/25
-            scrollView.maximumZoomScale = 2.0
-            scrollView.delegate = self
-            scrollView.addSubview(imageView)
-            scrollView.layer.masksToBounds = true
         }
     }
     
@@ -139,44 +128,29 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
         }
         resetBadgeCount()
         messageTextfield.becomeFirstResponder()
-        
-        
-        
-        
-        
-        
-        scrollView.contentSize = backgroundView.frame.size
-        scrollView.layer.masksToBounds = true
-        scrollView.frame.size = view.frame.size
-        scrollView.contentMode = .scaleAspectFit
-        imageView.layer.masksToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        backgroundView.contentMode = .scaleAspectFit
-        
-
-        
-        
-        
+        imageView.enableZoom()
         
     }
-    
     
     
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        imageView.sizeToFit()
+        backgroundView.addSubview(imageView)
         backgroundView.contentMode = .scaleAspectFit
-        scrollView.contentSize = imageView.frame.size
-        scrollView.contentMode = .scaleAspectFit
-        imageView.contentMode = .scaleAspectFit
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
-        scrollView.layer.masksToBounds = true
-       // scrollView.zoomScale = 1.0
-
+        backgroundView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: 0).isActive = true
+        imageView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: 0).isActive = true
+        imageView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 0).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 0).isActive = true
+        
     }
+
+    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
@@ -315,35 +289,30 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     
     @objc func handleZoom(_ recognizer : UITapGestureRecognizer? =  nil ) {
         if let tappedImageView = recognizer?.view as? UIImageView {
+            backgroundView.addSubview(imageView)
             self.imageView.image = tappedImageView.image
             performZoomingIn()
             print("Debug: tapped")
         }
-
-        
     }
     
     func performZoomingIn (){
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.backgroundView.isHidden = false
-            
         })
     }
     
     
     @objc func handleZoomOut(_ recognizer : UITapGestureRecognizer? =  nil ) {
-        
         performZoomingOut()
     }
 
     func performZoomingOut (){
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.backgroundView.isHidden = true
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { [weak self] in
+            self?.backgroundView.isHidden = true
+            self?.imageView.removeFromSuperview()
         })
     }
-
-    
-    
   }
 
 extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate{
@@ -420,19 +389,6 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
         }
     }
     
-    
-
-//    var cellHeights: [IndexPath : CGFloat] = [:]
-
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        cellHeights[indexPath] = cell.frame.size.height
-//    }
-//
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return cellHeights[indexPath] ?? 70.0
-//    }
-
-    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
          let contentOffSetY = scrollView.contentOffset.y
          let contentHeight = scrollView.contentSize.height
@@ -494,7 +450,7 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
         headerView.addSubview(spinner)
         spinner.startAnimating()
         return headerView
-    }
+       }
     
     }
 
@@ -538,7 +494,3 @@ extension ChatViewController : UIImagePickerControllerDelegate, UINavigationCont
     }
 }
 
-//        scrollView.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: 0).isActive = true
-//        scrollView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: 0).isActive = true
-//        scrollView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 0).isActive = true
-//        scrollView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 0).isActive = true

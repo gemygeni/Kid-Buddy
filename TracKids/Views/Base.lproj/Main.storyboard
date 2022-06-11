@@ -1235,18 +1235,9 @@
                                 <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
                                 <color key="color" name="AccentColor"/>
                             </activityIndicatorView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tDN-ry-BCT">
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tDN-ry-BCT">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="pFO-LU-b6p">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                        <viewLayoutGuide key="contentLayoutGuide" id="gk9-W1-Yzq"/>
-                                        <viewLayoutGuide key="frameLayoutGuide" id="b0g-D3-sJx"/>
-                                    </scrollView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.7654076447" green="0.7654076447" blue="0.7654076447" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ez3-BV-v7M"/>
@@ -1274,7 +1265,6 @@
                     <connections>
                         <outlet property="backgroundView" destination="tDN-ry-BCT" id="97R-eJ-MXt"/>
                         <outlet property="messageTextfield" destination="Mbl-zH-VDk" id="vkp-CQ-9BQ"/>
-                        <outlet property="scrollView" destination="pFO-LU-b6p" id="QXU-OJ-3hF"/>
                         <outlet property="spinnerIndecator" destination="EQf-WQ-uhO" id="IxA-n9-OSn"/>
                         <outlet property="tableView" destination="KQB-5y-ScE" id="IAs-ma-NxY"/>
                     </connections>

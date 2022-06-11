@@ -14,8 +14,8 @@
             filePath = "TracKids/Controllers/ChatViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "458"
-            endingLineNumber = "458"
+            startingLineNumber = "414"
+            endingLineNumber = "414"
             landmarkName = "beginBatchFetch(completion:)"
             landmarkType = "7">
          </BreakpointContent>
