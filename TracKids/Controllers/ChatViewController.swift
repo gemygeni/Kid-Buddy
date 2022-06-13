@@ -43,11 +43,19 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
         }
     }
     
+    
+    
+    @IBAction func saveImagePressed(_ sender: UIButton) {
+        UIImageWriteToSavedPhotosAlbum(self.imageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+
+    }
+    
     @IBOutlet weak var spinnerIndecator: UIActivityIndicatorView!
     @IBAction func pickPhotoPressed(_ sender: UIButton) {
         selectPhoto()
     }
     
+    @IBOutlet weak var saveButton: UIButton!
     
     @IBOutlet weak var backgroundView: UIView!{
         didSet{
@@ -60,7 +68,6 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     
     var  imageView =  UIImageView(){
         didSet{
-            
             imageView.sizeToFit()
             imageView.layer.masksToBounds = true
         }
@@ -136,21 +143,9 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        backgroundView.addSubview(imageView)
-        backgroundView.contentMode = .scaleAspectFit
-        imageView.layer.masksToBounds = true
-        backgroundView.layer.masksToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: 0).isActive = true
-        imageView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: 0).isActive = true
-        imageView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 0).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 0).isActive = true
-        
+        layoutImageView()
     }
 
-    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
@@ -291,11 +286,23 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
         if let tappedImageView = recognizer?.view as? UIImageView {
             backgroundView.addSubview(imageView)
             self.imageView.image = tappedImageView.image
+            layoutImageView()
             performZoomingIn()
             print("Debug: tapped")
         }
     }
-    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Saved!", message: "Your image has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
     func performZoomingIn (){
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.backgroundView.isHidden = false
@@ -313,6 +320,24 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
             self?.imageView.removeFromSuperview()
         })
     }
+    
+    func layoutImageView(){
+        backgroundView.addSubview(imageView)
+        backgroundView.contentMode = .scaleAspectFit
+        backgroundView.layer.masksToBounds = true
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.bringSubviewToFront(saveButton)
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: 0).isActive = true
+        imageView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: 0).isActive = true
+        imageView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 0).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 0).isActive = true
+    }
+
+    
+    
   }
 
 extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate{

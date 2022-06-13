@@ -16,24 +16,27 @@ class ListViewController: UIViewController {
     weak var delegate : settingDelegate?
     private var user : User?
     private var invitationUrl : URL?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if self.user?.uid == nil{
             self.childsButton.isHidden = true
         }
         fetchUserInfo()
+        
     }
     
     func fetchUserInfo(){
-        DataHandler.shared.fetchUserInfo { (user) in
-            self.user = user
+        DataHandler.shared.fetchUserInfo {[weak self] (user) in
+            self?.user = user
             if user.accountType == 1{
-                self.childsButton.isHidden = true
-                self.settingsButton.isHidden = true
+                self?.childsButton.isHidden = true
+                self?.settingsButton.isHidden = true
             }
             else if user.accountType == 0{
-                self.childsButton.isHidden = false
+                self?.childsButton.isHidden = false
             }
+            self?.navigationItem.title = self?.user?.name
         }
     }
     var AuthHandler : AuthStateDidChangeListenerHandle?

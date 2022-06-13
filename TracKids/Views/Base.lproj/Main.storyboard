@@ -944,13 +944,13 @@
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
-                        <imageReference key="backIndicatorImage" image="chevron.left" catalog="system" symbolScale="large" renderingMode="original"/>
-                        <imageReference key="backIndicatorTransitionMaskImage" image="chevron.backward" catalog="system" symbolScale="large" renderingMode="original"/>
+                        <imageReference key="backIndicatorImage" image="chevron.left" catalog="system" symbolScale="medium" renderingMode="original"/>
+                        <imageReference key="backIndicatorTransitionMaskImage" image="chevron.backward" catalog="system" symbolScale="medium" renderingMode="original"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bVm-ue-1ip">
@@ -977,11 +977,11 @@
                                 <color key="backgroundColor" red="0.28270332729999997" green="1" blue="0.37367196130000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="48" translatesAutoresizingMaskIntoConstraints="NO" id="jSu-gb-rSK">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="48" translatesAutoresizingMaskIntoConstraints="NO" id="jSu-gb-rSK">
                                 <rect key="frame" x="20" y="150" width="374" height="594"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8I8-zn-eez">
-                                        <rect key="frame" x="52" y="0.0" width="270" height="270"/>
+                                        <rect key="frame" x="52" y="0.0" width="270" height="273"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" translatesAutoresizingMaskIntoConstraints="NO" id="iqz-gC-PHv">
                                                 <rect key="frame" x="10" y="0.0" width="250" height="250"/>
@@ -992,7 +992,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="44F-WL-U6s">
-                                                <rect key="frame" x="10" y="260" width="250" height="10"/>
+                                                <rect key="frame" x="10" y="260" width="250" height="13"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                                 <nil key="textColor"/>
@@ -1010,10 +1010,10 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="vQe-HN-UkM">
-                                        <rect key="frame" x="20" y="318" width="334" height="276"/>
+                                        <rect key="frame" x="20" y="321" width="334" height="273"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FfY-7y-fpk">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="28"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="27.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                 <state key="normal" title="  Observe places">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1025,7 +1025,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-SB-4Oi">
-                                                <rect key="frame" x="0.0" y="62" width="334" height="28"/>
+                                                <rect key="frame" x="0.0" y="61.5" width="334" height="27.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                 <state key="normal" title=" History">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1037,7 +1037,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Phd-17-FV9">
-                                                <rect key="frame" x="0.0" y="124" width="334" height="28"/>
+                                                <rect key="frame" x="0.0" y="123" width="334" height="27"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                 <color key="tintColor" systemColor="systemYellowColor"/>
                                                 <state key="normal" title="  Chat">
@@ -1050,7 +1050,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvB-h0-aVK">
-                                                <rect key="frame" x="0.0" y="186" width="334" height="28"/>
+                                                <rect key="frame" x="0.0" y="184" width="334" height="27.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="Send  link to child">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1062,7 +1062,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mb1-Dw-H9D">
-                                                <rect key="frame" x="0.0" y="248" width="334" height="28"/>
+                                                <rect key="frame" x="0.0" y="245.5" width="334" height="27.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                 <state key="normal" title="  Unpair child">
                                                     <color key="titleColor" systemColor="systemRedColor"/>
@@ -1237,7 +1237,23 @@
                             </activityIndicatorView>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tDN-ry-BCT">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKH-9b-mAS">
+                                        <rect key="frame" x="338.5" y="50" width="55.5" height="31"/>
+                                        <color key="tintColor" systemColor="linkColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Save"/>
+                                        <connections>
+                                            <action selector="saveImagePressed:" destination="OPM-Kp-6a6" eventType="touchUpInside" id="s5J-Mw-FI2"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="0.7654076447" green="0.7654076447" blue="0.7654076447" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="pKH-9b-mAS" secondAttribute="trailing" constant="20" id="WAa-eT-ZMF"/>
+                                    <constraint firstItem="pKH-9b-mAS" firstAttribute="top" secondItem="tDN-ry-BCT" secondAttribute="top" constant="50" id="ZUs-GL-Aac"/>
+                                    <constraint firstItem="pKH-9b-mAS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tDN-ry-BCT" secondAttribute="leading" constant="20" symbolic="YES" id="iQG-9V-3FN"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ez3-BV-v7M"/>
@@ -1265,6 +1281,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="tDN-ry-BCT" id="97R-eJ-MXt"/>
                         <outlet property="messageTextfield" destination="Mbl-zH-VDk" id="vkp-CQ-9BQ"/>
+                        <outlet property="saveButton" destination="pKH-9b-mAS" id="5Wd-eW-H8W"/>
                         <outlet property="spinnerIndecator" destination="EQf-WQ-uhO" id="IxA-n9-OSn"/>
                         <outlet property="tableView" destination="KQB-5y-ScE" id="IAs-ma-NxY"/>
                     </connections>
