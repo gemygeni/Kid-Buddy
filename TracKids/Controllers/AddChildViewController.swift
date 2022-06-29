@@ -52,7 +52,6 @@ class AddChildViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-           childMailTextField.becomeFirstResponder()
            ChildImageView.layer.borderColor = UIColor.lightGray.cgColor
            ChildImageView.layer.masksToBounds = true
            ChildImageView.layer.cornerRadius = ChildImageView.frame.size.width / 2.5
@@ -142,11 +141,10 @@ class AddChildViewController: UIViewController {
                     UserReference.child(childId).updateChildValues(childInfo) { (error, reference) in
                         if let error = error{print(error.localizedDescription)}
                         
-                Auth.auth().updateCurrentUser(originalUser!) { error in
+                   Auth.auth().updateCurrentUser(originalUser!) { error in
                                         if let error = error {
                                             print(error)
                                         }
-
                        TrackedChildsReference.child(UID).child(childId).updateChildValues(childInfo){_,_ in
                             if !ChildName.isEmpty {
                                 self?.navigationController?.popViewController(animated: true)
@@ -161,8 +159,8 @@ class AddChildViewController: UIViewController {
                     
                 }
             }
-   }
-}
+        }
+    }
 
 
 extension AddChildViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate{

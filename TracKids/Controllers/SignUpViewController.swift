@@ -55,7 +55,7 @@ class SignUpViewController: UIViewController {
      }
     override func viewDidLoad() {
         super.viewDidLoad()
-        emailTextField.becomeFirstResponder()
+        nameTextField.becomeFirstResponder()
     }
     
     @IBAction func signInPressed(_ sender: UIButton) {
@@ -84,7 +84,14 @@ class SignUpViewController: UIViewController {
             }
             guard let UId = result?.user.uid else {return}
             
-            let UserInfo = ["name" : name,"email" : email ,"password" : password, "userType" : userType, "deviceID" : deviceID ]   as [String : Any]
+            let UserInfo = [ "name" : name,
+                             "email" : email,
+                             "password" : password,
+                             "userType" : userType,
+                             "parentID" : "" ,
+                             "imageURL" :  "",
+                             "deviceID" : deviceID] as [String : Any]
+
             self.usersReference.child(UId).updateChildValues(UserInfo) { (error, reference) in
                 if let error = error{
                     print(error.localizedDescription)

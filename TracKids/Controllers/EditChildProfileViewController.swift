@@ -53,7 +53,6 @@
         
         
         @objc func setChildPhoto(_ recognizer : UITapGestureRecognizer? =  nil ) {
-            print("tappp")
             let alert = UIAlertController(title: "edit Profile Image", message: "How Would You Like To Select a Picture ", preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Take By Camera", style: .default, handler: {

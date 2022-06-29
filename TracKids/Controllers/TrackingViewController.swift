@@ -100,6 +100,7 @@
                     self?.addChildButton.isHidden = false
                 }
             })
+            self.navigationItem.title = user?.name
         }
         
             
@@ -125,9 +126,9 @@
                                 guard let childAnnnotation = annotation as? ChildAnnotation else{return false}
                                 childAnnnotation.updateMapView(with: fetchedLocation.coordinate)
                                 return true
-                            })) )
-                            {
-                            }
+                            })))
+                                 {
+                        }
                             else{
                                 self?.mapView.addAnnotation(annotation)
                             }
@@ -158,6 +159,8 @@
                    performSegue(withIdentifier: "AddChildSegue", sender: sender)
                 }
                 else if self.accountType == .child{
+                    performSegue(withIdentifier: "presentOTPSegue", sender: sender)
+                    
             }
         }
     }
@@ -190,6 +193,8 @@
             mapView.isZoomEnabled = true
         }
     }
+
+
     extension TrackingViewController : MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             if let annotation = annotation as? ChildAnnotation {
@@ -255,17 +260,15 @@
 
             guard let childId = TrackingViewController.trackedChildUId else {return}
             DataHandler.shared.fetchChildAccount(with: childId) {[weak self] user in
-               
                 self?.tabBarItem.title = user.name + " tracked"
                 self?.navigationItem.title = user.name
             }
             fetchChildLocation()
-        }
+         }
     }
+
 extension TrackingViewController : AddedChildDelegate{
     func didAddChild(_ sender: AddChildViewController) {
         self.fetchChildsItems()
-    }
-    
-    
-}
+     }
+ }

@@ -14,7 +14,7 @@ class ChildsCollectionViewCell: UICollectionViewCell {
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 24
         imageView.contentMode = .scaleAspectFill
-        imageView.image = #imageLiteral(resourceName: "mazengar")
+        imageView.image = #imageLiteral(resourceName: "person")
         return imageView
     }()
     

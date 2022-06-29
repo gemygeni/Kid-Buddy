@@ -10,9 +10,11 @@ target 'TracKids' do
         pod 'Firebase/Auth'
         pod 'Firebase/Storage'
         pod 'Firebase/Messaging'
-        pod 'Firebase/Analytics'
         pod 'Firebase/DynamicLinks'
         pod 'GeoFire', '~> 4.3.0'
-        pod 'FloatingPanel'
+        pod 'FloatingPanel', '2.5.3'
+        pod "KWVerificationCodeView", '0.4.0'
        
 end
+
+

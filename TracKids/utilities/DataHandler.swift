@@ -16,6 +16,7 @@
     let MessagesReference = DBReference.child("Messages")
     let ObservedPlacesReference = DBReference.child("ObservedPlaces")
     let HistoryReference = DBReference.child("LocationHistory")
+    let OTPReference = DBReference.child("OTPLinking")
     let storage = Storage.storage()
     var FetchedPlaces = [CLLocation]()
     var placesIds = [String]()

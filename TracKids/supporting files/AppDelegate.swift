@@ -55,9 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("dynamic with allready installed")
         return handleDynamicLink(dynamicLink)
  
-      // Handle incoming URL with other methods as necessary
-      // ...
-           
             
         }
       return false
@@ -92,18 +89,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else {
           return false
         }
-     // let queryItems = URLComponents(url: deepLink, resolvingAgainstBaseURL: true)?.queryItems
-//        guard let email = queryItems?.filter({(item) in item.name == "childEmail"}).first?.value else {return false}
-//        guard  let password = queryItems?.filter({(item) in item.name == "childPasssword"}).first?.value else {return false}
-        
-//        Auth.auth().signInAnonymously() { (user, error) in
-//            let credential = EmailAuthProvider.credential(withEmail: email, password: password)
-//            if let user = Auth.auth().currentUser {
-//              user.link(with: credential) { (user, error) in
-//                // Complete any post sign-up tasks here.
-//              }
-//            }
-//        }
       return true
     }
     

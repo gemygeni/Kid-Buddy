@@ -7,15 +7,10 @@
 
 import UIKit
 import Firebase
-protocol settingDelegate : AnyObject  {
-    func didChangedInfo(_ sender : ListViewController )
-}
+import SwiftOTP
 
 class ListViewController: UIViewController {
-    
-    weak var delegate : settingDelegate?
     private var user : User?
-    private var invitationUrl : URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +18,6 @@ class ListViewController: UIViewController {
             self.childsButton.isHidden = true
         }
         fetchUserInfo()
-        
     }
     
     func fetchUserInfo(){
@@ -31,9 +25,8 @@ class ListViewController: UIViewController {
             self?.user = user
             if user.accountType == 1{
                 self?.childsButton.isHidden = true
-                self?.settingsButton.isHidden = true
             }
-            else if user.accountType == 0{
+            else if user.accountType == 0 {
                 self?.childsButton.isHidden = false
             }
             self?.navigationItem.title = self?.user?.name
@@ -41,19 +34,10 @@ class ListViewController: UIViewController {
     }
     var AuthHandler : AuthStateDidChangeListenerHandle?
     @IBAction func helpButtonPressed(_ sender: UIButton) {
-        MessagesReference.child("oMXMLQI7DlQT5LrCySOi29jPT0E2").removeValue()
-        
-        
     }
     
     @IBOutlet weak var childsButton: UIButton!
     
-    @IBOutlet weak var settingsButton: UIButton!
-    
-    @IBAction func settingsButton(_ sender: UIButton) {
-        
-        self.delegate?.didChangedInfo(self)
-                   }
     
     @IBOutlet weak var signInButton: UIButton!{
         didSet{
@@ -69,6 +53,7 @@ class ListViewController: UIViewController {
     @IBAction func signOutPressed(_ sender: UIButton) {
                    handleSignOut()
         TrackingViewController.trackedChildUId = nil
+        navigationItem.title = ""
                    }
     
     @IBOutlet weak var signOutButton: UIButton!{
@@ -130,30 +115,27 @@ class ListViewController: UIViewController {
      }
     
     
-    
-    
     @IBAction func childsButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "ChildsListSegue", sender: self)
     }
     
     
     @IBAction func shareAppPressed(_ sender: UIButton) {
-        handleSharing()
-    }
-    func handleSharing(){
-        let activity = UIActivityViewController(activityItems: ["invite to join trackids"], applicationActivities: nil)
-        //activity.popoverPresentationController?.barButtonItem = sender
-        present(activity, animated: true, completion: nil)
         configureDynamicLink()
     }
     
+    
+//    func handleSharing(){
+//        let activity = UIActivityViewController(activityItems: ["invite to join trackids"], applicationActivities: nil)
+//        //activity.popoverPresentationController?.barButtonItem = sender
+//        present(activity, animated: true, completion: nil)
+//
+//    }
+    
     func configureDynamicLink(){
-//        DataHandler.shared.fetchChildInfo(completion: <#T##(User, String) -> Void#>) else { return }
         var components = URLComponents()
         components.scheme = "https"
         components.host = "apps.apple.com/app/1600337105"
-//        let itemIDQueryItem = URLQueryItem(name: "recipeID", value: recipe.recipeID)
-//        components.queryItems = [itemIDQueryItem]
         guard let linkParameter = components.url else { return }
         print("I am sharing \(linkParameter.absoluteString)")
         let domain = "https://trackids.page.link"
@@ -169,10 +151,10 @@ class ListViewController: UIViewController {
         linkBuilder.socialMetaTagParameters?.title = "Join kid buddy with this link"
         linkBuilder.socialMetaTagParameters?.descriptionText = "install kid buddy to share your location info with your parents"
         guard let longURL = linkBuilder.url else { return }
-        print("The long dynamic link is \(longURL.absoluteString)")
+        print("sharing The long dynamic link is \(longURL.absoluteString)")
         linkBuilder.shorten {[weak self] url, warnings, error in
           if let error = error {
-            print("Oh no! Got an error! \(error)")
+            print("Oh no! Got an error in sharing! \(error)")
             return
           }
           if let warnings = warnings {
@@ -180,15 +162,25 @@ class ListViewController: UIViewController {
               print("Warning: \(warning)")
             }
           }
-          guard let url = url else { return }
-          print("I have a short url to share! \(url.absoluteString)")
-            self?.invitationUrl = url
+          guard let shortenUrl = url else { return }
+          print("I have a short url to sharing ! \(shortenUrl.absoluteString)")
+            let items: [Any] = ["join trackids via this Link: ", shortenUrl]
+            let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            self?.present(ac, animated: true)
         }
-   }
+    }
     
     
     @IBAction func SOSButtonPressed(_ sender: Any) {
-        sendCriticalAlert()
+       // sendCriticalAlert()
+        guard let uid =   Auth.auth().currentUser?.uid else{return}
+        guard let data = Data(base64Encoded: uid) else{return}
+        if let totp = TOTP(secret: data) {
+            if   let otpString = totp.generate(time: Date()){
+            print("otp is \(String(describing: otpString))")
+            OTPReference.child(String(describing: otpString)).updateChildValues(["parentId": uid])
+          }
+        }
     }
     
     func sendCriticalAlert(){

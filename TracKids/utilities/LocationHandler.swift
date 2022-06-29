@@ -27,7 +27,7 @@
             locationManager?.delegate = self
             locationManager?.allowsBackgroundLocationUpdates = true
             locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            locationManager?.distanceFilter = CLLocationDistance(100)
+            locationManager?.distanceFilter = CLLocationDistance(200)
                    }
         
         func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
@@ -146,7 +146,7 @@
                 var fenceRegion: CLCircularRegion {
                     let region = CLCircularRegion(
                         center: location.coordinate,
-                        radius: 1000,
+                        radius: 500,
                         identifier: identifier)
                     region.notifyOnEntry =  true
                     region.notifyOnExit = true

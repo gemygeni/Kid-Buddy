@@ -34,7 +34,6 @@ class ChildProfileViewController: UIViewController {
         set {
             profileImageView.image = newValue ?? #imageLiteral(resourceName: "person")
             profileImageView.translatesAutoresizingMaskIntoConstraints = false
-            // profileImageView.layer.cornerRadius = ((profileImageView.frame.height) + (profileImageView.frame.width)) / 4.0
             profileImageView.layer.cornerRadius = profileImageView.frame.size.width/2.5
             profileImageView.layer.masksToBounds = true
             profileImageView.contentMode = .scaleAspectFill
@@ -51,7 +50,9 @@ class ChildProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ProfileImage = fetchedImage
-        childNameLabel?.text = (childName ?? "name")+"\n"+(childAccount?.email ?? "email")
+        childNameLabel?.text = childAccount?.email ?? "email"
+        //(childName ?? "name")+"\n"+(childAccount?.email ?? "email")
+        navigationItem.title = childName
     }
     
     
@@ -95,12 +96,11 @@ class ChildProfileViewController: UIViewController {
         configureDynamicLink()
     }
     
-    func handleSharing(){
-        let activity = UIActivityViewController(activityItems: ["install app on your kid device by this link"], applicationActivities: nil)
-        //        activity.popoverPresentationController?.barButtonItem = sender
-        present(activity, animated: true, completion: nil)
-        configureDynamicLink()
-    }
+//    func handleSharing(){
+//        let activity = UIActivityViewController(activityItems: ["install app on your kid device by this link"], applicationActivities: nil)
+//        present(activity, animated: true, completion: nil)
+//        configureDynamicLink()
+//    }
     
     func configureDynamicLink(){
         var components = URLComponents()
@@ -121,12 +121,13 @@ class ChildProfileViewController: UIViewController {
         guard let uid =   Auth.auth().currentUser?.uid else{return}
         guard let data = Data(base64Encoded: uid) else{return}
         if let totp = TOTP(secret: data) {
-            let otpString = totp.generate(time: Date())
-            linkBuilder.socialMetaTagParameters?.title = "Join kid buddy with this code \(String(describing: otpString)) "
+            if  let otpString = totp.generate(time: Date()){
+            linkBuilder.socialMetaTagParameters?.title = "install app on your kid's device by this link & Join kid with this code: \(otpString) "
             print("otp is \(String(describing: otpString))")
+                OTPReference.child(String(describing: otpString)).updateChildValues(["parentId": uid])
+           }
         }
-
-        linkBuilder.socialMetaTagParameters?.descriptionText = "if you recieved this link from your parents number install kid buddy to share your location info with them "
+        linkBuilder.socialMetaTagParameters?.descriptionText = "if you recieved this link from your parents install kid buddy "
         guard let longURL = linkBuilder.url else { return }
         print("The long dynamic link is \(longURL.absoluteString)")
         linkBuilder.shorten {[weak self] url, warnings, error in
@@ -146,7 +147,7 @@ class ChildProfileViewController: UIViewController {
     }
     
     func shareItem(with url: URL) {
-        let subjectLine = "install app on your kid's device by this link"
+        let subjectLine = ""
         let activityView = UIActivityViewController(activityItems: [subjectLine, url], applicationActivities: nil)
         UIApplication.shared.windows.first?.rootViewController?.present(activityView, animated: true, completion: nil)
     }

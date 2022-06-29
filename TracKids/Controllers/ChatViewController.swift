@@ -134,9 +134,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
             }
         }
         resetBadgeCount()
-        messageTextfield.becomeFirstResponder()
         imageView.enableZoom()
-        
     }
     
     
@@ -382,19 +380,19 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
         cell.timeLabel.numberOfLines = 0
         cell.timeLabel.text = message.timestamp?.convertDateFormatter()
         if message.sender == Auth.auth().currentUser?.uid {
-            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0.4581165314, green: 0.7310858369, blue: 0.08122736961, alpha: 1)
+            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
             cell.MessageBodyView.leftAnchor.constraint(equalTo: cell.MessageBodyView.superview!.leftAnchor , constant: 50).isActive = true
         }
         else{
-            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0, green: 0.4845445156, blue: 0.9041138291, alpha: 1)
+            cell.MessageBodyView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         }
         
         return cell
-    }
+        }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
-    }
+         }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
@@ -462,6 +460,7 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate, UIScr
                               }
                 if ((self?.messages.count)! > 1 && self?.counter2 == 1) || ((self?.messages.count)! > 1 && self?.trackedChildChanged == true || ((self?.messages.count)! > 1 && self?.sendPressed == true )) {
                     self?.tableView.scrollToBottomRow()
+                    print("scrolled To Bottom Row")
                  }
             }
             completion()
