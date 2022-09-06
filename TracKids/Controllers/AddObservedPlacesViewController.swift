@@ -8,16 +8,15 @@
     import UIKit
     import MapKit
     import Firebase
-    
     import FloatingPanel
 
 class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, SearchViewControllerDelegate {
-    
+   
         let panel = FloatingPanelController()
         var observedPlaces = [CLLocationCoordinate2D]()
         var ObservedLocation = CLLocation()
+        var addressTitle : String?
         var searchResults : [MKPlacemark] = []
-        
         override func viewDidLoad() {
             super.viewDidLoad()
             configureMapView()
@@ -28,8 +27,6 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
             panel.move(to: .tip , animated: false)
         }
     
-
-        
         @IBOutlet weak var mapView: MKMapView!
         
         @IBAction func cancelButtonPressed(_ sender: UIButton) {
@@ -61,11 +58,9 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
                                             latitudinalMeters: 2000,
                                             longitudinalMeters: 2000)
             mapView.setRegion(region, animated: true)
-            
                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-                   
                    mapView.addGestureRecognizer(tapGesture)
-        }
+             }
         
       @objc func handleTap(gestureReconizer: UITapGestureRecognizer) {
         mapView.removeAnnotations(mapView.annotations)
@@ -74,41 +69,50 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
                 // Add annotation:
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
-                print("Debug : Coordinates  \(coordinate)")
+                
         let ObservedLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        self.ObservedLocation = ObservedLocation
+          
+              self.ObservedLocation = ObservedLocation
             mapView.addAnnotation(annotation)
         addRadiusOverlay(for: ObservedLocation)
-            }
+          LocationHandler.shared.convertLocationToAdress(for: ObservedLocation) { [weak self] address in
+              
+    self?.addressTitle = address?.title.components(separatedBy: ",").dropLast(2).joined(separator: " ")
+              print("Debug : addressTitle  \(String(describing: self?.addressTitle))")
+          }
+      }
 
+    func searchViewController(_ VC: SearchViewController, didSelectLocationWith coordinates: CLLocationCoordinate2D?, title: String) {
+        guard let coordinates = coordinates else {return}
+        self.addressTitle  = title
+        let ObservedLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        self.ObservedLocation = ObservedLocation
+        self.observedPlaces.append(coordinates)
+        mapView.removeAnnotations(mapView.annotations)
+        let pin = MKPointAnnotation()
+        pin.coordinate = coordinates
+        mapView.addAnnotation(pin)
+        mapView.setRegion(MKCoordinateRegion(center: coordinates, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        panel.move(to: .tip, animated: true)
+        mapView.removeOverlays(mapView.overlays)
+        addRadiusOverlay(for: ObservedLocation)
+    }
         
-        
-        func searchViewController(_ VC: SearchViewController, didSelectLocationWith coordinates: CLLocationCoordinate2D?) {
-            guard let coordinates = coordinates else {return}
-            let ObservedLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
-            self.ObservedLocation = ObservedLocation
-            self.observedPlaces.append(coordinates)
-            mapView.removeAnnotations(mapView.annotations)
-            let pin = MKPointAnnotation()
-            pin.coordinate = coordinates
-            mapView.addAnnotation(pin)
-            mapView.setRegion(MKCoordinateRegion(center: coordinates, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
-            panel.move(to: .tip, animated: true)
-            mapView.removeOverlays(mapView.overlays)
-            addRadiusOverlay(for: ObservedLocation)
-        }
+    
     func didBeginsearching(_ VC: SearchViewController) {
         self.panel.move(to: .full, animated: true)
     }
 
-        
         func uploadObservedPlaceData(){
             if let trackedChildId = TrackingViewController.trackedChildUId{
-                DataHandler.shared.uploadObservedPlace(ObservedLocation, for: trackedChildId)
+                let addressTitle = self.addressTitle ?? "cool"
+                //String(describing: self.ObservedLocation.altitude)
+                DataHandler.shared.uploadObservedPlace(ObservedLocation, addressTitle: addressTitle, for: trackedChildId)
                 self.dismiss(animated: true, completion: nil)
                 print("Debug: uploaded place successfully")
             }
         }
+    
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
           if overlay is MKCircle {
             let circleRenderer = MKCircleRenderer(overlay: overlay)

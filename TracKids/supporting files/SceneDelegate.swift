@@ -27,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.distanceFilter = CLLocationDistance(100)
+        locationManager.startMonitoringSignificantLocationChanges()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -63,38 +64,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
-// MARK: - Location Manager Delegate
-extension SceneDelegate: CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let lastLocation = locations.last else {return}
-        LocationHandler.shared.uploadChildLocation(for: lastLocation)
-        LocationHandler.shared.uploadLocationHistory(for: lastLocation)
-       }
+    // MARK: - Location Manager Delegate
+    extension SceneDelegate: CLLocationManagerDelegate {
+        
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            guard let lastLocation = locations.last else {return}
+            LocationHandler.shared.uploadChildLocation(for: lastLocation)
+            LocationHandler.shared.uploadLocationHistory(for: lastLocation)
+           }
 
-  func locationManager(
-    _ manager: CLLocationManager,
-    didEnterRegion region: CLRegion
-  ) {
-    if region is CLCircularRegion {
-        handleEvent(for: region, withType: "arrived")
-        print("geo exit")
-    }
-  }
+      func locationManager(
+        _ manager: CLLocationManager,
+        didEnterRegion region: CLRegion
+      ) {
+        if region is CLCircularRegion {
+            handleEvent(for: region, withType: "arrived")
+            print("geo exit")
+        }
+      }
 
-  func locationManager(
-    _ manager: CLLocationManager,
-    didExitRegion region: CLRegion
-  ) {
-    if region is CLCircularRegion {
-      handleEvent(for: region, withType: "left")
-        print("geo exit")
-    }
-  }
+      func locationManager(
+        _ manager: CLLocationManager,
+        didExitRegion region: CLRegion
+      ) {
+        if region is CLCircularRegion {
+          handleEvent(for: region, withType: "left")
+            print("geo exit")
+        }
+      }
     
     func handleEvent(for region: CLRegion, withType event : String) {
-        
- 
         var childName : String = " "
         DataHandler.shared.fetchUserInfo { (user) in
             childName = user.name
@@ -103,35 +102,10 @@ extension SceneDelegate: CLLocationManagerDelegate {
             guard let parentID = user.parentID else{return}
             DataHandler.shared.fetchDeviceID(for: parentID) { parentDeviceToken in
             DataHandler.shared.sendPushNotification(to: parentDeviceToken, sender: childName, body: self.message)
-            }
-
-            if UIApplication.shared.applicationState == .active {
-                self.window?.rootViewController?.showAlert(withTitle: nil, message: self.message)
-              print("Geofence active")
-            } else {
-              print("Geofence inactive!")
-              let notificationContent   = UNMutableNotificationContent()
-              notificationContent.body  = self.message
-              notificationContent.sound = .default
-              notificationContent.badge = UIApplication.shared
-                .applicationIconBadgeNumber + 1 as NSNumber
-              let trigger = UNTimeIntervalNotificationTrigger(
-                timeInterval: 1,
-                repeats: false)
-              let request = UNNotificationRequest(
-                identifier: "location_change",
-                content: notificationContent,
-                trigger: trigger)
-              UNUserNotificationCenter.current().add(request) { error in
-                  print("Geofence request! ")
-                if let error = error {
-                  print("Error: \(error)")
-                 }
-               }
              }
            }
         }
-      }
+    } 
 
 extension SceneDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(

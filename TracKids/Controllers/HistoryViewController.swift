@@ -71,7 +71,7 @@ class HistoryViewController: UIViewController {
                 formatter.dateFormat = "E HH:mm a"
                 let timestamp = formatter.string(from: date)
                 annotation.title = timestamp
-                DataHandler.shared.convertLocationToAdress(for: location) { (place) in
+                LocationHandler.shared.convertLocationToAdress(for: location) { (place) in
                     annotation.subtitle = place?.title
                   }
                 let point = fetchedLocation.coordinate

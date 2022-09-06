@@ -31,25 +31,25 @@
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="663"/>
                                         <subviews>
                                             <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HHT-tL-LeX">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="58.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                                             </textField>
                                             <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fif-hj-a4t">
-                                                <rect key="frame" x="0.0" y="88.5" width="374" height="58.5"/>
+                                                <rect key="frame" x="0.0" y="90" width="374" height="60"/>
                                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                             </textField>
                                             <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LQM-Yi-eX0">
-                                                <rect key="frame" x="0.0" y="177" width="374" height="56"/>
+                                                <rect key="frame" x="0.0" y="180" width="374" height="57.5"/>
                                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
                                             <segmentedControl opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OPB-I6-SmR">
-                                                <rect key="frame" x="0.0" y="263" width="374" height="47"/>
+                                                <rect key="frame" x="0.0" y="267.5" width="374" height="48"/>
                                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                 <segments>
                                                     <segment title="Parent"/>
@@ -59,33 +59,41 @@
                                                 <color key="selectedSegmentTintColor" systemColor="systemPinkColor"/>
                                             </segmentedControl>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MLe-ZH-lfK">
-                                                <rect key="frame" x="0.0" y="339" width="374" height="62"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <rect key="frame" x="0.0" y="344.5" width="374" height="54"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="Sign up">
                                                     <color key="titleColor" systemColor="systemBlueColor"/>
                                                 </state>
+                                                <buttonConfiguration key="configuration" style="gray" title="Sign up" cornerStyle="capsule">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="18"/>
+                                                    <color key="baseForegroundColor" systemColor="systemBlueColor"/>
+                                                </buttonConfiguration>
                                                 <connections>
                                                     <action selector="signUpPressed:" destination="7ti-Pb-o6c" eventType="touchUpInside" id="cP3-0G-Pnp"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GPK-7E-XB2">
-                                                <rect key="frame" x="0.0" y="431" width="374" height="53.5"/>
+                                                <rect key="frame" x="0.0" y="428.5" width="374" height="54"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MkM-Ds-SuZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="299" height="53.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="272.5" height="54"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="260" id="nxY-QI-4Un"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BdX-el-GfE">
-                                                        <rect key="frame" x="304" y="0.0" width="70" height="53.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <rect key="frame" x="277.5" y="0.0" width="96.5" height="54"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <state key="normal" title="Sign in">
                                                             <color key="titleColor" systemColor="linkColor"/>
                                                         </state>
+                                                        <buttonConfiguration key="configuration" style="gray" title="Sign in" cornerStyle="capsule">
+                                                            <fontDescription key="titleFontDescription" type="system" pointSize="18"/>
+                                                            <color key="baseForegroundColor" systemColor="linkColor"/>
+                                                        </buttonConfiguration>
                                                         <connections>
                                                             <action selector="signInPressed:" destination="7ti-Pb-o6c" eventType="touchUpInside" id="l8Q-l9-IV6"/>
                                                         </connections>
@@ -101,11 +109,15 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vRF-Sk-3dA">
-                                                <rect key="frame" x="0.0" y="514.5" width="374" height="148.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <rect key="frame" x="0.0" y="512.5" width="374" height="150.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="Cancel">
                                                     <color key="titleColor" systemColor="systemRedColor"/>
                                                 </state>
+                                                <buttonConfiguration key="configuration" style="gray" title="Cancel" cornerStyle="capsule">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                                </buttonConfiguration>
                                                 <connections>
                                                     <action selector="CancelPressed:" destination="7ti-Pb-o6c" eventType="touchUpInside" id="SWc-Fw-hnh"/>
                                                 </connections>
@@ -170,7 +182,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="hN3-HG-qSD">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="hN3-HG-qSD">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oP4-xI-Pgt" customClass="KWVerificationCodeView" customModule="KWVerificationCodeView">
@@ -216,6 +228,9 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Submit"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Submit" cornerStyle="capsule">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="SubmitButtonPressed:" destination="tfY-s5-ujz" eventType="touchUpInside" id="38L-qd-6aN"/>
                                 </connections>
@@ -257,7 +272,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="1cx-fO-zS0">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="1cx-fO-zS0">
                                 <rect key="frame" x="0.0" y="0.0" width="428" height="838"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.28270332729999997" green="1" blue="0.37367196130000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -300,7 +315,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UWY-2Q-bZM">
-                                        <rect key="frame" x="0.0" y="510.5" width="354" height="247.5"/>
+                                        <rect key="frame" x="0.0" y="525" width="354" height="233"/>
                                         <subviews>
                                             <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" horizontalCompressionResistancePriority="747" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Child Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LOV-jT-DXv">
                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="39.5"/>
@@ -318,24 +333,34 @@
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="spatial" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LzF-Yg-7LN">
-                                                <rect key="frame" x="133.5" y="147" width="87.5" height="48.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <rect key="frame" x="136" y="147" width="82.5" height="38"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Add">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <imageReference key="image" image="plus.circle" catalog="system" symbolScale="large"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32" scale="large" weight="medium"/>
                                                 </state>
+                                                <buttonConfiguration key="configuration" style="gray" title="Add" cornerStyle="capsule">
+                                                    <imageReference key="image" image="plus.circle" catalog="system" symbolScale="default"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="large" weight="regular"/>
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </buttonConfiguration>
                                                 <connections>
                                                     <action selector="AddChildPressed:" destination="jpA-SM-bGd" eventType="touchUpInside" id="8VG-eO-d5N"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JPh-ov-TuI">
-                                                <rect key="frame" x="139" y="205.5" width="76" height="42"/>
+                                                <rect key="frame" x="134.5" y="195" width="85" height="38"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="Cancel">
                                                     <color key="titleColor" systemColor="systemRedColor"/>
                                                 </state>
+                                                <buttonConfiguration key="configuration" style="gray" title="Cancel" cornerStyle="capsule">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                                </buttonConfiguration>
                                                 <connections>
                                                     <action selector="CancelPressed:" destination="jpA-SM-bGd" eventType="touchUpInside" id="PfH-ja-i4A"/>
                                                 </connections>
@@ -411,38 +436,48 @@
                                 <rect key="frame" x="188.5" y="402.5" width="37" height="37"/>
                             </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" distribution="equalSpacing" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="Cz0-BV-VGV">
-                                <rect key="frame" x="50" y="567" width="314" height="45.5"/>
+                                <rect key="frame" x="50" y="582" width="314" height="34"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UFY-Ce-RLh">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="45.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="34"/>
                                         <color key="backgroundColor" systemColor="systemGray5Color"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="p1p-2U-dZn">
-                                <rect key="frame" x="140" y="692.5" width="134" height="99.5"/>
+                                <rect key="frame" x="140" y="696" width="134" height="96"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="spatial" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yLO-TZ-w69">
-                                        <rect key="frame" x="0.0" y="0.0" width="134" height="37.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="134" height="38"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="save">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <imageReference key="image" image="square.and.pencil" catalog="system" symbolScale="large"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="medium"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20" scale="large" weight="regular"/>
                                         </state>
+                                        <buttonConfiguration key="configuration" style="gray" title="save" cornerStyle="capsule">
+                                            <imageReference key="image" image="square.and.pencil" catalog="system" symbolScale="medium"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="large" weight="regular"/>
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="saveButtonPressed:" destination="Gde-w5-1AI" eventType="touchUpInside" id="3Et-HX-Ubn"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fq9-kF-rBG">
-                                        <rect key="frame" x="0.0" y="57.5" width="134" height="42"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <rect key="frame" x="0.0" y="58" width="134" height="38"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                         </state>
+                                        <buttonConfiguration key="configuration" style="gray" title="Cancel" cornerStyle="capsule">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                            <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="cancelButtonPressed:" destination="Gde-w5-1AI" eventType="touchUpInside" id="eZG-8K-Y5R"/>
                                         </connections>
@@ -632,7 +667,7 @@
                                 <color key="color" name="AccentColor"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6DP-zF-yxH">
-                                <rect key="frame" x="325.5" y="40" width="68.5" height="57"/>
+                                <rect key="frame" x="327" y="40" width="67" height="57"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="67" id="K5T-q9-Xf7"/>
@@ -640,9 +675,9 @@
                                 </constraints>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" imagePlacement="leading">
+                                <buttonConfiguration key="configuration" style="gray" imagePlacement="leading" cornerStyle="capsule">
                                     <imageReference key="image" image="trash" catalog="system" symbolScale="medium"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="medium" weight="medium"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="15" scale="default" weight="medium"/>
                                     <attributedString key="attributedTitle">
                                         <fragment content="clear">
                                             <attributes>
@@ -768,41 +803,49 @@
                                 <rect key="frame" x="20" y="180" width="374" height="633"/>
                                 <subviews>
                                     <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zgp-WQ-i4X">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="67.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="69.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DjA-FS-pXk">
-                                        <rect key="frame" x="0.0" y="137.5" width="374" height="64.5"/>
+                                        <rect key="frame" x="0.0" y="139.5" width="374" height="67"/>
                                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="continue" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vw4-tM-fMB">
-                                        <rect key="frame" x="0.0" y="272" width="374" height="82"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <rect key="frame" x="0.0" y="276.5" width="374" height="66.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Log in">
                                             <color key="titleColor" systemColor="systemBlueColor"/>
                                         </state>
+                                        <buttonConfiguration key="configuration" style="gray" title="Log in" cornerStyle="capsule">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                            <color key="baseForegroundColor" systemColor="systemBlueColor"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="signInPressed:" destination="zu5-A9-fYx" eventType="touchUpInside" id="gat-AZ-8r3"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2PO-uh-QSh">
-                                        <rect key="frame" x="0.0" y="424" width="374" height="209"/>
+                                        <rect key="frame" x="0.0" y="413" width="374" height="220"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Pf-KO-NAY">
-                                                <rect key="frame" x="0.0" y="0.0" width="281" height="209"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Pf-KO-NAY">
+                                                <rect key="frame" x="0.0" y="0.0" width="259" height="220"/>
+                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bug-il-4XN">
-                                                <rect key="frame" x="291" y="0.0" width="83" height="209"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <rect key="frame" x="269" y="0.0" width="105" height="220"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Sign up">
                                                     <color key="titleColor" systemColor="linkColor"/>
                                                 </state>
+                                                <buttonConfiguration key="configuration" style="gray" title="Sign up" cornerStyle="capsule">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                    <color key="baseForegroundColor" systemColor="linkColor"/>
+                                                </buttonConfiguration>
                                                 <connections>
                                                     <segue destination="7ti-Pb-o6c" kind="show" id="KiG-IB-j4g"/>
                                                 </connections>
@@ -857,20 +900,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="hwS-0S-dYn">
-                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="aBI-0R-gqh">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="hwS-0S-dYn">
+                                <rect key="frame" x="10" y="188" width="394" height="525"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZu-MK-pE0">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="58.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zZu-MK-pE0">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="62.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal" title="  Childs" image="person.fill.badge.plus" catalog="system">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" weight="semibold"/>
                                         </state>
-                                        <buttonConfiguration key="configuration" style="gray" image="person.fill.badge.plus" catalog="system" title="  Childs">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" weight="semibold"/>
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
+                                        <buttonConfiguration key="configuration" style="gray" image="person.fill.badge.plus" catalog="system" title="  Childs" cornerStyle="capsule">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="19" scale="default" weight="regular"/>
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                             <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -878,53 +924,37 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TNH-QU-IRq">
-                                        <rect key="frame" x="0.0" y="102.5" width="414" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="92.5" width="394" height="62.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal" title="  SOS">
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                             <imageReference key="image" image="bell.fill" catalog="system" symbolScale="large" renderingMode="original"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="35" scale="large" weight="regular"/>
                                         </state>
-                                        <buttonConfiguration key="configuration" style="gray" title="  SOS">
+                                        <buttonConfiguration key="configuration" style="gray" title="  SOS" cornerStyle="capsule">
                                             <imageReference key="image" image="bell.fill" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="35" scale="large" weight="regular"/>
-                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="25"/>
-                                            <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="19" scale="default" weight="regular"/>
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="SOSButtonPressed:" destination="PEL-v1-FtV" eventType="touchUpInside" id="o4z-tQ-OYV"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2a8-c0-2ef">
-                                        <rect key="frame" x="0.0" y="205" width="414" height="58.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" title="  Help">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <imageReference key="image" image="info.circle" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" weight="semibold"/>
-                                        </state>
-                                        <buttonConfiguration key="configuration" style="gray" title="  Help">
-                                            <imageReference key="image" image="info.circle" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" weight="semibold"/>
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
-                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="helpButtonPressed:" destination="PEL-v1-FtV" eventType="touchUpInside" id="B3j-Sf-nQt"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="joT-El-mLJ">
-                                        <rect key="frame" x="0.0" y="307.5" width="414" height="58"/>
+                                        <rect key="frame" x="0.0" y="185" width="394" height="62.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal" title="  Sign in">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <imageReference key="image" image="pip.enter" catalog="system" symbolScale="large" renderingMode="original"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
                                         </state>
-                                        <buttonConfiguration key="configuration" style="gray" title="  Sign in">
+                                        <buttonConfiguration key="configuration" style="gray" title="  Sign in" cornerStyle="capsule">
                                             <imageReference key="image" image="pip.enter" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="default" weight="regular"/>
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                             <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -932,17 +962,18 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OLt-fm-rdT">
-                                        <rect key="frame" x="0.0" y="409.5" width="414" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="277.5" width="394" height="62.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal" title="  Sign out">
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                             <imageReference key="image" image="pip.exit" catalog="system" symbolScale="large" renderingMode="original"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
                                         </state>
-                                        <buttonConfiguration key="configuration" style="gray" title="  Sign out">
+                                        <buttonConfiguration key="configuration" style="gray" title="  Sign out" cornerStyle="capsule">
                                             <imageReference key="image" image="pip.exit" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="default" weight="regular"/>
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                             <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -950,35 +981,37 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mbu-hR-bi6">
-                                        <rect key="frame" x="0.0" y="512" width="414" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="370" width="394" height="62.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal" title="  Remove Account">
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                             <imageReference key="image" image="trash" catalog="system" symbolScale="large" renderingMode="original"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
                                         </state>
-                                        <buttonConfiguration key="configuration" style="gray" title="  Remove Account">
+                                        <buttonConfiguration key="configuration" style="gray" title="  Remove Account" cornerStyle="capsule">
                                             <imageReference key="image" image="trash" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="default" weight="regular"/>
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                             <color key="baseForegroundColor" systemColor="systemRedColor"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="removeAccountPressed:" destination="PEL-v1-FtV" eventType="touchUpInside" id="owi-2Z-IZv"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tak-5F-6H2">
-                                        <rect key="frame" x="0.0" y="614.5" width="414" height="58.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tak-5F-6H2">
+                                        <rect key="frame" x="0.0" y="462.5" width="394" height="62.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal" title="  Share App">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <imageReference key="image" image="square.and.arrow.up" catalog="system" symbolScale="large" renderingMode="original"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
                                         </state>
-                                        <buttonConfiguration key="configuration" style="gray" title="  Share App">
+                                        <buttonConfiguration key="configuration" style="gray" title="  Share App" cornerStyle="capsule">
                                             <imageReference key="image" image="square.and.arrow.up" catalog="system" symbolScale="large" renderingMode="original"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="default" weight="regular"/>
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                             <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -991,10 +1024,14 @@
                         <viewLayoutGuide key="safeArea" id="LEq-bl-Xb8"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                         <constraints>
-                            <constraint firstItem="LEq-bl-Xb8" firstAttribute="trailing" secondItem="hwS-0S-dYn" secondAttribute="trailing" id="9Ua-in-N2d"/>
-                            <constraint firstItem="hwS-0S-dYn" firstAttribute="top" secondItem="LEq-bl-Xb8" secondAttribute="top" id="q2g-ip-jDq"/>
-                            <constraint firstItem="LEq-bl-Xb8" firstAttribute="bottom" secondItem="hwS-0S-dYn" secondAttribute="bottom" id="u6R-Dy-XNl"/>
-                            <constraint firstItem="hwS-0S-dYn" firstAttribute="leading" secondItem="LEq-bl-Xb8" secondAttribute="leading" id="xjP-tB-odp"/>
+                            <constraint firstAttribute="bottom" secondItem="aBI-0R-gqh" secondAttribute="bottom" id="86n-sF-LGv"/>
+                            <constraint firstItem="LEq-bl-Xb8" firstAttribute="trailing" secondItem="hwS-0S-dYn" secondAttribute="trailing" constant="10" id="9Ua-in-N2d"/>
+                            <constraint firstItem="aBI-0R-gqh" firstAttribute="top" secondItem="FKM-aA-ESt" secondAttribute="top" id="Pyz-Ey-nwv"/>
+                            <constraint firstItem="hwS-0S-dYn" firstAttribute="top" secondItem="LEq-bl-Xb8" secondAttribute="top" constant="100" id="q2g-ip-jDq"/>
+                            <constraint firstItem="LEq-bl-Xb8" firstAttribute="bottom" secondItem="hwS-0S-dYn" secondAttribute="bottom" constant="100" id="u6R-Dy-XNl"/>
+                            <constraint firstItem="LEq-bl-Xb8" firstAttribute="trailing" secondItem="aBI-0R-gqh" secondAttribute="trailing" id="vWC-vw-9Fh"/>
+                            <constraint firstItem="hwS-0S-dYn" firstAttribute="leading" secondItem="LEq-bl-Xb8" secondAttribute="leading" constant="10" id="xjP-tB-odp"/>
+                            <constraint firstItem="aBI-0R-gqh" firstAttribute="leading" secondItem="LEq-bl-Xb8" secondAttribute="leading" id="zs0-Fd-PSO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ggy-68-T1s"/>
@@ -1043,8 +1080,8 @@
                         <imageReference key="image" image="location.fill" catalog="system" symbolScale="large" renderingMode="original"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="Sbi-ZM-Fwk">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Sbi-ZM-Fwk">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" name="Trackids colors"/>
@@ -1080,66 +1117,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.89999997615814209" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="DiU-Ps-jQg">
-                                <rect key="frame" x="-9" y="0.0" width="443" height="896"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="DiU-Ps-jQg">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" red="0.28270332729999997" green="1" blue="0.37367196130000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="jSu-gb-rSK">
-                                <rect key="frame" x="20" y="130" width="374" height="614"/>
+                                <rect key="frame" x="20" y="100" width="374" height="746"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8I8-zn-eez">
-                                        <rect key="frame" x="52" y="0.0" width="270" height="297"/>
+                                        <rect key="frame" x="52" y="0.0" width="270" height="363"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" translatesAutoresizingMaskIntoConstraints="NO" id="iqz-gC-PHv">
-                                                <rect key="frame" x="10" y="0.0" width="250" height="250"/>
+                                                <rect key="frame" x="35" y="0.0" width="200" height="200"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="250" id="7Fi-IL-OD1"/>
-                                                    <constraint firstAttribute="width" constant="250" id="Rqb-MR-OGa"/>
+                                                    <constraint firstAttribute="height" constant="200" id="7Fi-IL-OD1"/>
+                                                    <constraint firstAttribute="width" constant="200" id="Rqb-MR-OGa"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44F-WL-U6s">
-                                                <rect key="frame" x="10" y="260" width="250" height="37"/>
+                                                <rect key="frame" x="10" y="210" width="250" height="153"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="textColor" name="AccentColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="44F-WL-U6s" firstAttribute="top" secondItem="8I8-zn-eez" secondAttribute="top" priority="750" constant="240" id="03Z-zR-pYm"/>
+                                            <constraint firstItem="44F-WL-U6s" firstAttribute="top" secondItem="iqz-gC-PHv" secondAttribute="bottom" priority="750" constant="20" id="03Z-zR-pYm"/>
                                             <constraint firstItem="44F-WL-U6s" firstAttribute="leading" secondItem="8I8-zn-eez" secondAttribute="leading" priority="750" constant="10" id="08W-IF-iLT"/>
                                             <constraint firstAttribute="trailing" secondItem="iqz-gC-PHv" secondAttribute="trailing" priority="750" id="O17-Ko-wFZ"/>
                                             <constraint firstItem="iqz-gC-PHv" firstAttribute="leading" secondItem="8I8-zn-eez" secondAttribute="leading" priority="750" id="OqY-cR-DHC"/>
                                             <constraint firstItem="iqz-gC-PHv" firstAttribute="top" secondItem="8I8-zn-eez" secondAttribute="top" priority="750" id="Zx3-kp-ObU"/>
-                                            <constraint firstAttribute="bottom" secondItem="iqz-gC-PHv" secondAttribute="bottom" priority="750" constant="92.5" id="b1F-gt-bry"/>
+                                            <constraint firstAttribute="bottom" secondItem="iqz-gC-PHv" secondAttribute="bottom" priority="750" constant="70" id="b1F-gt-bry"/>
                                             <constraint firstAttribute="trailing" secondItem="44F-WL-U6s" secondAttribute="trailing" priority="750" constant="10" id="fSz-oU-9tk"/>
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="vQe-HN-UkM">
-                                        <rect key="frame" x="20" y="317" width="334" height="297"/>
+                                        <rect key="frame" x="20" y="383" width="334" height="363"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FfY-7y-fpk">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="39.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="52.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="  Observe places">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <imageReference key="image" image="eyes" catalog="system" symbolScale="large" renderingMode="original"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
                                                 </state>
-                                                <buttonConfiguration key="configuration" style="gray" title="  Observe places">
-                                                    <imageReference key="image" image="eyes" catalog="system" symbolScale="large" renderingMode="original"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
-                                                    <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="  Observe places" cornerStyle="capsule">
+                                                    <imageReference key="image" image="eyes" catalog="system" symbolScale="default" renderingMode="original"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="default" weight="regular"/>
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="ObservePlacesButtonPressed:" destination="FVP-oK-YHi" eventType="touchUpInside" id="TRg-S1-R1u"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-SB-4Oi">
-                                                <rect key="frame" x="0.0" y="64.5" width="334" height="39.5"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-SB-4Oi">
+                                                <rect key="frame" x="0.0" y="77.5" width="334" height="52.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title=" History">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1147,18 +1184,18 @@
                                                     <imageReference key="image" image="book" catalog="system" symbolScale="large" renderingMode="original"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
                                                 </state>
-                                                <buttonConfiguration key="configuration" style="gray" title=" History">
-                                                    <imageReference key="image" image="book" catalog="system" symbolScale="large" renderingMode="original"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
-                                                    <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title=" History" cornerStyle="capsule">
+                                                    <imageReference key="image" image="book" catalog="system" symbolScale="default" renderingMode="original"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="default" weight="regular"/>
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <segue destination="FhS-eD-9Hm" kind="show" id="Uhr-oB-kLM"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Phd-17-FV9">
-                                                <rect key="frame" x="0.0" y="129" width="334" height="39"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Phd-17-FV9">
+                                                <rect key="frame" x="0.0" y="155" width="334" height="53"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="  Chat">
@@ -1166,28 +1203,28 @@
                                                     <imageReference key="image" image="message" catalog="system" symbolScale="large"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
                                                 </state>
-                                                <buttonConfiguration key="configuration" style="gray" title="  Chat">
-                                                    <imageReference key="image" image="message" catalog="system" symbolScale="large"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
-                                                    <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="  Chat" cornerStyle="capsule">
+                                                    <imageReference key="image" image="message" catalog="system" symbolScale="default"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="default" weight="regular"/>
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="ChatButtonPressed:" destination="FVP-oK-YHi" eventType="touchUpInside" id="W1M-GD-eiC"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvB-h0-aVK">
-                                                <rect key="frame" x="0.0" y="193" width="334" height="39.5"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvB-h0-aVK">
+                                                <rect key="frame" x="0.0" y="233" width="334" height="52.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="Send  link to child">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <imageReference key="image" image="square.and.arrow.up" catalog="system" symbolScale="medium" renderingMode="original"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
                                                 </state>
-                                                <buttonConfiguration key="configuration" style="gray" title="Send  link to child">
-                                                    <imageReference key="image" image="square.and.arrow.up" catalog="system" symbolScale="medium" renderingMode="original"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="large" weight="semibold"/>
-                                                    <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Send  link to child" cornerStyle="capsule">
+                                                    <imageReference key="image" image="square.and.arrow.up" catalog="system" symbolScale="default" renderingMode="original"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="default" weight="regular"/>
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -1195,26 +1232,29 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mb1-Dw-H9D">
-                                                <rect key="frame" x="0.0" y="257.5" width="334" height="39.5"/>
+                                                <rect key="frame" x="0.0" y="310.5" width="334" height="52.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="  Unpair child">
                                                     <color key="titleColor" systemColor="systemRedColor"/>
                                                     <imageReference key="image" image="delete.left" catalog="system" symbolScale="large" renderingMode="original"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="small" weight="regular"/>
                                                 </state>
-                                                <buttonConfiguration key="configuration" style="gray" title="  Unpair child">
-                                                    <imageReference key="image" image="delete.left" catalog="system" symbolScale="large" renderingMode="original"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="small" weight="regular"/>
-                                                    <fontDescription key="titleFontDescription" type="system" pointSize="25"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="  Unpair child" cornerStyle="capsule">
+                                                    <imageReference key="image" image="delete.left" catalog="system" symbolScale="default" renderingMode="original"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" scale="default" weight="regular"/>
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
                                                     <color key="baseForegroundColor" systemColor="systemRedColor"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="unpairChildPressed:" destination="FVP-oK-YHi" eventType="touchUpInside" id="NHE-Xu-ox8"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="8I8-zn-eez" secondAttribute="trailing" priority="750" constant="52" id="Ice-k5-pdU"/>
-                                    <constraint firstItem="vQe-HN-UkM" firstAttribute="top" secondItem="jSu-gb-rSK" secondAttribute="top" priority="750" constant="386" id="KOm-KG-bXB"/>
+                                    <constraint firstItem="vQe-HN-UkM" firstAttribute="top" secondItem="jSu-gb-rSK" secondAttribute="top" priority="750" constant="360" id="KOm-KG-bXB"/>
                                     <constraint firstItem="8I8-zn-eez" firstAttribute="leading" secondItem="jSu-gb-rSK" secondAttribute="leading" constant="52" id="NxT-NP-wGM"/>
                                     <constraint firstItem="8I8-zn-eez" firstAttribute="top" relation="lessThanOrEqual" secondItem="jSu-gb-rSK" secondAttribute="top" constant="20" symbolic="YES" id="RsC-Qw-zpr"/>
                                     <constraint firstAttribute="trailing" secondItem="vQe-HN-UkM" secondAttribute="trailing" constant="20" id="WTm-kt-hHe"/>
@@ -1226,11 +1266,11 @@
                         <viewLayoutGuide key="safeArea" id="6PS-bS-T75"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="DiU-Ps-jQg" firstAttribute="leading" secondItem="V76-Ud-nXi" secondAttribute="leadingMargin" constant="-29" id="AbN-ud-UM5"/>
+                            <constraint firstItem="DiU-Ps-jQg" firstAttribute="leading" secondItem="V76-Ud-nXi" secondAttribute="leadingMargin" constant="-20" id="AbN-ud-UM5"/>
                             <constraint firstItem="jSu-gb-rSK" firstAttribute="leading" secondItem="6PS-bS-T75" secondAttribute="leading" constant="20" id="FMy-JJ-hzt"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="DiU-Ps-jQg" secondAttribute="trailing" constant="-40" id="MCy-xC-vGo"/>
-                            <constraint firstItem="6PS-bS-T75" firstAttribute="bottom" secondItem="jSu-gb-rSK" secondAttribute="bottom" constant="20" id="Rz1-iX-7p8"/>
-                            <constraint firstItem="jSu-gb-rSK" firstAttribute="top" secondItem="V76-Ud-nXi" secondAttribute="top" constant="130" id="cPR-cV-mrg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DiU-Ps-jQg" secondAttribute="trailing" constant="-20" id="MCy-xC-vGo"/>
+                            <constraint firstAttribute="bottom" secondItem="jSu-gb-rSK" secondAttribute="bottom" constant="50" id="Rz1-iX-7p8"/>
+                            <constraint firstItem="jSu-gb-rSK" firstAttribute="top" secondItem="V76-Ud-nXi" secondAttribute="top" constant="100" id="cPR-cV-mrg"/>
                             <constraint firstItem="DiU-Ps-jQg" firstAttribute="top" secondItem="V76-Ud-nXi" secondAttribute="top" id="gcf-hD-mNN"/>
                             <constraint firstItem="6PS-bS-T75" firstAttribute="trailing" secondItem="jSu-gb-rSK" secondAttribute="trailing" constant="20" id="ksL-cX-8Wb"/>
                             <constraint firstAttribute="bottom" secondItem="DiU-Ps-jQg" secondAttribute="bottom" id="msy-22-ikf"/>
@@ -1293,7 +1333,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yp7-OG-Fj9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1529" y="2018"/>
+            <point key="canvasLocation" x="1481" y="2018"/>
         </scene>
         <!--Chat-->
         <scene sceneID="ASc-KP-peu">
@@ -1304,7 +1344,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KQB-5y-ScE">
-                                <rect key="frame" x="0.0" y="140" width="414" height="559"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="611"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                 <color key="tintColor" red="0.17136007140000001" green="1" blue="0.39771998980000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="separatorColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1441,27 +1481,37 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                             </mapView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VMM-vE-Mgi">
-                                <rect key="frame" x="163.5" y="673.5" width="87.5" height="98.5"/>
+                                <rect key="frame" x="158.5" y="672" width="97.5" height="90"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="spatial" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uRN-JE-Ore">
-                                        <rect key="frame" x="0.0" y="0.0" width="87.5" height="48.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="97.5" height="44"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <state key="normal" title="Add">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <imageReference key="image" image="plus.circle" catalog="system" symbolScale="large" renderingMode="original"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32" scale="large" weight="medium"/>
                                         </state>
+                                        <buttonConfiguration key="configuration" style="gray" title="Add" cornerStyle="capsule">
+                                            <imageReference key="image" image="plus.circle" catalog="system" symbolScale="large" renderingMode="original"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="default" weight="regular"/>
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="AddButtonPressed:" destination="zPt-hd-4bs" eventType="touchUpInside" id="eGy-Wh-WRr"/>
                                             <action selector="AddChildPressed:" destination="jpA-SM-bGd" eventType="touchUpInside" id="NPH-mb-wMH"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="067-Gf-kr3">
-                                        <rect key="frame" x="0.0" y="56.5" width="87.5" height="42"/>
+                                        <rect key="frame" x="0.0" y="52" width="97.5" height="38"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                         </state>
+                                        <buttonConfiguration key="configuration" style="gray" title="Cancel" cornerStyle="capsule">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                            <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="CancelPressed:" destination="jpA-SM-bGd" eventType="touchUpInside" id="MUC-jW-eBV"/>
                                             <action selector="cancelButtonPressed:" destination="zPt-hd-4bs" eventType="touchUpInside" id="scC-jc-4wu"/>
@@ -1492,7 +1542,7 @@
                         <viewLayoutGuide key="safeArea" id="zKj-7m-3vx"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="zKj-7m-3vx" firstAttribute="bottom" secondItem="VMM-vE-Mgi" secondAttribute="bottom" constant="70" id="Dgd-Yk-5tO"/>
+                            <constraint firstItem="zKj-7m-3vx" firstAttribute="bottom" secondItem="VMM-vE-Mgi" secondAttribute="bottom" constant="80" id="Dgd-Yk-5tO"/>
                             <constraint firstItem="zKj-7m-3vx" firstAttribute="trailing" secondItem="fUw-ce-Q4b" secondAttribute="trailing" id="DsZ-hQ-Aw7"/>
                             <constraint firstItem="fUw-ce-Q4b" firstAttribute="leading" secondItem="zKj-7m-3vx" secondAttribute="leading" id="Lh8-X4-dBo"/>
                             <constraint firstAttribute="bottom" secondItem="fUw-ce-Q4b" secondAttribute="bottom" id="Vcq-d9-j7d"/>
@@ -1516,7 +1566,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="iHc-15-WqC"/>
-        <segue reference="966-xM-PZK"/>
+        <segue reference="WZU-q8-wgU"/>
         <segue reference="Uhr-oB-kLM"/>
         <segue reference="fnv-E1-P1c"/>
     </inferredMetricsTieBreakers>
@@ -1530,7 +1580,6 @@
         <image name="clock" catalog="system" width="128" height="121"/>
         <image name="delete.left" catalog="system" width="128" height="104"/>
         <image name="eyes" catalog="system" width="128" height="99"/>
-        <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="list.triangle" catalog="system" width="128" height="91"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>

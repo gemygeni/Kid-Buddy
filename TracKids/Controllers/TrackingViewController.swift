@@ -75,7 +75,6 @@
             var dict = [String: Any]()
             dict.updateValue(0, forKey: "badgeCount")
             UserDefaults.standard.register(defaults: dict)
-                
         }
         
         override func viewWillAppear(_ animated: Bool) {
@@ -100,8 +99,14 @@
                     self?.addChildButton.isHidden = false
                 }
             })
-            self.navigationItem.title = user?.name
         }
+        
+        
+        override func viewDidDisappear(_ animated: Bool) {
+            super.viewDidDisappear(true)
+            self.tabBarItem.title = "Track"
+        }
+
         
             
         func centerMapOnUserLocation() {
@@ -139,12 +144,13 @@
             else{
                 centerMapOnUserLocation()
             }
-        }
+         }
         
         func fetchUserInfo(){
             DataHandler.shared.fetchUserInfo { [weak self](user) in
                 self?.user = user
                 self?.accountType = AccountType(rawValue: user.accountType)
+                self?.navigationItem.title = user.name
             }
         }
         
@@ -237,7 +243,7 @@
                 if  let child = childs[indexPath.item]{
                     if let childImageURl = child.imageURL {
                         childCell.profileImageView.loadImageUsingCacheWithUrlString(childImageURl)
-                        annotationImage = childCell.profileImageView.image?.resize(70 , 70)
+                        annotationImage = childCell.profileImageView.image?.resize(60 , 60)
                     }
                     else{childCell.profileImageView.image = #imageLiteral(resourceName: "person").resize(70 , 70)}
                 }
@@ -260,6 +266,7 @@
 
             guard let childId = TrackingViewController.trackedChildUId else {return}
             DataHandler.shared.fetchChildAccount(with: childId) {[weak self] user in
+                print("selected \(user.name)")
                 self?.tabBarItem.title = user.name + " tracked"
                 self?.navigationItem.title = user.name
             }

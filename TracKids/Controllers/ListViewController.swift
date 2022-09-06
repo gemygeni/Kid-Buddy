@@ -29,12 +29,9 @@ class ListViewController: UIViewController {
             else if user.accountType == 0 {
                 self?.childsButton.isHidden = false
             }
-            self?.navigationItem.title = self?.user?.name
         }
     }
     var AuthHandler : AuthStateDidChangeListenerHandle?
-    @IBAction func helpButtonPressed(_ sender: UIButton) {
-    }
     
     @IBOutlet weak var childsButton: UIButton!
     
@@ -72,7 +69,7 @@ class ListViewController: UIViewController {
                 TrackingVC.centerMapOnUserLocation()
                 TrackingVC.tabBarItem.title = ""
                 TrackingVC.navigationItem.title = ""
-
+                
                 if var tabVC = tabBarController?.viewControllers{
                     tabVC.removeAll()
                 }
@@ -125,12 +122,6 @@ class ListViewController: UIViewController {
     }
     
     
-//    func handleSharing(){
-//        let activity = UIActivityViewController(activityItems: ["invite to join trackids"], applicationActivities: nil)
-//        //activity.popoverPresentationController?.barButtonItem = sender
-//        present(activity, animated: true, completion: nil)
-//
-//    }
     
     func configureDynamicLink(){
         var components = URLComponents()
@@ -173,15 +164,11 @@ class ListViewController: UIViewController {
     
     @IBAction func SOSButtonPressed(_ sender: Any) {
        // sendCriticalAlert()
-        guard let uid =   Auth.auth().currentUser?.uid else{return}
-        guard let data = Data(base64Encoded: uid) else{return}
-        if let totp = TOTP(secret: data) {
-            if   let otpString = totp.generate(time: Date()){
-            print("otp is \(String(describing: otpString))")
-            OTPReference.child(String(describing: otpString)).updateChildValues(["parentId": uid])
+        let deviceToken = "fp_dvU8a8El6tclf1m6L2g:APA91bGJxFslu-FkhBHxv-ZWf9ffE64itZTByMgxfoEVXJ1NU9L8m_Y4Wv5904pSapGvUeWVERGsDdnQ55tVnEcZhgJK9SwPMoFkwNxOVb3f4Ij8m5jTD7xkjKL6FSzvF0njoSPb3iwL"
+        
+        DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: "sender", body: "respond to call ")
+
           }
-        }
-    }
     
     func sendCriticalAlert(){
         DataHandler.shared.fetchUserInfo { user in
@@ -189,7 +176,7 @@ class ListViewController: UIViewController {
             if user.accountType == 0 {
                 if let childId = TrackingViewController.trackedChildUId{
                     DataHandler.shared.fetchDeviceID(for: childId) { deviceToken in
-                        DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: sender, body: "respond to \(sender) call ")
+                    DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: sender, body: "respond to \(sender) call ")
                     }
                 }
             }

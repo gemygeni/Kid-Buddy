@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import CoreLocation
 protocol SearchViewControllerDelegate : AnyObject  {
-    func searchViewController(_ VC : SearchViewController , didSelectLocationWith coordinates : CLLocationCoordinate2D?)
+    func searchViewController(_ VC : SearchViewController , didSelectLocationWith coordinates : CLLocationCoordinate2D?, title : String)
     func didBeginsearching(_ VC : SearchViewController)
 
 }
@@ -21,8 +21,8 @@ class SearchViewController: UIViewController {
     private let completer = MKLocalSearchCompleter()
     let label : UILabel = {
        let label = UILabel()
-        label.text = "Search For Loacation"
-        label.font = .systemFont(ofSize: 24, weight: .semibold)
+        label.text = "Swipe up to Search For Place ⬆️"
+        label.font = .systemFont(ofSize: 20, weight: .regular)
        return label
     }()
     
@@ -76,30 +76,34 @@ class SearchViewController: UIViewController {
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
         self.places = []
+        print("sss textFieldDidChange")
         guard let query = textField.text else {
 
         if completer.isSearching {
-          completer.cancel()
+           completer.cancel()
         }
         return
       }
-        guard    let location =  LocationHandler.shared.locationManager?.location else{return}
+        guard let location =  LocationHandler.shared.locationManager?.location else{return}
             let Delta: CLLocationDegrees = 25 / 111
             let span = MKCoordinateSpan(
               latitudeDelta: Delta,
               longitudeDelta: Delta)
             let region = MKCoordinateRegion(center: location.coordinate, span: span)
             completer.region = region
-          completer.queryFragment = query
-        self.completionResults.forEach { (place) in
-            let address = Location(title: place.title, details: place.subtitle, coordinates: location.coordinate )
-            self.places.append(address)
-            self.tableView.reloadData()
-        }
+            completer.queryFragment = query
 
-    }
-
-}
+            self.completionResults.forEach { (place) in
+                
+                LocationHandler.shared.searchForLocation(with: place.title) {[weak self] (places) in
+                    DispatchQueue.main.async {
+                        self?.places = places
+                        self?.tableView.reloadData()
+                    }
+                }
+           }
+      }
+  }
 
 // MARK: - UITextFieldDelegate
 extension SearchViewController : UITextFieldDelegate {
@@ -107,15 +111,18 @@ extension SearchViewController : UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         searchTextField.text = ""
         self.places = []
+        self.tableView.reloadData()
             if completer.isSearching {
               completer.cancel()
                 return
             }
         searchTextField = textField
+        
            }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         self.delegate?.didBeginsearching(self)
+        self.tableView.reloadData()
         return true
     }
     
@@ -130,8 +137,15 @@ extension SearchViewController : UITextFieldDelegate {
             }
         }
         return true
+     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+     //   self.places = []
+        self.tableView.reloadData()
+        print("rrr textFieldDidEndEditing")
     }
-}
+    
+  }
 
 
 extension SearchViewController : UITableViewDelegate, UITableViewDataSource{
@@ -150,15 +164,22 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        print("ggg beefore \(self.places.count)")
         let coordinates = places[indexPath.row].coordinates
-        self.delegate?.searchViewController(self, didSelectLocationWith: coordinates)
+        let title = places[indexPath.row].title
+        self.delegate?.searchViewController(self, didSelectLocationWith: coordinates, title: title)
    }
 }
 
 extension SearchViewController : MKLocalSearchCompleterDelegate{
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        let Results = completer.results
-        self.completionResults = Results
+        DispatchQueue.main.async { [weak self] in
+            self?.places = []
+            let Results = completer.results
+            self?.completionResults = Results
+            self?.tableView.reloadData()
+            print("sss completerDidUpdateResults")
+         }
       }
 
       func completer(

@@ -1,22 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   uuid = "0FC8423A-F7A3-49BB-89AD-A18C180B80ED"
+   uuid = "D3CF119A-516D-4318-B124-8803D97141E0"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "21373D3E-5CDD-424B-8C7A-21C167D63517"
+            uuid = "7539D6FF-C93E-42C5-9F41-F6CF08508E08"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TracKids/Controllers/SearchViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "74AAB1BA-78BE-4DAB-811B-586A74BBEF0B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TracKids/Controllers/SearchViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "textFieldShouldReturn(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "83E95EB9-7D29-4206-A27D-6DD468B998AB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TracKids/utilities/Extensions.swift"
+            filePath = "TracKids/supporting files/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "loadImageUsingCacheWithUrlString(_:)"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "getNotificationSettings()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -44,6 +44,7 @@
                 DataHandler.shared.fetchUserInfo { [weak self](user) in
                     if user.accountType == 1 {
                         self?.locationManager?.startUpdatingLocation()
+                        self?.locationManager?.startMonitoringSignificantLocationChanges()
                         self?.locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
                         print("always auth")
                     }
@@ -51,8 +52,9 @@
                 
                 
             case .authorizedWhenInUse:
-//                locationManager?.startUpdatingLocation()
-//                 locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                 locationManager?.startUpdatingLocation()
+                locationManager?.startMonitoringSignificantLocationChanges()
+                 locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
                 locationManager?.requestAlwaysAuthorization()
             @unknown default:
                 print("default")
@@ -65,23 +67,17 @@
             guard let lastLocation = locations.first else {return}
             self.uploadChildLocation(for: lastLocation)
             self.uploadLocationHistory(for: lastLocation)
-           // guard let accuracy = manager.location?.horizontalAccuracy else { return }
-//            if (accuracy > CLLocationAccuracy(300)){
-//                return
-//                 }
            }
 
         var count1 = 0
         func uploadLocationHistory(for location : CLLocation){
             count1 += 1
-            print("count out is \(count1)")
             DataHandler.shared.fetchUserInfo { [weak self] user in
                 guard let parentID = user.parentID else {return}
                let UId = user.uid
                 let timestamp = String(Int(Date().timeIntervalSince1970))
                 let historyReference = HistoryReference.child( parentID).child(UId)
                 if self?.count1 == 1 {
-                    print("count inside is \(String(describing: self?.count1))")
                     historyReference.observe(.childAdded) { snapshot in
                         let locationTime = snapshot.key
                         if Int(timestamp)! - (24*60*60) >  Int(locationTime)! {
@@ -141,8 +137,8 @@
         var geofences = [CLCircularRegion]()
         func configureGeofencing(for location : CLLocation) {
             var identifier : String = " "
-            DataHandler.shared.convertLocationToAdress(for: location) {[weak self] (place) in
-                identifier = "\(place?.title ?? "monitord place")"
+            LocationHandler.shared.convertLocationToAdress(for: location) {[weak self] (place) in
+                identifier = "\(place?.title.components(separatedBy: ",").dropLast(2).joined(separator: " ") ?? "monitored place")"
                 var fenceRegion: CLCircularRegion {
                     let region = CLCircularRegion(
                         center: location.coordinate,
@@ -165,20 +161,65 @@
         
         
         func StartObservingPlaces(){
-            DataHandler.shared.fetchUserInfo { [weak self] (user) in
+            
+            DataHandler.shared.fetchUserInfo { [weak self] user in
                 if user.accountType == 1{
-                    let currentUser = user.uid
-                    DataHandler.shared.fetchObservedPlaces(for: currentUser) { locations, _ in
+                    let childId = user.uid
+                    let parentId = user.parentID
+                    DataHandler.shared.fetchObservedPlaces(for: childId, of: parentId!) { locations, _ in
+                        print("Debug: geofencing user \(String(describing: locations?.first))")
                         guard let locations = locations else {return}
+                        
                         for location in locations{
                             self?.configureGeofencing(for: location)
                             print("Debug: geofencing started")
                         }
                         for fenceRegion in self!.geofences{
                             self?.locationManager?.startMonitoring(for: fenceRegion)
-                            print("\(String(describing: self?.locationManager?.monitoredRegions.first?.identifier))")
+                            print("geofencing \(String(describing: self?.locationManager?.monitoredRegions.first?.identifier))")
                         }
-                    }
+                   }
+            
+            
+            
+            
+            
+            
+            
+//            DataHandler.shared.fetchUserInfo { [weak self] (user) in
+//                if user.accountType == 1{
+//                    let currentUser = user.uid
+//                    DataHandler.shared.fetchObservedPlaces(for: currentUser) { locations, _ in
+//                        guard let locations = locations else {return}
+//                        for location in locations{
+//                            self?.configureGeofencing(for: location)
+//                            print("Debug: geofencing started")
+//                        }
+//                        for fenceRegion in self!.geofences{
+//                            self?.locationManager?.startMonitoring(for: fenceRegion)
+//                            print("geofencing \(String(describing: self?.locationManager?.monitoredRegions.first?.identifier))")
+//                        }
+//
+//                    }
+                    
+                    
+                    
+                    
+//                    DataHandler.shared.fetchObservedPlaces(for: currentUser) { locations, _ in
+//                        guard let locations = locations else {return}
+//                        for location in locations{
+//                            self?.configureGeofencing(for: location)
+//                            print("Debug: geofencing started")
+//                        }
+//                        for fenceRegion in self!.geofences{
+//                            self?.locationManager?.startMonitoring(for: fenceRegion)
+//                            print("geofencing \(String(describing: self?.locationManager?.monitoredRegions.first?.identifier))")
+//                        }
+//                    }
+                    
+                    
+                    
+                    
                 }
             }
         }
@@ -199,8 +240,44 @@
                     let details = item.placemark.title
          let place = Location(title: name ?? "", details: details ?? "", coordinates: coordinates ?? CLLocationCoordinate2D())
                     self?.places.append(place)
+                    
+                    print("serr in searchForLocation \(String(describing: self?.places.count))")
                     completion(self!.places)
                 }
             }
         }
+        
+        // MARK: - function to convert observed location to readable address
+         func convertLocationToAdress(for location : CLLocation?, completion : @escaping((Location?) -> Void)) {
+            let geocoder = CLGeocoder()
+            geocoder.reverseGeocodeLocation(location!) { (placeMarks, error) in
+                if error != nil {print(error!.localizedDescription) }
+                guard let placemarks = placeMarks , error == nil
+                else {completion(nil)
+                    return}
+                
+                let placeData = placemarks[0]
+                var name = ""
+                
+                if let streetDetails = placeData.subThoroughfare{
+                    name += "\(streetDetails), "
+                }
+                
+                if let street = placeData.thoroughfare{
+                    name += "\(street), "
+                }
+                
+                if let LocalDetails = placeData.subLocality {
+                    name += "\(LocalDetails), "
+                }
+
+                if let locality = placeData.locality{
+                    name += "\(locality), "
+                }
+                
+                let place = Location(title: name, details: "", coordinates: placeData.location?.coordinate ?? CLLocationCoordinate2D())
+                completion(place)
+            }
+        }
+
     }

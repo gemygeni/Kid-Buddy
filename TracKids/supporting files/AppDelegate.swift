@@ -14,7 +14,7 @@ import IQKeyboardManagerSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static let NOTIFICATION_URL = "https://fcm.googleapis.com/fcm/send"
-                                   
+    static let NOTIFICATION_URL2 = "https://fcm.googleapis.com/v1/projects/trackids-75352/messages:send"
     static var DEVICEID = String()
     
     static let SERVERKEY = "AAAAv5tBZAc:APA91bGm3eTsLaqQMDCjXHvHRfpxyIx5GqOo87Owdb8UWb1ZQyGav9eR2jk6yJgMiMK3M6rt5aS-dOl1BjupMBaTDgaDYKrT8-gI5IztH-s9ZZozPFAqp5HSmm1WI08xMCPTGLuXEqvL"
@@ -130,6 +130,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
       _ application: UIApplication,
       didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
+        
+        
     Messaging.messaging().apnsToken = deviceToken
     Messaging.messaging().token { (token, error) in
             if let error = error {
@@ -142,6 +144,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 print("Token is \(token)")
             }
         }
+        let deviceToken: String = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        print("Device token is: \(deviceToken)")
+
     }
     
     func application(
@@ -150,6 +155,20 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
       print("Failed to register: \(error)")
     }
+    
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//        print("noty")
+//                if let aps = userInfo["aps"] as? NSDictionary {
+//                    if let alert = aps["alert"] as? NSDictionary {
+//                        if let message = alert["message"] as? NSString {
+//                            print("noty: \(message)")
+//                        }
+//                    } else if let alert = aps["alert"] as? NSString {
+//                        print("noty: \(alert)")
+//                    }
+//                }
+//        }
+    
   }
 
 extension AppDelegate: MessagingDelegate {
@@ -164,8 +183,6 @@ extension AppDelegate: MessagingDelegate {
       userInfo: tokenDict)
   }
     
-    
-    }
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         Messaging.messaging().token { (token, error) in
                 if let error = error {
@@ -178,3 +195,7 @@ extension AppDelegate: MessagingDelegate {
                 }
             }
        }
+    
+    
+
+    }

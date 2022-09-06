@@ -56,10 +56,6 @@ class ChildProfileViewController: UIViewController {
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
-    
     @IBAction func ChatButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "ShowChatSegue", sender: self)
     }
@@ -96,11 +92,22 @@ class ChildProfileViewController: UIViewController {
         configureDynamicLink()
     }
     
-//    func handleSharing(){
-//        let activity = UIActivityViewController(activityItems: ["install app on your kid device by this link"], applicationActivities: nil)
-//        present(activity, animated: true, completion: nil)
-//        configureDynamicLink()
-//    }
+
+    @IBAction func unpairChildPressed(_ sender: UIButton) {
+        let alert = UIAlertController(title: "are you sure you want to remove account", message: "caution: you will lose all data related to this account", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] action in
+            let childId = self?.childAccount?.uid
+            guard let parentId = Auth.auth().currentUser?.uid else {return}
+           DataHandler.shared.removeChild(of: parentId, withId: childId!)
+                self?.navigationController?.popViewController(animated: true)
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+
     
     func configureDynamicLink(){
         var components = URLComponents()

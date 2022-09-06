@@ -1,5 +1,7 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '14.3'
+# platform :ios, '9.0'
+
+
 
 target 'TracKids' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -14,7 +16,4 @@ target 'TracKids' do
         pod 'GeoFire', '~> 4.3.0'
         pod 'FloatingPanel', '2.5.3'
         pod "KWVerificationCodeView", '0.4.0'
-       
 end
-
-
