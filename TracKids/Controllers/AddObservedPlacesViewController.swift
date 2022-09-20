@@ -106,7 +106,6 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
         func uploadObservedPlaceData(){
             if let trackedChildId = TrackingViewController.trackedChildUId{
                 let addressTitle = self.addressTitle ?? "cool"
-                //String(describing: self.ObservedLocation.altitude)
                 DataHandler.shared.uploadObservedPlace(ObservedLocation, addressTitle: addressTitle, for: trackedChildId)
                 self.dismiss(animated: true, completion: nil)
                 print("Debug: uploaded place successfully")

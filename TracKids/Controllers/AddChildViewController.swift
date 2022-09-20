@@ -156,7 +156,6 @@ class AddChildViewController: UIViewController {
                         }
                     }
                     print("original user uid is \(originalUser!.uid)")
-                    
                 }
             }
         }

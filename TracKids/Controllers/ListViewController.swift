@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import MessageUI
 import SwiftOTP
 
 class ListViewController: UIViewController {
@@ -122,6 +123,25 @@ class ListViewController: UIViewController {
     }
     
     
+    @IBAction func sendEmailPressed(_ sender: UIButton) {
+        showMailComposer()
+    }
+    
+    func showMailComposer() {
+        
+        guard MFMailComposeViewController.canSendMail() else {
+            showAlert(withTitle: "Oops!", message: "sorry, there is an error and your device can't send email ")
+            return
+        }
+        
+        let composer = MFMailComposeViewController()
+        composer.mailComposeDelegate = self
+        composer.setToRecipients(["ahmedgamal.miner@gmail.com"])
+        composer.setSubject("HELP!")
+        composer.setMessageBody("hey Ahmed ", isHTML: false)
+        present(composer, animated: true)
+     }
+
     
     func configureDynamicLink(){
         var components = URLComponents()
@@ -163,11 +183,7 @@ class ListViewController: UIViewController {
     
     
     @IBAction func SOSButtonPressed(_ sender: Any) {
-       // sendCriticalAlert()
-        let deviceToken = "fp_dvU8a8El6tclf1m6L2g:APA91bGJxFslu-FkhBHxv-ZWf9ffE64itZTByMgxfoEVXJ1NU9L8m_Y4Wv5904pSapGvUeWVERGsDdnQ55tVnEcZhgJK9SwPMoFkwNxOVb3f4Ij8m5jTD7xkjKL6FSzvF0njoSPb3iwL"
-        
-        DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: "sender", body: "respond to call ")
-
+       sendCriticalAlert()
           }
     
     func sendCriticalAlert(){
@@ -187,5 +203,32 @@ class ListViewController: UIViewController {
                 }
             }
         }
+    }
+}
+
+extension ListViewController: MFMailComposeViewControllerDelegate {
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        
+        if let returnedError = error {
+            showAlert(withTitle: "error!", message: "your email can't be sent because that error \(returnedError.localizedDescription)")
+            controller.dismiss(animated: true)
+            return
+        }
+        
+        switch result {
+        case .cancelled:
+            print("Cancelled")
+        case .failed:
+            print("Failed to send")
+        case .saved:
+            print("Saved")
+        case .sent:
+            print("Email Sent")
+        @unknown default:
+            break
+        }
+        
+        controller.dismiss(animated: true)
     }
 }

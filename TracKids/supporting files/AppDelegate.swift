@@ -14,9 +14,7 @@ import IQKeyboardManagerSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static let NOTIFICATION_URL = "https://fcm.googleapis.com/fcm/send"
-    static let NOTIFICATION_URL2 = "https://fcm.googleapis.com/v1/projects/trackids-75352/messages:send"
     static var DEVICEID = String()
-    
     static let SERVERKEY = "AAAAv5tBZAc:APA91bGm3eTsLaqQMDCjXHvHRfpxyIx5GqOo87Owdb8UWb1ZQyGav9eR2jk6yJgMiMK3M6rt5aS-dOl1BjupMBaTDgaDYKrT8-gI5IztH-s9ZZozPFAqp5HSmm1WI08xMCPTGLuXEqvL"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -33,8 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
@@ -66,14 +62,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let dynamicLinks = DynamicLinks.dynamicLinks()
       let handled = dynamicLinks.handleUniversalLink(userActivity.webpageURL!) { (dynamicLink, error) in
         if (dynamicLink != nil) && !(error != nil) {
-            print("dynamic with non installed")
-            self.handleDynamicLink(dynamicLink)
+            print("Debug:dynamic with non installed")
+           // self.handleDynamicLink(dynamicLink)
         }
       }
         
       if !handled {
-        // Handle incoming URL with other methods as necessary
-        // ...
+          print("Debug: not handled")
       }
       return handled
     }
@@ -156,20 +151,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
       print("Failed to register: \(error)")
     }
     
-//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//        print("noty")
-//                if let aps = userInfo["aps"] as? NSDictionary {
-//                    if let alert = aps["alert"] as? NSDictionary {
-//                        if let message = alert["message"] as? NSString {
-//                            print("noty: \(message)")
-//                        }
-//                    } else if let alert = aps["alert"] as? NSString {
-//                        print("noty: \(alert)")
-//                    }
-//                }
-//        }
-    
-  }
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+                if let aps = userInfo["aps"] as? NSDictionary {
+                    print("Debug: aps: \(aps)")
+                    if let sound = aps["sound"] as? NSString {
+                        print("Debug: sound: \(sound)")
+                    }
+                }
+        completionHandler(UIBackgroundFetchResult.newData)
+             }
+       }
 
 extension AppDelegate: MessagingDelegate {
   func messaging(
@@ -195,7 +187,4 @@ extension AppDelegate: MessagingDelegate {
                 }
             }
        }
-    
-    
-
     }

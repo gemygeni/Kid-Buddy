@@ -102,6 +102,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let parentID = user.parentID else{return}
             DataHandler.shared.fetchDeviceID(for: parentID) { parentDeviceToken in
             DataHandler.shared.sendPushNotification(to: parentDeviceToken, sender: childName, body: self.message)
+                
+                
+                
+                
+                if UIApplication.shared.applicationState == .active {
+                    self.window?.rootViewController?.showAlert(withTitle: nil, message: "your child sent SOS and may need Help")
+                  print("Geofence active")
+                } else {
+                  print("Geofence inactive!")
+                  let notificationContent   = UNMutableNotificationContent()
+                  notificationContent.body  = self.message
+                  notificationContent.sound = .default
+                  notificationContent.badge = UIApplication.shared
+                    .applicationIconBadgeNumber + 1 as NSNumber
+                  let trigger = UNTimeIntervalNotificationTrigger(
+                    timeInterval: 1,
+                    repeats: false)
+                  let request = UNNotificationRequest(
+                    identifier: "location_change",
+                    content: notificationContent,
+                    trigger: trigger)
+                  UNUserNotificationCenter.current().add(request) { error in
+                      print("Geofence request! ")
+                    if let error = error {
+                      print("Error: \(error)")
+                     }
+                   }
+                }
              }
            }
         }

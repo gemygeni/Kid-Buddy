@@ -121,6 +121,9 @@ extension SearchViewController : UITextFieldDelegate {
            }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if LocationHandler.shared.locationManager?.location == nil{
+            showAlert(withTitle: "Lost Location", message: "please give Kidbuddy permission to get Location Services to get precise search results")
+        }
         self.delegate?.didBeginsearching(self)
         self.tableView.reloadData()
         return true
@@ -142,7 +145,7 @@ extension SearchViewController : UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
      //   self.places = []
         self.tableView.reloadData()
-        print("rrr textFieldDidEndEditing")
+        print("Debug: textFieldDidEndEditing")
     }
     
   }

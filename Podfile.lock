@@ -59,7 +59,7 @@ PODS:
     - Firebase/Database (< 9.0.0, > 7.0.0)
     - GeoFire/Utils
   - GeoFire/Utils (4.3.0)
-  - GoogleDataTransport (9.1.4):
+  - GoogleDataTransport (9.2.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
@@ -88,7 +88,7 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
-  - PromisesObjC (2.1.0)
+  - PromisesObjC (2.1.1)
 
 DEPENDENCIES:
   - Firebase/Auth
@@ -133,14 +133,14 @@ SPEC CHECKSUMS:
   FirebaseStorage: 8019af461599b2c3bc61c6a5dbdfa3d2de66a4d9
   FloatingPanel: 3cee815e9ded75b632543fa73ab655a1ef941452
   GeoFire: c34927b5c81ab614f611c79aa8d074cfa9780f07
-  GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
+  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   KWVerificationCodeView: 92cca6ad028546d3232fa75cda3a40d00109a1a2
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
+  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
 
-PODFILE CHECKSUM: 4e042174f734718e3918aa38efad6a5df6dec80b
+PODFILE CHECKSUM: 3ca5ce6cd1555299c7f9dc7d4af6ca98d0aeea89
 
 COCOAPODS: 1.11.3
