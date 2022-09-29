@@ -23,18 +23,11 @@ class MessageCell: UITableViewCell {
         MessageBodyView.layer.cornerRadius = MessageBodyView.frame.size.height / 5
         MessageBodyView.layer.masksToBounds = true
         MessageBodyView.contentMode = .scaleAspectFill
-        
     }
-    
-
     
     override func prepareForReuse() {
         super.prepareForReuse()
         MessageImageView?.image = nil
         MessageImageView?.removeConstraints(MessageImageView.constraints)
-
     }
-
-
-    
 }

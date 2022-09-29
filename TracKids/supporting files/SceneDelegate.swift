@@ -9,17 +9,12 @@ import UIKit
 import CoreLocation
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
     let locationManager = CLLocationManager()
     var count : Int = 0
     var message : String = ""
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-       
         guard let _ = (scene as? UIWindowScene) else { return }
         locationManager.delegate = self
         UNUserNotificationCenter.current().delegate = self
@@ -28,119 +23,88 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.distanceFilter = CLLocationDistance(100)
         locationManager.startMonitoringSignificantLocationChanges()
-    }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-    }
-
+     }
+    
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         UserDefaults.standard.setValue(0, forKey: "badgeCount")
         UIApplication.shared.applicationIconBadgeNumber = 0
-      UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-      UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-
-    }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
-    }
-
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
 }
 
-    // MARK: - Location Manager Delegate
-    extension SceneDelegate: CLLocationManagerDelegate {
-        
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            guard let lastLocation = locations.last else {return}
-            LocationHandler.shared.uploadChildLocation(for: lastLocation)
-            LocationHandler.shared.uploadLocationHistory(for: lastLocation)
-           }
-
-      func locationManager(
+// MARK: - Location Manager Delegate Methods.
+extension SceneDelegate: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let lastLocation = locations.last else {return}
+        LocationHandler.shared.uploadChildLocation(for: lastLocation)
+        LocationHandler.shared.uploadLocationHistory(for: lastLocation)
+    }
+    
+    func locationManager(
         _ manager: CLLocationManager,
         didEnterRegion region: CLRegion
-      ) {
+    ) {
         if region is CLCircularRegion {
             handleEvent(for: region, withType: "arrived")
             print("geo exit")
         }
-      }
-
-      func locationManager(
+    }
+    
+    func locationManager(
         _ manager: CLLocationManager,
         didExitRegion region: CLRegion
-      ) {
+    ) {
         if region is CLCircularRegion {
-          handleEvent(for: region, withType: "left")
+            handleEvent(for: region, withType: "left")
             print("geo exit")
         }
-      }
-    
+    }
+    // MARK: - function to handle sending push notification in background.
     func handleEvent(for region: CLRegion, withType event : String) {
         var childName : String = " "
         DataHandler.shared.fetchUserInfo { (user) in
             childName = user.name
             self.message = "your child  \(String(describing: childName))  \(event)  \(region.identifier)"
-            print(" message in fetch  \(self.message)")
+            print("Debug: message in fetch  \(self.message)")
             guard let parentID = user.parentID else{return}
             DataHandler.shared.fetchDeviceID(for: parentID) { parentDeviceToken in
-            DataHandler.shared.sendPushNotification(to: parentDeviceToken, sender: childName, body: self.message)
-                
-                
-                
-                
+                DataHandler.shared.sendPushNotification(to: parentDeviceToken, sender: childName, body: self.message)
                 if UIApplication.shared.applicationState == .active {
-                    self.window?.rootViewController?.showAlert(withTitle: nil, message: "your child sent SOS and may need Help")
-                  print("Geofence active")
+                    print("Debug: Geofence active!")
                 } else {
-                  print("Geofence inactive!")
-                  let notificationContent   = UNMutableNotificationContent()
-                  notificationContent.body  = self.message
-                  notificationContent.sound = .default
-                  notificationContent.badge = UIApplication.shared
-                    .applicationIconBadgeNumber + 1 as NSNumber
-                  let trigger = UNTimeIntervalNotificationTrigger(
-                    timeInterval: 1,
-                    repeats: false)
-                  let request = UNNotificationRequest(
-                    identifier: "location_change",
-                    content: notificationContent,
-                    trigger: trigger)
-                  UNUserNotificationCenter.current().add(request) { error in
-                      print("Geofence request! ")
-                    if let error = error {
-                      print("Error: \(error)")
-                     }
-                   }
+                    print("Debug: Geofence inactive!")
+                    let notificationContent   = UNMutableNotificationContent()
+                    notificationContent.body  = self.message
+                    notificationContent.sound = .default
+                    notificationContent.badge = UIApplication.shared
+                        .applicationIconBadgeNumber + 1 as NSNumber
+                    let trigger = UNTimeIntervalNotificationTrigger(
+                        timeInterval: 1,
+                        repeats: false)
+                    let request = UNNotificationRequest(
+                        identifier: "location_change",
+                        content: notificationContent,
+                        trigger: trigger)
+                    UNUserNotificationCenter.current().add(request) { error in
+                        print("Geofence request! ")
+                        if let error = error {
+                            print("Error: \(error)")
+                        }
+                    }
                 }
-             }
-           }
+            }
         }
-    } 
+    }
+}
 
+// MARK: - UNUserNotificationCenterDelegate Methods.
 extension SceneDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
-      _ center: UNUserNotificationCenter,
-      willPresent notification: UNNotification,
-      withCompletionHandler completionHandler:
-      @escaping (UNNotificationPresentationOptions) -> Void
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler:
+        @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         if var badgeCount = UserDefaults.standard.value(forKey: "badgeCount") as? Int {
             badgeCount += 1
@@ -149,22 +113,17 @@ extension SceneDelegate: UNUserNotificationCenterDelegate {
         }
         completionHandler([[.banner, .sound]])
     }
-      
+    
     func userNotificationCenter(
-      _ center: UNUserNotificationCenter,
-      didReceive response: UNNotificationResponse,
-      withCompletionHandler completionHandler: @escaping () -> Void
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-       if var badgeCount = UserDefaults.standard.value(forKey: "badgeCount") as? Int {
+        if var badgeCount = UserDefaults.standard.value(forKey: "badgeCount") as? Int {
             badgeCount += 1
             UserDefaults.standard.setValue(badgeCount, forKey: "badgeCount")
             UIApplication.shared.applicationIconBadgeNumber = badgeCount
         }
-       
-      completionHandler()
+        completionHandler()
     }
-    
-    
-
-
 }

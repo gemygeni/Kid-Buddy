@@ -12,7 +12,6 @@ import GeoFire
 class SignUpViewController: UIViewController {
     
     let usersReference =  Database.database().reference().child("users")
-    
     @IBOutlet weak var nameTextField: UITextField!{
         didSet{
             nameTextField.delegate = self
@@ -31,18 +30,10 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    func tapRecognnizer(){
-        let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        view.addGestureRecognizer(taprecognizer)
-    }
-    @objc func handleTap(){
-        view.endEditing(true)
-    }
     @IBOutlet weak var userTypeControl: UISegmentedControl!
     let location = LocationHandler.shared.locationManager?.location
     
     @IBAction func signUpPressed(_ sender: UIButton) {
-        
         handleSignUp()
     }
     
@@ -53,10 +44,6 @@ class SignUpViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
      }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        nameTextField.becomeFirstResponder()
-    }
     
     @IBAction func signInPressed(_ sender: UIButton) {
         DispatchQueue.main.async {
@@ -64,7 +51,13 @@ class SignUpViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
         }
     }
-  
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        nameTextField.becomeFirstResponder()
+    }
+
+    // MARK: - function to handle Signing up and createe new user account.
     private func handleSignUp(){
         let userType = userTypeControl.selectedSegmentIndex
         let deviceID  = AppDelegate.DEVICEID 
@@ -73,7 +66,6 @@ class SignUpViewController: UIViewController {
          let password = passwordTextField.text,
          !password.isEmpty,!email.isEmpty,!password.isEmpty
         else {return}
-        
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 let alert = UIAlertController(title: "Sign Up Failed", message: error.localizedDescription, preferredStyle: .alert)
@@ -105,7 +97,7 @@ class SignUpViewController: UIViewController {
         }
     }
 }
-
+// MARK: - UITextFieldDelegate Methods
 extension SignUpViewController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleSignUp()

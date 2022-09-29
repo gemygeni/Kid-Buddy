@@ -10,14 +10,19 @@ import MapKit
 import Firebase
 import GeoFire
 class HistoryViewController: UIViewController {
-
+    
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var mapView: MKMapView!
     var annotations = [ChildAnnotation]()
     var historyPoints = [CLLocationCoordinate2D]()
+    var count = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMapView()
+    }
+    @IBAction func clearHistoryPressed(_ sender: Any) {
+        print("Debug: clear history pressed")
+        clearHistory()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,7 +32,6 @@ class HistoryViewController: UIViewController {
             annotations = []
             mapView.removeAnnotations(mapView.annotations)
         }
-        
         fetchLocationHistory()
         guard let childId = TrackingViewController.trackedChildUId else {return}
         DataHandler.shared.fetchChildAccount(with: childId) {[weak self] user in
@@ -41,13 +45,14 @@ class HistoryViewController: UIViewController {
         self.tabBarItem.title = "History"
     }
     
+    // MARK: - function to configure map view.
     func configureMapView(){
         mapView.delegate = self
         self.mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.isZoomEnabled = true
     }
-    var count = 0
+    // MARK: - function to fetch Location History from database.
     func fetchLocationHistory(){
         spinner.startAnimating()
         self.historyPoints = []
@@ -73,7 +78,7 @@ class HistoryViewController: UIViewController {
                 annotation.title = timestamp
                 LocationHandler.shared.convertLocationToAdress(for: location) { (place) in
                     annotation.subtitle = place?.title
-                  }
+                }
                 let point = fetchedLocation.coordinate
                 self?.historyPoints.append(point)
                 self?.drawOverlay(with: self!.historyPoints)
@@ -81,17 +86,19 @@ class HistoryViewController: UIViewController {
         }
         self.spinner.stopAnimating()
     }
-
+    
+    // MARK: - function to draw overlay on the map with points of location history.
     func drawOverlay(with points : [CLLocationCoordinate2D] ){
-         let historyPoints = self.historyPoints
+        let historyPoints = self.historyPoints
         let polyline = MKPolyline(coordinates: historyPoints, count: historyPoints.count)
         mapView.addOverlay(polyline)
-       var polylineRect = polyline.boundingMapRect
+        var polylineRect = polyline.boundingMapRect
         polylineRect.size.width *= 1.1
         polylineRect.size.height *= 1.1
         self.mapView.setRegion(MKCoordinateRegion(polylineRect), animated: true)
-     }
+    }
     
+    // MARK: - function to remove location history from database.
     func clearHistory(){
         LocationHandler.shared.clearHistory {[weak self] in
             guard let coordinate = LocationHandler.shared.locationManager?.location?.coordinate else { return }
@@ -101,46 +108,39 @@ class HistoryViewController: UIViewController {
             self?.mapView.setRegion(region, animated: true)
             if  self?.mapView.overlays != nil{
                 self?.mapView.removeOverlays((self?.mapView.overlays)!)
-             }
+            }
             if  self?.mapView.annotations != nil{
-                        self?.mapView.removeAnnotations((self?.mapView.annotations)!)
-                }
-          }
-    }
-    
-    @IBAction func clearHistoryPressed(_ sender: Any) {
-        print("Debug: clear history pressed")
-        clearHistory()
+                self?.mapView.removeAnnotations((self?.mapView.annotations)!)
+            }
+        }
     }
 }
 
+// MARK: - MKMapViewDelegate Methods.
 extension HistoryViewController : MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation is MKUserLocation) {
             return nil
         }
-        
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "historyAnnotation") as? MKMarkerAnnotationView
         if annotationView == nil{
             annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "historyAnnotation")
             annotationView?.canShowCallout = true
             annotationView?.calloutOffset = CGPoint(x: -5, y: 5)
             annotationView?.rightCalloutAccessoryView = UIButton(type: .system)
-          }
+        }
         else{
             annotationView?.annotation = annotation
         }
         annotationView?.glyphText = "⏰"
         annotationView?.markerTintColor = .orange
-         //   UIColor(displayP3Red: 0.518, green:0.263 , blue:  0.082, alpha: 1.0)
         return annotationView
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = UIColor(red:0.07, green:0.73, blue:0.86, alpha:1.0)
-           renderer.lineWidth = 4.0
-//        renderer.strokeColor = UIColor(red: 17.0/255.0, green: 147.0/255.0, blue: 255.0/255.0, alpha: 1)
+        renderer.lineWidth = 4.0
         renderer.lineWidth = 5.0
         return renderer
     }

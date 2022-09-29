@@ -27,5 +27,4 @@ class ChildsCollectionViewCell: UICollectionViewCell {
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
     }
-    
 }

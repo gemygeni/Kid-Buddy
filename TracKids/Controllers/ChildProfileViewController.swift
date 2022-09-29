@@ -9,11 +9,6 @@ import UIKit
 import Firebase
 import SwiftOTP
 class ChildProfileViewController: UIViewController {
-    
-    @IBOutlet weak var profileImageView: UIImageView!
-    
-    @IBOutlet weak var childNameLabel: UILabel!
-    
     weak var fetchedImage : UIImage?
     var invitationUrl : URL?
     var childAccount : User?{
@@ -55,6 +50,9 @@ class ChildProfileViewController: UIViewController {
         navigationItem.title = childName
     }
     
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var childNameLabel: UILabel!
     
     @IBAction func ChatButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "ShowChatSegue", sender: self)
@@ -63,8 +61,29 @@ class ChildProfileViewController: UIViewController {
     @IBAction func ObservePlacesButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "ShowObservedPlacesSegue", sender: self)
     }
+    @IBAction func EditButtonPressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showEditChildProfileSegue", sender: self)
+    }
     
+    @IBAction func sendLinkButtonPressed(_ sender: UIButton) {
+        configureDynamicLink()
+    }
     
+    // MARK: - function to remove all child account from database.
+    @IBAction func unpairChildPressed(_ sender: UIButton) {
+        let alert = UIAlertController(title: "are you sure you want to remove account", message: "caution: you will lose all data related to this account", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] action in
+            let childId = self?.childAccount?.uid
+            guard let parentId = Auth.auth().currentUser?.uid else {return}
+            DataHandler.shared.removeChild(of: parentId, withId: childId!)
+            self?.navigationController?.popViewController(animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Navigation.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowChatSegue"{
             if let chatVC = segue.destination.contents as? ChatViewController{
@@ -84,44 +103,20 @@ class ChildProfileViewController: UIViewController {
         }
     }
     
-    @IBAction func EditButtonPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "showEditChildProfileSegue", sender: self)
-    }
-    
-    @IBAction func sendLinkButtonPressed(_ sender: UIButton) {
-        configureDynamicLink()
-    }
-    
-
-    @IBAction func unpairChildPressed(_ sender: UIButton) {
-        let alert = UIAlertController(title: "are you sure you want to remove account", message: "caution: you will lose all data related to this account", preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] action in
-            let childId = self?.childAccount?.uid
-            guard let parentId = Auth.auth().currentUser?.uid else {return}
-           DataHandler.shared.removeChild(of: parentId, withId: childId!)
-                self?.navigationController?.popViewController(animated: true)
-        }))
-
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-
-    
+    //MARK: - func to configure Dynamic Link with OTP to send it to child device to join it in database.
     func configureDynamicLink(){
         var components = URLComponents()
         components.scheme = "https"
         components.host = "apps.apple.com/app/1600337105"
         guard let linkParameter = components.url else { return }
-        print("I am sharing \(linkParameter.absoluteString)")
+        print("Debug: I am sharing \(linkParameter.absoluteString)")
         let domain = "https://trackids.page.link"
         guard let linkBuilder = DynamicLinkComponents
-          .init(link: linkParameter, domainURIPrefix: domain) else {
+            .init(link: linkParameter, domainURIPrefix: domain) else {
             return
         }
         if let myBundleId = Bundle.main.bundleIdentifier {
-          linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
+            linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
         }
         linkBuilder.iOSParameters?.appStoreID = "1600337105"
         linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
@@ -129,17 +124,17 @@ class ChildProfileViewController: UIViewController {
         guard let data = Data(base64Encoded: uid) else{return}
         if let totp = TOTP(secret: data) {
             if  let otpString = totp.generate(time: Date()){
-            linkBuilder.socialMetaTagParameters?.title = "install app on your kid's device by this link & Join kid with this code: \(otpString) "
-            print("otp is \(String(describing: otpString))")
+                linkBuilder.socialMetaTagParameters?.title = "install app on your kid's device by this link & Join kid with this code: \(otpString) "
+                print("Debug: otp is \(String(describing: otpString))")
                 OTPReference.child(String(describing: otpString)).updateChildValues(["parentId": uid])
-           }
+            }
         }
         linkBuilder.socialMetaTagParameters?.descriptionText = "if you recieved this link from your parents install kid buddy "
         guard let longURL = linkBuilder.url else { return }
-        print("The long dynamic link is \(longURL.absoluteString)")
+        print("Debug: The long dynamic link is \(longURL.absoluteString)")
         linkBuilder.shorten {[weak self] url, warnings, error in
             if let error = error {
-                print("Oh no! Got an error! \(error)")
+                print("Debug: Oh no! Got an error! \(error)")
                 return
             }
             if let warnings = warnings {
@@ -148,11 +143,12 @@ class ChildProfileViewController: UIViewController {
                 }
             }
             guard let url = url else { return }
-            print("I have a short dynamic link to share! \(url.absoluteString)")
+            print("Debug: I have a short dynamic link to share! \(url.absoluteString)")
             self?.shareItem(with: url)
         }
     }
     
+    // MARK: - function to display Activity ViewController
     func shareItem(with url: URL) {
         let subjectLine = ""
         let activityView = UIActivityViewController(activityItems: [subjectLine, url], applicationActivities: nil)
@@ -160,8 +156,9 @@ class ChildProfileViewController: UIViewController {
     }
 }
 
-
+// MARK: - ChangedInfoDelegate Method
 extension ChildProfileViewController : ChangedInfoDelegate{
+    // MARK: function triggered when child profile edited to update data
     func didChangedInfo(_ sender: EditChildProfileViewController, newImage: UIImage, newName: String) {
         ProfileImage = newImage
         childName = newName
