@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import MobileCoreServices
 import Photos
+import UniformTypeIdentifiers
 class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     var trackedChildObserver : NSObjectProtocol?
     var messages : [Message] = []
@@ -487,7 +488,7 @@ extension ChatViewController : UIImagePickerControllerDelegate, UINavigationCont
     func PresentCamera() {
         let picker = UIImagePickerController()
         picker.sourceType = .camera
-        picker.mediaTypes = [kUTTypeImage as String]
+        picker.mediaTypes = [UTType.image.identifier as String]
         picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)
@@ -497,7 +498,7 @@ extension ChatViewController : UIImagePickerControllerDelegate, UINavigationCont
     func PresentPhotoPicker(){
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
-        picker.mediaTypes = [kUTTypeImage as String]
+        picker.mediaTypes = [UTType.image.identifier as String]
         picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)

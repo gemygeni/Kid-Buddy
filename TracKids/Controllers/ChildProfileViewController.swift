@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import SwiftOTP
+import UniformTypeIdentifiers
 class ChildProfileViewController: UIViewController {
     weak var fetchedImage : UIImage?
     var invitationUrl : URL?

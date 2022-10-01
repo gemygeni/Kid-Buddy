@@ -8,6 +8,8 @@
 import UIKit
 import MobileCoreServices
 import Firebase
+import UniformTypeIdentifiers
+
 // MARK: - ChangedInfoDelegate methods.
 protocol ChangedInfoDelegate : AnyObject  {
     func didChangedInfo(_ sender : EditChildProfileViewController ,newImage : UIImage, newName: String)
@@ -106,7 +108,7 @@ extension EditChildProfileViewController : UIImagePickerControllerDelegate, UINa
     func PresentCamera() {
         let picker = UIImagePickerController()
         picker.sourceType = .camera
-        picker.mediaTypes = [kUTTypeImage as String]
+        picker.mediaTypes = [UTType.image.identifier as String]
         picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)
@@ -116,7 +118,7 @@ extension EditChildProfileViewController : UIImagePickerControllerDelegate, UINa
     func PresentPhotoPicker(){
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
-        picker.mediaTypes = [kUTTypeImage as String]
+        picker.mediaTypes = [UTType.image.identifier as String]
         picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)

@@ -555,7 +555,7 @@
 				INFOPLIST_FILE = TrackidsNotificationExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TrackidsNotificationExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -584,7 +584,7 @@
 				INFOPLIST_FILE = TrackidsNotificationExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TrackidsNotificationExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -733,7 +733,7 @@
 				DEVELOPMENT_TEAM = 376L6GYCXP;
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = TracKids/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -759,7 +759,7 @@
 				DEVELOPMENT_TEAM = 376L6GYCXP;
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = TracKids/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -13,12 +13,13 @@ class ObservedPlacesTableViewController: UITableViewController {
     
     var Addresses = [Location?]()
     var placesIds = [String]()
+    @IBAction func AddPlacesButtonPressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "AddPlacesSegue", sender: self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchObservedPlaces()
-        self.showAlert(withTitle: "Set Location", message: "press ＋ and Tap the map at desired Location or search by address")
-        
-        print("ccc \(String(describing: LocationHandler.shared.locationManager?.monitoredRegions))     \n ccc \(placesIds)")
     }
     
     // MARK: - function to fetch observed laocations from database and convert it to places.
@@ -55,9 +56,6 @@ class ObservedPlacesTableViewController: UITableViewController {
         navigationItem.rightBarButtonItem?.isEnabled = Addresses.count < 20
     }
     
-    @IBAction func AddPlacesButtonPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "AddPlacesSegue", sender: self)
-    }
     
     // MARK: - Table view data source delegate Methods
     override func numberOfSections(in tableView: UITableView) -> Int {

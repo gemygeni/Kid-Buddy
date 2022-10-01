@@ -5,8 +5,9 @@
 //  Created by AHMED GAMAL  on 2/20/21.
 //
 import UIKit
-import MobileCoreServices
 import  Firebase
+import MobileCoreServices
+import UniformTypeIdentifiers
 protocol AddedChildDelegate : AnyObject  {
     func didAddChild(_ sender : AddChildViewController)
 }
@@ -152,7 +153,7 @@ extension AddChildViewController : UIImagePickerControllerDelegate, UINavigation
     func PresentCamera() {
         let picker = UIImagePickerController()
         picker.sourceType = .camera
-        picker.mediaTypes = [kUTTypeImage as String]
+        picker.mediaTypes = [UTType.image.identifier as String]
         picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)
@@ -161,7 +162,7 @@ extension AddChildViewController : UIImagePickerControllerDelegate, UINavigation
     func PresentPhotoPicker(){
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
-        picker.mediaTypes = [kUTTypeImage as String]
+        picker.mediaTypes = [UTType.image.identifier as String]
         picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)

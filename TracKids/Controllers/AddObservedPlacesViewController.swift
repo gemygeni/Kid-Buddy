@@ -31,9 +31,6 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
     
     @IBOutlet weak var mapView: MKMapView!
     
-    @IBAction func cancelButtonPressed(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
     @IBAction func AddButtonPressed(_ sender: UIButton) {
         uploadObservedPlaceData()
     }
@@ -45,6 +42,9 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
         else if mapView.mapType == .hybrid {
             mapView.mapType = .standard
         }
+    }
+    @IBAction func cancelButtonPressed(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - function to configure map and center on user location.
@@ -78,12 +78,13 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
         //convert location to address to display on observeed places.
         LocationHandler.shared.convertLocationToAdress(for: ObservedLocation) { [weak self] address in
             self?.addressTitle = address?.title.components(separatedBy: ",").dropLast(2).joined(separator: " ")
-            print("Debug : addressTitle  \(String(describing: self?.addressTitle))")
+            print("Debug: addressTitle  \(String(describing: self?.addressTitle))")
         }
     }
     
     // MARK: - SearchViewControllerDelegate method triggered when select search result row.
     func searchViewController(_ VC: SearchViewController, didSelectLocationWith coordinates: CLLocationCoordinate2D?, title: String) {
+        panel.move(to: .tip, animated: true)
         guard let coordinates = coordinates else {return}
         self.addressTitle  = title
         let ObservedLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
@@ -94,13 +95,12 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
         pin.coordinate = coordinates
         mapView.addAnnotation(pin)
         mapView.setRegion(MKCoordinateRegion(center: coordinates, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
-        panel.move(to: .tip, animated: true)
         mapView.removeOverlays(mapView.overlays)
         addRadiusOverlay(for: ObservedLocation)
     }
     
     // MARK: - SearchViewControllerDelegate method triggered when search  begin to expand search panel.
-    func didBeginsearching(_ VC: SearchViewController) {
+    func didBeginSearching(_ VC: SearchViewController) {
         self.panel.move(to: .full, animated: true)
     }
     
