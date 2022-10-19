@@ -50,6 +50,7 @@ class SignInViewController: UIViewController  {
     
     // MARK: - function to handle Signing user in.
     private func handleSignIn(){
+        
         guard let email = emailTextField.text ,
               let password = passwordTextField.text,
               !email.isEmpty,!password.isEmpty else {return}
@@ -65,7 +66,7 @@ class SignInViewController: UIViewController  {
                 DispatchQueue.main.async {
                     self?.dismiss(animated: true) {
                         self?.navigationController?.popToRootViewController(animated: true)
-                        print("Debug: signed in successfully")
+                        print("Debug: signed in successfully \(String(describing: (Auth.auth().currentUser?.uid)))")
                     }
                 }
             }
@@ -85,3 +86,15 @@ extension SignInViewController : UITextFieldDelegate{
         return true
     }
 }
+
+//extension SignInViewController{
+//func signOutOldUser(){
+//    if let _ = UserDefaults.standard.value(forKey: "isNewuser"){}else{
+//        do{
+//            UserDefaults.standard.set(true, forKey: "isNewuser")
+//            try Auth.auth().signOut()
+//        }
+//        catch{}
+//    }
+//  }
+//}

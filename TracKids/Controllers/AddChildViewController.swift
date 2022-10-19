@@ -84,9 +84,9 @@ class AddChildViewController: UIViewController {
         let imageReference  = storageReference.child("ChildsPictures/\(UID)/\(childName).jpg")
         if let imageData = ChildImageView.image!.jpegData(compressionQuality: 0.3){
             imageReference.putData(imageData, metadata: nil) { (metadata, error) in
-                if error != nil {print(error!.localizedDescription)}
+                if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
                 imageReference.downloadURL { [weak self](url, error) in
-                    if error != nil {print(error!.localizedDescription)}
+                    if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
                     if let downloadedURL = url{
                         self?.ImageURL = downloadedURL.absoluteString
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -125,7 +125,7 @@ class AddChildViewController: UIViewController {
                              "imageURL" : self?.ImageURL ?? "",
                              "deviceID" : deviceID] as [String : Any]
             UserReference.child(childId).updateChildValues(childInfo) { (error, reference) in
-                if let error = error{print(error.localizedDescription)}
+                if let error = error{print("Debug: error \(String(describing: error.localizedDescription))")}
                 //update current user on device with original parent user after creating child account.
                 Auth.auth().updateCurrentUser(originalUser!) { error in
                     if let error = error {

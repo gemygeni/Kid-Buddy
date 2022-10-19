@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 import Firebase
-
+import SwiftOTP
 enum AccountType : Int  {
     case parent
     case child
@@ -55,11 +55,20 @@ class TrackingViewController: UIViewController  {
     @IBAction func AddChildPressed(_ sender: UIButton) {
         if !IsLoggedIn{
             performSegue(withIdentifier: "showSignIn", sender: sender)
-            print("please log in")
         }
         else if IsLoggedIn {
             if self.accountType == .parent{
-                performSegue(withIdentifier: "AddChildSegue", sender: sender)
+                
+                let alert = UIAlertController(title: "choose how to join a child", message: "create a new child account or send a code to existing one", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Send Code", style: .default, handler: { [weak self] action in
+                    self?.configureDynamicLink()
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Create Account", style: .default, handler: { [weak self] action in
+                    self?.performSegue(withIdentifier: "AddChildSegue", sender: sender)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                self.present(alert, animated: true, completion: nil)
             }
             else if self.accountType == .child{
                 performSegue(withIdentifier: "presentOTPSegue", sender: sender)
@@ -98,18 +107,18 @@ class TrackingViewController: UIViewController  {
         fetchUserInfo()
         configureMapView()
         if self.accountType == .parent {
-            print("hey iam parent and i willappear")
-            self.childsCollectionView.reloadData()
+            print("Debug: hey i am parent and i willappear")
+            self.childsCollectionView?.reloadData()
             fetchChildLocation()
         }
         AuthHandler =  Auth.auth().addStateDidChangeListener({ [weak self] (_, user) in
             if user == nil {
                 self?.centerMapOnUserLocation()
-                self?.childsCollectionView.isHidden = true
+                self?.childsCollectionView?.isHidden = true
                 self?.addChildButton.isHidden = true
             }
             else{
-                self?.childsCollectionView.isHidden = false
+                self?.childsCollectionView?.isHidden = false
                 self?.addChildButton.isHidden = false
             }
         })
@@ -122,7 +131,7 @@ class TrackingViewController: UIViewController  {
     // MARK: - function to check if user is logged in database or not.
     func CheckLogIn() -> Bool {
         if user?.uid == nil {
-            print("not logged in")
+            print("Debug: not logged in")
             IsLoggedIn = false
             return false
         }
@@ -197,6 +206,60 @@ class TrackingViewController: UIViewController  {
             }
         }
     }
+    
+    //MARK: - function to configure Dynamic Link with OTP to send it to child device to join it in database.
+    func configureDynamicLink(){
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "apps.apple.com/app/1600337105"
+        guard let linkParameter = components.url else { return }
+        print("Debug: I am sharing \(linkParameter.absoluteString)")
+        let domain = "https://trackids.page.link"
+        guard let linkBuilder = DynamicLinkComponents
+            .init(link: linkParameter, domainURIPrefix: domain) else {
+            return
+        }
+        if let myBundleId = Bundle.main.bundleIdentifier {
+            linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
+        }
+        linkBuilder.iOSParameters?.appStoreID = "1600337105"
+        linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        guard let uid =   Auth.auth().currentUser?.uid else{return}
+        guard let data = Data(base64Encoded: uid) else{return}
+        if let totp = TOTP(secret: data) {
+            if  let otpString = totp.generate(time: Date()){
+                linkBuilder.socialMetaTagParameters?.title = "install app on your kid's device by this link & Join kid with this code: \(otpString) "
+                print("Debug: otp is \(String(describing: otpString))")
+                OTPReference.child(String(describing: otpString)).updateChildValues(["parentId": uid])
+            }
+        }
+        linkBuilder.socialMetaTagParameters?.descriptionText = "if you recieved this link from your parents install kid buddy"
+        guard let longURL = linkBuilder.url else { return }
+        print("Debug: The long dynamic link is \(longURL.absoluteString)")
+        linkBuilder.shorten {[weak self] url, warnings, error in
+            if let error = error {
+                print("Debug: Oh no! Got an error! \(error)")
+                return
+            }
+            if let warnings = warnings {
+                for warning in warnings {
+                    print("Warning: \(warning)")
+                }
+            }
+            guard let url = url else { return }
+            print("Debug: I have a short dynamic link to share! \(url.absoluteString)")
+            self?.shareItem(with: url)
+        }
+    }
+    
+    // MARK: - function to display Activity ViewController
+    func shareItem(with url: URL) {
+        let subjectLine = ""
+        let activityView = UIActivityViewController(activityItems: [subjectLine, url], applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(activityView, animated: true, completion: nil)
+    }
+    
+    
 }
 
 // MARK: - MKMapViewDelegate Methods.
@@ -204,7 +267,7 @@ extension TrackingViewController : MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ChildAnnotation {
             let view = MKAnnotationView(annotation: annotation, reuseIdentifier: "childAnnotation")
-            view.image =  annotationImage ?? #imageLiteral(resourceName: "person").resize(70 , 70)
+            view.image =  annotationImage ?? #imageLiteral(resourceName: "person").resize(70,70)
             view.layer.cornerRadius = 25
             view.clipsToBounds = true
             return view
@@ -238,13 +301,13 @@ extension TrackingViewController : UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChildProfileCell", for: indexPath)
         if let childCell = cell as? ChildsCollectionViewCell{
-            childCell.profileImageView.image = nil
-            if  let child = childs[indexPath.item]{
+          //  childCell.profileImageView.image =  #imageLiteral(resourceName: "person").resize(70,70)
+            if let child = childs[indexPath.item]{
                 if let childImageURl = child.imageURL {
                     childCell.profileImageView.loadImageUsingCacheWithUrlString(childImageURl)
-                    annotationImage = childCell.profileImageView.image?.resize(60 , 60)
+                    annotationImage = childCell.profileImageView.image?.resize(60,60)
                 }
-                else{childCell.profileImageView.image = #imageLiteral(resourceName: "person").resize(70 , 70)}
+                else{childCell.profileImageView.image = #imageLiteral(resourceName: "person").resize(70,70)}
             }
             return childCell
         }
@@ -254,17 +317,17 @@ extension TrackingViewController : UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.mapView.removeAnnotations(mapView.annotations)
         trackedChild = childs[indexPath.item]
-        print("tracked child now is \(String(describing: trackedChild?.name)) ")
+        print("Debug: tracked child now is \(String(describing: trackedChild?.name)) ")
         TrackingViewController.trackedChildUId = childsID[indexPath.item]
         if let cell = childsCollectionView.cellForItem(at: indexPath) as? ChildsCollectionViewCell {
             self.annotationImage = nil
             DispatchQueue.main.async {
-                self.annotationImage = cell.profileImageView.image?.resize(60 , 60)
+                self.annotationImage = cell.profileImageView.image?.resize(60,60)
             }
         }
         guard let childId = TrackingViewController.trackedChildUId else {return}
         DataHandler.shared.fetchChildAccount(with: childId) {[weak self] user in
-            print("selected \(user.name)")
+            print("Debug: selected \(user.name)")
             self?.tabBarItem.title = user.name + " tracked"
             self?.navigationItem.title = user.name
         }

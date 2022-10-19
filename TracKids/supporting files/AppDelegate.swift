@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        signOutOldUser()
         FirebaseConfiguration.shared.setLoggerLevel(.min)
         Database.database().isPersistenceEnabled = true
         IQKeyboardManager.shared.enable = true
@@ -167,7 +168,7 @@ extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         Messaging.messaging().token { (token, error) in
             if let error = error {
-                print("Error fetching remote instance ID: \(error.localizedDescription)")
+                print("Debug: Error fetching remote instance ID: \(error.localizedDescription)")
             } else if let newToken = token {
                 AppDelegate.DEVICEID = newToken
                 guard let uid = Auth.auth().currentUser?.uid else {return}
@@ -176,4 +177,15 @@ extension AppDelegate: MessagingDelegate {
             }
         }
     }
+}
+extension AppDelegate{
+func signOutOldUser(){
+    if let _ = UserDefaults.standard.value(forKey: "isNewuser"){}else{
+        do{
+            UserDefaults.standard.set(true, forKey: "isNewuser")
+            try Auth.auth().signOut()
+        }
+        catch{}
+    }
+  }
 }

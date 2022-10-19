@@ -35,7 +35,7 @@ class ObservedPlacesTableViewController: UITableViewController {
                 
                 for location in locations{
                     //convert fetched locations to addresses to display in tableview
-                    LocationHandler.shared.convertLocationToAdress(for: location) { address in
+                    LocationHandler.shared.convertLocationToAddress(for: location) { address in
                         if   !((self?.Addresses.contains(where: { (address2) -> Bool in
                             if address2?.coordinates.latitude == address?.coordinates.latitude && address2?.coordinates.longitude == address?.coordinates.longitude {
                                 return true

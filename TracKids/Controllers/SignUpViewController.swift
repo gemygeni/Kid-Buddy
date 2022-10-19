@@ -86,7 +86,7 @@ class SignUpViewController: UIViewController {
 
             self.usersReference.child(UId).updateChildValues(UserInfo) { (error, reference) in
                 if let error = error{
-                    print(error.localizedDescription)
+                    print("Debug: error \(String(describing: error.localizedDescription))")
                 }
             }
             

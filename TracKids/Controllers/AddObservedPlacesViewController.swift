@@ -76,7 +76,7 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
         mapView.addAnnotation(annotation)
         addRadiusOverlay(for: ObservedLocation)
         //convert location to address to display on observeed places.
-        LocationHandler.shared.convertLocationToAdress(for: ObservedLocation) { [weak self] address in
+        LocationHandler.shared.convertLocationToAddress(for: ObservedLocation) { [weak self] address in
             self?.addressTitle = address?.title.components(separatedBy: ",").dropLast(2).joined(separator: " ")
             print("Debug: addressTitle  \(String(describing: self?.addressTitle))")
         }

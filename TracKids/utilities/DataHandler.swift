@@ -62,7 +62,7 @@ struct DataHandler{
         let geofire = GeoFire(firebaseRef: ChildLocationReference.child(uid))
         ChildLocationReference.child(uid).observe(.value) { (snapshot) in
             geofire.getLocationForKey(childID) { (location, error) in
-                if error != nil {print(error!.localizedDescription) }
+                if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))") }
                 guard let childLocation = location else {return}
                 completion(childLocation)
             }
@@ -79,7 +79,7 @@ struct DataHandler{
             let key = snapshot.key
             placesIds.append(key)
             geofire.getLocationForKey(key) { (location, error) in
-                if error != nil {print(error!.localizedDescription) }
+                if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))") }
                 guard let FetchedPlace = location else {return}
                 FetchedPlaces.append(FetchedPlace)
                 completion(FetchedPlaces,placesIds)
@@ -96,7 +96,6 @@ struct DataHandler{
         geoFire.setLocation(location, forKey: key )
     }
     
-    
     // MARK: - function to upload Meessage Info to firebase specific user.
     func uploadMessageWithInfo(_ messageText : String , _ recipient : String, ImageURL : String? ,completion : @escaping(() -> Void) )  {
         guard  let sender = Auth.auth().currentUser?.uid else{return}
@@ -112,9 +111,9 @@ struct DataHandler{
                             "imageURL" : ImageURL ?? ""] as [String : Any]
         self.fetchUserInfo { (user) in
             if user.accountType == 0 {
-                MessagesReference.child(sender).child(recipient).childByAutoId().updateChildValues(messsageInfo) { error, reference in
+                MessagesReference.child(sender).child(recipient).childByAutoId().updateChildValues(messsageInfo) { error, ـ in
                     if error != nil {
-                        print(error?.localizedDescription as Any)
+                        print("Debug: error \(String(describing: error!.localizedDescription))")
                     }
                     else {
                         completion()
@@ -122,9 +121,9 @@ struct DataHandler{
                 }
             }
             else if user.accountType == 1 {
-                MessagesReference.child(user.parentID!).child(sender).childByAutoId().updateChildValues(messsageInfo) { error, reference in
+                MessagesReference.child(user.parentID!).child(sender).childByAutoId().updateChildValues(messsageInfo) { error, ـ in
                     if error != nil {
-                        print(error?.localizedDescription as Any)
+                        print("Debug: error \(String(describing: error!.localizedDescription))")
                     }
                     else {
                         completion()
@@ -133,7 +132,6 @@ struct DataHandler{
             }
         }
     }
-    
     
     // MARK: - function to send Push Notification to a specific user.
     func sendPushNotification(to recipientToken : String, sender : String, body : String) {
@@ -151,8 +149,6 @@ struct DataHandler{
             }.resume()
         }
     }
-    
-    
     
     // MARK: - function to send Critical Alert Push Notification to a specific user.
     func sendCriticalAlert(to recipientToken : String, sender : String, body : String) {
@@ -187,23 +183,19 @@ struct DataHandler{
     
     // MARK: - function to remove all account data of a specific user from realtime database.
     func removeAccount( for currentUser : String, completion : @escaping () -> Void ){
-        UserReference.child(currentUser).removeValue { error, reference in
-            ChildLocationReference.child(currentUser).removeValue { error, reference in
-                HistoryReference.child(currentUser).removeValue { error, reference in
-                    TrackedChildsReference.child(currentUser).removeValue { error, reference in
-                        ObservedPlacesReference.child(currentUser).removeValue { error, reference in
-                            MessagesReference.child(currentUser).removeValue { error, reference in
-                                
+        UserReference.child(currentUser).removeValue { error, ـ in
+            ChildLocationReference.child(currentUser).removeValue { error, ـ in
+                HistoryReference.child(currentUser).removeValue { error, ـ in
+                    TrackedChildsReference.child(currentUser).removeValue { error, ـ in
+                        ObservedPlacesReference.child(currentUser).removeValue { error, ـ in
+                            MessagesReference.child(currentUser).removeValue { error, ـ in
                                 let storageReference = storage.reference()
-                                
                                 let imageMessagesReference  = storageReference.child("Messages/\(String(describing: currentUser))")
-                                
                                 imageMessagesReference.delete { error in
                                     let childsPicturesReference  = storageReference.child("ChildsPictures/\(currentUser)")
                                     childsPicturesReference.delete { error in
                                         completion()
                                         print("Debug: removed successfully")
-                                        
                                     }
                                 }
                             }
@@ -218,16 +210,16 @@ struct DataHandler{
     func removeChild(of parentUid : String, withId childID : String){
         self.fetchChildAccount(with: childID) { child in
             guard  let parentId = Auth.auth().currentUser?.uid else{return}
-            UserReference.child(childID).removeValue { error, reference in
-        if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                HistoryReference.child(parentId).child(childID).removeValue { error, response in
-        if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                    ChildLocationReference.child(parentId).child(childID).removeValue { error, reference in
+            UserReference.child(childID).removeValue { error, ـ in
             if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                        MessagesReference.child(parentId).child(childID).removeValue { error, reference in
-                            TrackedChildsReference.child(parentId).child(childID).removeValue { error, reference in
+                HistoryReference.child(parentId).child(childID).removeValue { error, ـ in
             if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                                ObservedPlacesReference.child(parentId).child(childID).removeValue { error, reference in
+                    ChildLocationReference.child(parentId).child(childID).removeValue {error, ـ in
+            if let error = error {print("Debug: removing error \(error.localizedDescription)")}
+                        MessagesReference.child(parentId).child(childID).removeValue { error, ـ in
+                            TrackedChildsReference.child(parentId).child(childID).removeValue { error, ـ in
+            if let error = error {print("Debug: removing error \(error.localizedDescription)")}
+                                ObservedPlacesReference.child(parentId).child(childID).removeValue { error, ـ in
             if let error = error {print("Debug: removing error \(error.localizedDescription)")}
                                     let storage = Storage.storage()
                                     if let url = child.imageURL{
@@ -248,7 +240,6 @@ struct DataHandler{
         }
     }
     
-    
     // MARK: - function to change a specific user information and image.
     func updateChildInfo(forId childId : String, withImage newImage : UIImage, name: String, completion : @escaping () -> Void){
         guard let parenId = Auth.auth().currentUser?.uid else {return}
@@ -264,16 +255,18 @@ struct DataHandler{
                         
                         newImageReference.putData(imageData, metadata: nil) { metaData, error in
                             
-                            if error != nil {print(error!.localizedDescription)}
+                            if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")
+}
                             newImageReference.downloadURL { (url, error) in
-                                if error != nil {print(error!.localizedDescription)}
+                                if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")
                                 if let downloadedURL = url{
                                     let urlReference = UserReference.child(childId)
                                     let trackedChildReference = TrackedChildsReference.child(parenId).child(childId)
-                                    trackedChildReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, reference in
-                                        if error != nil {print(error!.localizedDescription)}
-                                        urlReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, reference in
-                                            if error != nil {print(error!.localizedDescription)}
+                                    trackedChildReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, ـ in
+                                        if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")
+                                        urlReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, ـ in
+                                            if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")
+}
                                             completion()
                                         }
                                     }
@@ -285,6 +278,5 @@ struct DataHandler{
             }
         }
     }
+}}
 }
-
-

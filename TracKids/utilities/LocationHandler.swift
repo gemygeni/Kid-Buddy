@@ -70,7 +70,7 @@
         
         func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
             
-            print(error.localizedDescription)
+            print("Debug: error \(String(describing: error.localizedDescription))")
         }
         
         func locationManager(
@@ -116,7 +116,8 @@
             let historyReference = HistoryReference.child( uid).child(trackedChildID)
             historyReference.removeValue { error, reference in
                 if  error != nil {
-                    print(error!.localizedDescription)
+                    print(print("Debug: error \(String(describing: error!.localizedDescription))")
+)
                 }
                 else{
                     completion()
@@ -131,7 +132,7 @@
                 let geofire = GeoFire(firebaseRef: ChildLocationReference.child(parentID))
                 let UId = user.uid
                 geofire.setLocation(location, forKey: UId) { (error) in
-                    if error != nil {print(error!.localizedDescription )}
+                    if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
                 }
             }
         }
@@ -140,7 +141,7 @@
         // MARK: - function to configure Geofencing to specific location to get notified about.
         func configureGeofencing(for location : CLLocation) {
             var identifier : String = " "
-            LocationHandler.shared.convertLocationToAdress(for: location) {[weak self] (place) in
+            LocationHandler.shared.convertLocationToAddress(for: location) {[weak self] (place) in
                 identifier = "\(place?.title.components(separatedBy: ",").dropLast(2).joined(separator: " ") ?? "monitored place")"
                 var fenceRegion: CLCircularRegion {
                     let region = CLCircularRegion(
@@ -210,10 +211,10 @@
         }
         
         // MARK: - function to convert observed location to readable address.
-        func convertLocationToAdress(for location : CLLocation?, completion : @escaping((Location?) -> Void)) {
+        func convertLocationToAddress(for location : CLLocation?, completion : @escaping((Location?) -> Void)) {
             let geocoder = CLGeocoder()
             geocoder.reverseGeocodeLocation(location!) { (placeMarks, error) in
-                if error != nil {print(error!.localizedDescription) }
+                if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
                 guard let placemarks = placeMarks , error == nil
                 else {completion(nil)
                     return}

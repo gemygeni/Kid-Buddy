@@ -297,9 +297,9 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
         let imageReference  = storageReference.child("Messages/\(String(describing: UId))/\(imageName).jpg")
         if let imageData =  self.imageMessage?.jpegData(compressionQuality: 0.3){
             imageReference.putData(imageData, metadata: nil) { (metadata, error) in
-                if error != nil {print(error!.localizedDescription)}
+                if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
                 imageReference.downloadURL { [weak self](url, error) in
-                    if error != nil {print(error!.localizedDescription)}
+                    if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
                     if let downloadedURL = url{
                         self?.ImageURL = downloadedURL.absoluteString
                         print("Debug: url is \(String(describing: self?.ImageURL))")
@@ -440,7 +440,7 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate {
             self.messagesIds = []
             selectedReference.removeValue { [weak self] error, reference in
                 if error != nil{
-                    print(error?.localizedDescription as Any)
+                    print("Debug: error \(String(describing: error!.localizedDescription))")
                 }
                 self?.tableView.reloadDataAndKeepOffset()
             }

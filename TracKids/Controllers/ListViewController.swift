@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import MessageUI
 
+
 class ListViewController: UIViewController {
     private var user : User?
     var AuthHandler : AuthStateDidChangeListenerHandle?
@@ -19,31 +20,32 @@ class ListViewController: UIViewController {
             self.childsButton.isHidden = true
         }
         fetchUserInfo()
-        print("Debug: \(String(describing: LocationHandler.shared.locationManager?.monitoredRegions))")
     }
     
     @IBOutlet weak var childsButton: UIButton!
     
     @IBOutlet weak var signInButton: UIButton!{
         didSet{
-            signInButton.isHidden = Auth.auth().currentUser?.uid != nil
+            signInButton.isHidden = Auth.auth().currentUser != nil
         }
     }
     
     @IBOutlet weak var RemoveAccountButton: UIButton!{
         didSet{
-            RemoveAccountButton.isHidden = Auth.auth().currentUser?.uid == nil
+            RemoveAccountButton.isHidden = Auth.auth().currentUser == nil
         }
     }
-    @IBAction func signOutPressed(_ sender: UIButton) {
-        handleSignOut()
-        TrackingViewController.trackedChildUId = nil
-        navigationItem.title = ""
-    }
-    
     @IBOutlet weak var signOutButton: UIButton!{
         didSet{
-            signOutButton.isHidden = Auth.auth().currentUser?.uid == nil
+            signOutButton.isHidden = Auth.auth().currentUser == nil
+        }
+    }
+
+    @IBAction func signOutPressed(_ sender: UIButton) {
+        handleSignOut()
+        Auth.auth().addStateDidChangeListener() { (auth, firUser) in
+        // do something with firUser, e.g. update UI
+            
         }
     }
     
@@ -70,9 +72,14 @@ class ListViewController: UIViewController {
         showMailComposer()
     }
     
-    @IBAction func SOSButtonPressed(_ sender: Any) {
+    @IBAction func sosButtonPressed(_ sender: Any) {
         sendCriticalAlert()
     }
+    
+    @IBAction func privacyButtonPressed(_ sender: UIButton) {
+       performSegue(withIdentifier: "showPrivacyPolicy", sender: self)
+    }
+    
     
     // MARK: - function to fetch user data from database.
     func fetchUserInfo(){
@@ -98,7 +105,8 @@ class ListViewController: UIViewController {
                 TrackingVC.centerMapOnUserLocation()
                 TrackingVC.tabBarItem.title = ""
                 TrackingVC.navigationItem.title = ""
-                
+                TrackingVC.childsCollectionView.numberOfItems(inSection: 0)
+                TrackingVC.trackedChild = nil
                 if var tabVC = tabBarController?.viewControllers{
                     tabVC.removeAll()
                 }
@@ -114,8 +122,7 @@ class ListViewController: UIViewController {
         DataHandler.shared.removeAccount(for: userId) {
             user?.delete {[weak self] error in
                 if let error = error {
-                    print(error.localizedDescription)
-                } else {
+                    print("Debug: error \(String(describing: error.localizedDescription))")} else {
                     print("Debug: Removed completed")
                     self?.navigationController?.popToRootViewController(animated: true)
                     if let TrackingController = self?.navigationController?.rootViewController as? TrackingViewController{
@@ -161,7 +168,7 @@ class ListViewController: UIViewController {
         linkBuilder.iOSParameters?.appStoreID = "1600337105"
         linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkBuilder.socialMetaTagParameters?.title = "Join kid buddy with this link"
-        linkBuilder.socialMetaTagParameters?.descriptionText = "install kid buddy to share your location info with your parents"
+        linkBuilder.socialMetaTagParameters?.descriptionText = "install kid buddy to follow your Kids Location in real time"
         guard let longURL = linkBuilder.url else { return }
         print("Debug: sharing The long dynamic link is \(longURL.absoluteString)")
         linkBuilder.shorten {[weak self] url, warnings, error in
@@ -176,7 +183,7 @@ class ListViewController: UIViewController {
             }
             guard let shortenUrl = url else { return }
             print("Debug: I have a short url to sharing ! \(shortenUrl.absoluteString)")
-            let items: [Any] = ["join trackids via this Link: ", shortenUrl]
+            let items: [Any] = ["", shortenUrl]
             let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
             self?.present(ac, animated: true)
         }
