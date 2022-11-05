@@ -29,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+
+    
+    
     // MARK: - UISceneSession Lifecycle.
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
@@ -183,9 +186,26 @@ func signOutOldUser(){
     if let _ = UserDefaults.standard.value(forKey: "isNewuser"){}else{
         do{
             UserDefaults.standard.set(true, forKey: "isNewuser")
-            try Auth.auth().signOut()
+            let firebaseAuth = Auth.auth()
+            try firebaseAuth.signOut()
         }
         catch{}
+    }
+    
+    let userDefaults = UserDefaults.standard
+    if userDefaults.value(forKey: "appFirstTimeOpend") == nil {
+        //if app is first time opened then it will be nil
+        userDefaults.setValue(true, forKey: "appFirstTimeOpend")
+        // signOut from FIRAuth
+        do {
+            let firebaseAuth = Auth.auth()
+            try firebaseAuth.signOut()
+        }catch {
+
+        }
+    } 
+    if !userDefaults.bool(forKey: "hasRunBefore") {
+         userDefaults.set(true, forKey: "hasRunBefore")
     }
   }
 }

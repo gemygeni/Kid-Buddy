@@ -34,6 +34,7 @@ class EditChildProfileViewController: UIViewController {
         }
     }
     @IBOutlet weak var spinnner: UIActivityIndicatorView!
+    
     @IBOutlet weak var nameTextField: UITextField!{
         didSet{
             nameTextField.delegate = self
@@ -41,6 +42,7 @@ class EditChildProfileViewController: UIViewController {
     }
     
     @IBOutlet weak var profileImageView: UIImageView!
+    
     @IBOutlet weak var saveButton: UIButton!
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
@@ -89,16 +91,23 @@ class EditChildProfileViewController: UIViewController {
     // MARK: - function to update child info with new data.
     func updateInfo(){
         spinnner?.startAnimating()
+
         guard let childId = childId,
               let newImage = ProfileImage,
               nameTextField.text != nil , let newName = nameTextField.text else {return}
-        DataHandler.shared.updateChildInfo(forId: childId, withImage: newImage, name: newName) {[weak self] in
+        DataHandler.shared.updateChildInfo(forId: childId, withImage: newImage, name: newName) { [weak self] in
             self?.navigationController?.popViewController(animated: true)
             self?.presentingViewController?.dismiss(animated: true, completion: {
-                self?.spinnner?.stopAnimating()
+            self?.spinnner?.stopAnimating()
                 self?.delegate?.didChangedInfo(self!, newImage: newImage, newName: newName)
             })
         }
+        
+        
+        
+        
+        
+        
     }
 }
 

@@ -129,7 +129,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
-        tableView.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0.7545114437)
+        tableView.backgroundColor = #colorLiteral(red: 0.8761226535, green: 0.8871519566, blue: 0.886958003, alpha: 1)
         tableView.allowsMultipleSelectionDuringEditing = true
     }
     
@@ -199,7 +199,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     // MARK: - function to handle sending message to database.
     func handleSendingMessage(){
         sendPressed = true
-        guard let messageText = messageTextfield.text,let sender = self.userName  else {return}
+        guard let messageText = messageTextfield.text,(messageTextfield.text?.isEmpty) == false  ,let sender = self.userName  else {return}
         if self.accountType == .parent{
             if let childID = self.uniqueID{
                 DataHandler.shared.uploadMessageWithInfo(messageText, childID, ImageURL: ImageURL) {[weak self] in
@@ -226,6 +226,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
             }
         }
         messageTextfield.text = ""
+        messageTextfield.resignFirstResponder()
     }
     
     

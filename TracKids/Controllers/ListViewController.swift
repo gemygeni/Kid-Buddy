@@ -12,7 +12,6 @@ import MessageUI
 
 class ListViewController: UIViewController {
     private var user : User?
-    var AuthHandler : AuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,18 +42,13 @@ class ListViewController: UIViewController {
 
     @IBAction func signOutPressed(_ sender: UIButton) {
         handleSignOut()
-        Auth.auth().addStateDidChangeListener() { (auth, firUser) in
-        // do something with firUser, e.g. update UI
-            
-        }
     }
     
     @IBAction func removeAccountPressed(_ sender: UIButton) {
         let alert = UIAlertController(title: "are you sure you want to remove account", message: "caution: you will lose all data related to this account", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] action in
-            self?.removeAccount()
-        }))
+            self?.deleteUserProcess() }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         self.present(alert, animated: true, completion: nil)
@@ -96,9 +90,11 @@ class ListViewController: UIViewController {
     
     // MARK: - function to handle signing out from database
     private func handleSignOut(){
+        let firebaseAuth = Auth.auth()
         do {
-            try! Auth.auth().signOut()
+            try firebaseAuth.signOut()
             self.navigationController?.popToRootViewController(animated: true)
+            TrackingViewController.trackedChildUId = nil
             if let TrackingVC = self.navigationController?.rootViewController as? TrackingViewController{
                 TrackingVC.IsLoggedIn = false
                 TrackingVC.mapView.removeAnnotations( TrackingVC.mapView.annotations)
@@ -106,35 +102,20 @@ class ListViewController: UIViewController {
                 TrackingVC.tabBarItem.title = ""
                 TrackingVC.navigationItem.title = ""
                 TrackingVC.childsCollectionView.numberOfItems(inSection: 0)
+                TrackingVC.childsCollectionView = nil
                 TrackingVC.trackedChild = nil
+                print ("usser: \(String(describing: Auth.auth().currentUser))")
                 if var tabVC = tabBarController?.viewControllers{
                     tabVC.removeAll()
                 }
             }
-            print("Debug: signed out successfully")
+        }
+        catch let signOutError as NSError {
+          print ("Error signing out: \(signOutError.localizedDescription)")
         }
     }
     
-    // MARK: - function to handle removing all account data from database.
-    func removeAccount(){
-        let user = Auth.auth().currentUser
-        guard  let userId = user?.uid else {return}
-        DataHandler.shared.removeAccount(for: userId) {
-            user?.delete {[weak self] error in
-                if let error = error {
-                    print("Debug: error \(String(describing: error.localizedDescription))")} else {
-                    print("Debug: Removed completed")
-                    self?.navigationController?.popToRootViewController(animated: true)
-                    if let TrackingController = self?.navigationController?.rootViewController as? TrackingViewController{
-                        TrackingController.IsLoggedIn = false
-                        TrackingController.mapView.removeAnnotations( TrackingController.mapView.annotations)
-                        TrackingController.centerMapOnUserLocation()
-                        self?.handleSignOut()
-                    }
-                }
-            }
-        }
-    }
+    
     
     // MARK: - function to display mail composer viewcontroller.
     func showMailComposer() {
@@ -189,8 +170,6 @@ class ListViewController: UIViewController {
         }
     }
     
-    
-    
     // MARK: - function to handle sending Critical Alert to another device.
     func sendCriticalAlert(){
         DataHandler.shared.fetchUserInfo { user in
@@ -205,12 +184,32 @@ class ListViewController: UIViewController {
             else  if user.accountType == 1 {
                 guard let parentId = user.parentID  else{return}
                 DataHandler.shared.fetchDeviceID(for: parentId) { deviceToken in
-                    DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: sender, body: " \(sender) NEEDS HELP ")
+                DataHandler.shared.sendCriticalAlert(to: deviceToken, sender: sender, body: " \(sender) NEEDS HELP ")
                 }
             }
         }
     }
-}
+    // MARK: - function to handle deleting user account and all its data.
+    func deleteUserProcess() {
+        guard let currentUser = Auth.auth().currentUser else { return }
+        DataHandler.shared.deleteUserData(user: currentUser)
+        DataHandler.shared.deleteDataGroup.notify(queue: .main) {
+            self.deleteUser(user: currentUser)
+        }
+    }
+
+    // MARK: - function to  Delete user Account from database.
+    func deleteUser(user currentUser: FirebaseAuth.User) {
+        currentUser.delete {[weak self] error in
+            if let error = error {
+                self?.showAlert(withTitle: "removing error", message: "\(error.localizedDescription)")
+                return
+              }
+            // Logout properly
+                self?.handleSignOut()
+          }
+       }
+   }
 
 // MARK: - Mail Compose ViewController Delegate Methods.
 extension ListViewController: MFMailComposeViewControllerDelegate {

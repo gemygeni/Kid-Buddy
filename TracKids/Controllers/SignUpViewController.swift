@@ -59,6 +59,7 @@ class SignUpViewController: UIViewController {
 
     // MARK: - function to handle Signing up and createe new user account.
     private func handleSignUp(){
+        let firebaseAuth = Auth.auth()
         let userType = userTypeControl.selectedSegmentIndex
         let deviceID  = AppDelegate.DEVICEID 
         guard let name = nameTextField.text,
@@ -66,7 +67,7 @@ class SignUpViewController: UIViewController {
          let password = passwordTextField.text,
          !password.isEmpty,!email.isEmpty,!password.isEmpty
         else {return}
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+        firebaseAuth.createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 let alert = UIAlertController(title: "Sign Up Failed", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -80,8 +81,8 @@ class SignUpViewController: UIViewController {
                              "email" : email,
                              "password" : password,
                              "userType" : userType,
-                             "parentID" : "" ,
-                             "imageURL" :  "",
+                             "parentID" : "no parentID" ,
+                             "imageURL" :  "no imageURL",
                              "deviceID" : deviceID] as [String : Any]
 
             self.usersReference.child(UId).updateChildValues(UserInfo) { (error, reference) in

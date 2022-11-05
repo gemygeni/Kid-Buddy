@@ -69,8 +69,7 @@ class ChildProfileViewController: UIViewController {
         let alert = UIAlertController(title: "are you sure you want to remove account", message: "caution: you will lose all data related to this account", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] action in
             let childId = self?.childAccount?.uid
-            guard let parentId = Auth.auth().currentUser?.uid else {return}
-            DataHandler.shared.removeChild(of: parentId, withId: childId!)
+            DataHandler.shared.removeChild(withId: childId!)
             self?.navigationController?.popViewController(animated: true)
         }))
         

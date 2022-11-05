@@ -39,24 +39,6 @@
                 print("Debug: present Alert Done")
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
 
      // MARK: -  UIImage extension.
@@ -153,6 +135,12 @@
             let dateString = formatter.string(from: self)
             return dateString
         }
+        
+        // MARK: function to Return the amount of minutes from another date
+        func minutes(from date: Date) -> Int {
+            return Calendar.current.dateComponents([.minute], from: date, to: self).minute ?? 0
+        }
+
     }
 
     // MARK: -  UITableView extension.

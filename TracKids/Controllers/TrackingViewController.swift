@@ -43,6 +43,7 @@ class TrackingViewController: UIViewController  {
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = LocationHandler.shared.locationManager
     
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBAction func changeMapTypeButtonPressed(_ sender: Any) {
         if mapView.mapType == .standard{
             mapView.mapType = .hybrid
@@ -104,6 +105,12 @@ class TrackingViewController: UIViewController  {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+
+        
+        
+        
+        
+        
         fetchUserInfo()
         configureMapView()
         if self.accountType == .parent {
@@ -209,6 +216,7 @@ class TrackingViewController: UIViewController  {
     
     //MARK: - function to configure Dynamic Link with OTP to send it to child device to join it in database.
     func configureDynamicLink(){
+        activityIndicatorView.startAnimating()
         var components = URLComponents()
         components.scheme = "https"
         components.host = "apps.apple.com/app/1600337105"
@@ -243,7 +251,7 @@ class TrackingViewController: UIViewController  {
             }
             if let warnings = warnings {
                 for warning in warnings {
-                    print("Warning: \(warning)")
+                    print("Debug: Warning: \(warning)")
                 }
             }
             guard let url = url else { return }
@@ -256,10 +264,25 @@ class TrackingViewController: UIViewController  {
     func shareItem(with url: URL) {
         let subjectLine = ""
         let activityView = UIActivityViewController(activityItems: [subjectLine, url], applicationActivities: nil)
-        UIApplication.shared.windows.first?.rootViewController?.present(activityView, animated: true, completion: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(activityView, animated: true, completion: {[weak self] in
+            self?.activityIndicatorView.stopAnimating()
+        })
     }
     
-    
+    // MARK: - function to fetch childs info and update collectionview data.
+    func fetchChildsItems(){
+        childs = []
+        childsID = []
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        DataHandler.shared.fetchChildsInfo(for: uid) {[weak self] child, childID in
+            self?.childs.append(child)
+            self?.childsID.append(childID)
+            DispatchQueue.main.async {
+                self?.childsCollectionView.reloadData()
+            }
+        }
+    }
+
 }
 
 // MARK: - MKMapViewDelegate Methods.
@@ -277,18 +300,6 @@ extension TrackingViewController : MKMapViewDelegate {
 }
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource Methods.
 extension TrackingViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func fetchChildsItems(){
-        childs = []
-        childsID = []
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        DataHandler.shared.fetchChildsInfo(for: uid) {[weak self] child, childID in
-            self?.childs.append(child)
-            self?.childsID.append(childID)
-            DispatchQueue.main.async {
-                self?.childsCollectionView.reloadData()
-            }
-        }
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return  childs.count
@@ -298,10 +309,11 @@ extension TrackingViewController : UICollectionViewDelegate, UICollectionViewDat
         return 1
     }
     
+        
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChildProfileCell", for: indexPath)
         if let childCell = cell as? ChildsCollectionViewCell{
-          //  childCell.profileImageView.image =  #imageLiteral(resourceName: "person").resize(70,70)
+            childCell.profileImageView.image =  #imageLiteral(resourceName: "person").resize(70,70)
             if let child = childs[indexPath.item]{
                 if let childImageURl = child.imageURL {
                     childCell.profileImageView.loadImageUsingCacheWithUrlString(childImageURl)

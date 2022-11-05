@@ -8,8 +8,6 @@ import Firebase
 import GeoFire
 import CryptoKit
 
-
-
 let DBReference = Database.database().reference()
 let UserReference = DBReference.child("users")
 let ChildLocationReference = DBReference.child("childLocation")
@@ -24,6 +22,7 @@ var placesIds = [String]()
 
 struct DataHandler{
     static  let shared  = DataHandler()
+    let deleteDataGroup = DispatchGroup()
     func fetchUserInfo(completion : @escaping (User) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
@@ -181,60 +180,105 @@ struct DataHandler{
         }
     }
     
-    // MARK: - function to remove all account data of a specific user from realtime database.
-    func removeAccount( for currentUser : String, completion : @escaping () -> Void ){
-        UserReference.child(currentUser).removeValue { error, ـ in
-            ChildLocationReference.child(currentUser).removeValue { error, ـ in
-                HistoryReference.child(currentUser).removeValue { error, ـ in
-                    TrackedChildsReference.child(currentUser).removeValue { error, ـ in
-                        ObservedPlacesReference.child(currentUser).removeValue { error, ـ in
-                            MessagesReference.child(currentUser).removeValue { error, ـ in
-                                let storageReference = storage.reference()
-                                let imageMessagesReference  = storageReference.child("Messages/\(String(describing: currentUser))")
-                                imageMessagesReference.delete { error in
-                                    let childsPicturesReference  = storageReference.child("ChildsPictures/\(currentUser)")
-                                    childsPicturesReference.delete { error in
-                                        completion()
-                                        print("Debug: removed successfully")
-                                    }
-                                }
-                            }
-                        }
+    
+    
+    // MARK: - function to Remove user data from Database & Storage
+    func deleteUserData(user currentUser: FirebaseAuth.User) {
+        // Check if `currentUser.delete()` won't require re-authentication
+        if let lastSignInDate = currentUser.metadata.lastSignInDate,
+            lastSignInDate.minutes(from: Date()) >= -5 {
+            deleteDataGroup.enter()
+            let userId = currentUser.uid
+            UserReference.child(userId).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+            deleteDataGroup.enter()
+            ChildLocationReference.child(userId).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+            deleteDataGroup.enter()
+            HistoryReference.child(userId).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+            deleteDataGroup.enter()
+            TrackedChildsReference.child(userId).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+
+            deleteDataGroup.enter()
+            ObservedPlacesReference.child(userId).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+            
+            deleteDataGroup.enter()
+            MessagesReference.child(userId).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+            //list and run over all files to delete each one independently
+            deleteDataGroup.enter()
+            let storageReference = storage.reference()
+            let imageMessagesReference  = storageReference.child("Messages/\(String(describing: userId))")
+            imageMessagesReference.listAll { list, error in
+                if let error = error { print(error) }
+                list.items.forEach({ file in
+                    self.deleteDataGroup.enter()
+                    file.delete { error in
+                        if let error = error { print(error) }
+                        self.deleteDataGroup.leave()
                     }
-                }
+                })
+                self.deleteDataGroup.leave()
             }
         }
     }
-    
+
     // MARK: - function to remove all child account data of a specific user from realtime database.
-    func removeChild(of parentUid : String, withId childID : String){
+    func removeChild(withId childID : String){
         self.fetchChildAccount(with: childID) { child in
             guard  let parentId = Auth.auth().currentUser?.uid else{return}
-            UserReference.child(childID).removeValue { error, ـ in
-            if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                HistoryReference.child(parentId).child(childID).removeValue { error, ـ in
-            if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                    ChildLocationReference.child(parentId).child(childID).removeValue {error, ـ in
-            if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                        MessagesReference.child(parentId).child(childID).removeValue { error, ـ in
-                            TrackedChildsReference.child(parentId).child(childID).removeValue { error, ـ in
-            if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                                ObservedPlacesReference.child(parentId).child(childID).removeValue { error, ـ in
-            if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                                    let storage = Storage.storage()
-                                    if let url = child.imageURL{
-                                        let storageRef = storage.reference(forURL: url)
-                                        storageRef.delete { error in
-            if let error = error {print("Debug: removing error \(error.localizedDescription)")}
-                                             else {
-                                                print("Debug: child account removed successfully")
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+            deleteDataGroup.enter()
+            ChildLocationReference.child(parentId).child(childID).removeValue { error, _ in
+                if let error = error {print(error)}
+                self.deleteDataGroup.leave()
+            }
+            
+            deleteDataGroup.enter()
+            HistoryReference.child(parentId).child(childID).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+            
+            deleteDataGroup.enter()
+            TrackedChildsReference.child(parentId).child(childID).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+            deleteDataGroup.enter()
+            ObservedPlacesReference.child(parentId).child(childID).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+            deleteDataGroup.enter()
+            MessagesReference.child(parentId).child(childID).removeValue { error, _ in
+                if let error = error { print(error) }
+                self.deleteDataGroup.leave()
+            }
+            //list and run over all files to delete each one independently.
+            deleteDataGroup.enter()
+            if let url = child.imageURL{
+                let storageRef = storage.reference(forURL: url)
+                storageRef.delete { error in
+                    if let error = error {print("Debug: removing error \(error.localizedDescription)")}
+                    else {
+                        print("Debug: child account removed successfully")
                     }
+                    self.deleteDataGroup.leave()
                 }
             }
         }
@@ -248,25 +292,23 @@ struct DataHandler{
             let childName = child.name
             let imageReference  = storageReference.child("ChildsPictures/\(parenId)/\(childName).jpg")
             imageReference.delete { error in
-                if error != nil{print("Debug: error in deleting\(String(describing: error?.localizedDescription))")}
+                if error != nil{print("error in deleting\(String(describing: error?.localizedDescription))")}
                 else {
                     if let imageData =  newImage.jpegData(compressionQuality: 0.3){
                         let newImageReference  = storageReference.child("ChildsPictures/\(parenId)/\(name).jpg")
                         
                         newImageReference.putData(imageData, metadata: nil) { metaData, error in
                             
-                            if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")
-}
+                            if error != nil {print(error!.localizedDescription)}
                             newImageReference.downloadURL { (url, error) in
-                                if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")
+                                if error != nil {print(error!.localizedDescription)}
                                 if let downloadedURL = url{
                                     let urlReference = UserReference.child(childId)
                                     let trackedChildReference = TrackedChildsReference.child(parenId).child(childId)
-                                    trackedChildReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, ـ in
-                                        if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")
-                                        urlReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, ـ in
-                                            if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")
-}
+                                    trackedChildReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, reference in
+                                        if error != nil {print(error!.localizedDescription)}
+                                        urlReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, reference in
+                                            if error != nil {print(error!.localizedDescription)}
                                             completion()
                                         }
                                     }
@@ -278,5 +320,5 @@ struct DataHandler{
             }
         }
     }
-}}
+    
 }

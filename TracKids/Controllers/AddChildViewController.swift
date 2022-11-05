@@ -21,13 +21,23 @@ class AddChildViewController: UIViewController {
         }
     }
     
+    
+    @IBOutlet weak var childMailTextField: UITextField!{
+        didSet{
+            childMailTextField.delegate = self
+        }
+    }
+    
+    @IBOutlet weak var childPasswordTextField: UITextField!{
+        didSet{
+            childPasswordTextField.delegate = self
+        }
+    }
+    
     @IBOutlet weak var spinnner: UIActivityIndicatorView!
-    
-    @IBOutlet weak var childMailTextField: UITextField!
-    
-    @IBOutlet weak var childPasswordTextField: UITextField!
-    
+
     @IBOutlet weak var ChildImageView: UIImageView!
+    
     @IBAction func AddChildPressed(_ sender: UIButton) {
         uploadData()
     }

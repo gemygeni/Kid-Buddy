@@ -50,11 +50,11 @@ class SignInViewController: UIViewController  {
     
     // MARK: - function to handle Signing user in.
     private func handleSignIn(){
-        
+        let firebaseAuth = Auth.auth()
         guard let email = emailTextField.text ,
               let password = passwordTextField.text,
               !email.isEmpty,!password.isEmpty else {return}
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
+        firebaseAuth.signIn(withEmail: email, password: password) { [weak self] (user, error) in
             if let error = error, user == nil {
                 let alert = UIAlertController(title: "Sign In Failed", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -86,15 +86,3 @@ extension SignInViewController : UITextFieldDelegate{
         return true
     }
 }
-
-//extension SignInViewController{
-//func signOutOldUser(){
-//    if let _ = UserDefaults.standard.value(forKey: "isNewuser"){}else{
-//        do{
-//            UserDefaults.standard.set(true, forKey: "isNewuser")
-//            try Auth.auth().signOut()
-//        }
-//        catch{}
-//    }
-//  }
-//}
