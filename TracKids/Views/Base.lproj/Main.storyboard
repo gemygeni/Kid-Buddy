@@ -954,7 +954,7 @@
                                             <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="SOSButtonPressed:" destination="PEL-v1-FtV" eventType="touchUpInside" id="o4z-tQ-OYV"/>
+                                            <action selector="sosButtonPressed:" destination="PEL-v1-FtV" eventType="touchUpInside" id="hxJ-pt-ytE"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="joT-El-mLJ">
@@ -1630,7 +1630,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="8FR-5Z-dBu"/>
-        <segue reference="966-xM-PZK"/>
+        <segue reference="WZU-q8-wgU"/>
         <segue reference="5SA-15-1eh"/>
         <segue reference="fnv-E1-P1c"/>
     </inferredMetricsTieBreakers>
