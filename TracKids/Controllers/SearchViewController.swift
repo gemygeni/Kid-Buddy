@@ -10,7 +10,7 @@ import MapKit
 import CoreLocation
 // MARK: -  SearchViewControllerDelegate Methods
 protocol SearchViewControllerDelegate : AnyObject  {
-    // MARK: delegate function trigerred when select a location row.
+    // MARK: delegate function trigerred when a location row been selected.
     func searchViewController(_ VC : SearchViewController , didSelectLocationWith coordinates : CLLocationCoordinate2D?, title : String)
     // MARK: delegate function trigerred when searching begin.
     func didBeginSearching(_ VC : SearchViewController)

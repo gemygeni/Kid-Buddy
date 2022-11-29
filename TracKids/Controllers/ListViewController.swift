@@ -102,7 +102,7 @@ class ListViewController: UIViewController {
                 TrackingVC.tabBarItem.title = ""
                 TrackingVC.navigationItem.title = ""
                 TrackingVC.childsCollectionView.numberOfItems(inSection: 0)
-                TrackingVC.childsCollectionView = nil
+                TrackingVC.childsCollectionView.isHidden = true
                 TrackingVC.trackedChild = nil
                 print ("usser: \(String(describing: Auth.auth().currentUser))")
                 if var tabVC = tabBarController?.viewControllers{

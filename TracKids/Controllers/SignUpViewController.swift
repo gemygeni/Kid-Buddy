@@ -37,13 +37,6 @@ class SignUpViewController: UIViewController {
         handleSignUp()
     }
     
-    @IBAction func CancelPressed(_ sender: UIButton) {
-        
-        DispatchQueue.main.async {
-            self.dismiss(animated: true)
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-     }
     
     @IBAction func signInPressed(_ sender: UIButton) {
         DispatchQueue.main.async {
