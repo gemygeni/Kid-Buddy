@@ -1,8 +1,7 @@
 # TracKids
-
-Kid Buddy is an IOS app that help parents track their kids location in realtime.
 ![appstore](https://user-images.githubusercontent.com/47509504/205902251-0b600df3-cfc3-417c-a8cb-8bba38300647.png)
 
+Kid Buddy is an IOS app which help parents to track their kids location in realtime.
 Our features:
 . GPS Location tracking 
 You can track your child’s location in real-time and see child’s annotation moving on the map.
