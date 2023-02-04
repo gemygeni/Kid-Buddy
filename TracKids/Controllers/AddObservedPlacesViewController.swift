@@ -15,7 +15,7 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
     let panel = FloatingPanelController()
     var observedPlaces = [CLLocationCoordinate2D]()
     var ObservedLocation = CLLocation()
-    var addressTitle : String?
+    var addressTitle = ""
     var searchResults : [MKPlacemark] = []
     let LocationManager = LocationHandler.shared.locationManager
     
@@ -77,7 +77,7 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
         addRadiusOverlay(for: ObservedLocation)
         //convert location to address to display on observeed places.
         LocationHandler.shared.convertLocationToAddress(for: ObservedLocation) { [weak self] address in
-            self?.addressTitle = address?.title.components(separatedBy: ",").dropLast(2).joined(separator: " ")
+            self?.addressTitle = (address?.title.components(separatedBy: ",").dropLast(2).joined(separator: " "))!
             print("Debug: addressTitle  \(String(describing: self?.addressTitle))")
         }
     }
@@ -107,13 +107,17 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
     // MARK: - function to upload observed place to database .
     func uploadObservedPlaceData(){
         if let trackedChildId = TrackingViewController.trackedChildUId{
-            let addressTitle = self.addressTitle ?? "observed place"
-            DataHandler.shared.uploadObservedPlace(ObservedLocation, addressTitle: addressTitle, for: trackedChildId)
+            if self.addressTitle.count > 1 {
+                print("Debug: fetched is \( addressTitle) ")
+                DataHandler.shared.uploadObservedPlace(ObservedLocation, addressTitle: self.addressTitle, for: trackedChildId)
+            }else{
+                DataHandler.shared.uploadObservedPlace(ObservedLocation, addressTitle: "no address", for: trackedChildId)
+            }
             self.dismiss(animated: true, completion: nil)
             print("Debug: uploaded place successfully")
         }
     }
-    
+
     // MARK: - MapView delegate Methods.
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKCircle {

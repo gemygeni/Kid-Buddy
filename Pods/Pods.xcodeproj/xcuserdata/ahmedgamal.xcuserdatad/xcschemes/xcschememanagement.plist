@@ -49,7 +49,7 @@
 		<key>FirebaseDynamicLinks.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>17</integer>
+			<integer>16</integer>
 		</dict>
 		<key>FirebaseInstallations.xcscheme</key>
 		<dict>
@@ -61,7 +61,7 @@
 		<key>FirebaseInstallations.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>20</integer>
+			<integer>19</integer>
 		</dict>
 		<key>FirebaseMessaging.xcscheme</key>
 		<dict>
@@ -73,7 +73,7 @@
 		<key>FirebaseMessaging.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>18</integer>
+			<integer>20</integer>
 		</dict>
 		<key>FirebaseStorage.xcscheme</key>
 		<dict>
@@ -127,7 +127,7 @@
 		<key>KWVerificationCodeView.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>19</integer>
+			<integer>17</integer>
 		</dict>
 		<key>Pods-TracKids.xcscheme</key>
 		<dict>
