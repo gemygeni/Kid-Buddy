@@ -158,7 +158,6 @@
                     return
                   }
                 self?.locationManager?.startMonitoring(for: fenceRegion)
-                print("Debug: identifier after  \(identifier)")
             }
         }
         

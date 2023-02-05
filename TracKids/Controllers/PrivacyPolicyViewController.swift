@@ -16,9 +16,10 @@ class PrivacyPolicyViewController: UIViewController {
     }
     
     func showWebviewContent(){
-        if let filePath = Bundle.main.url(forResource: "privacyPolicy", withExtension: "html") {
+        if let filePath = Bundle.main.url(forResource: "PrivacyPolicy", withExtension: "html") {
             let request = NSURLRequest(url: filePath)
             webView.load(request as URLRequest)
+            print("privacy url is \(filePath.absoluteString)")
         }
     }
 }
