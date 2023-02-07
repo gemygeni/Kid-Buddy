@@ -67,8 +67,36 @@ class ListViewController: UIViewController {
     }
     
     @IBAction func sosButtonPressed(_ sender: Any) {
-        sendCriticalAlert()
+       // sendCriticalAlert()
+//        let uid = "pRTmEaDZ5rcYU1CdNXoMJDSnv042"
+//        fetchDeviceID(for: uid) { free in
+//            print("Debug: device is \(free)")
+//
+//        }
+//        let dev = "eU3gmobiXEdmsYAjZ3d7jN:APA91bH6yQ4_LnXOn1rhVwxDhXoKqLXzwSIjp2xRIuI7VpZwsrKZMmOs0HT-6aBZHwb7B28u-RYVccePFQ83qSttyAuGQOJzZbGWoDxOV9P9ck1jUU4ja9LWG_uRZM-MOizcJ9cvla5C"
+//        DataHandler.shared.sendPushNotification(to: dev, sender: "mine", body: "بسم الله الرحمن الرحيم")
+        
     }
+    
+    func fetchDeviceID(for uid : String,  completion : @escaping (String) -> Void) {
+        
+       
+        UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String:Any] else {return}
+            let recipientDevice = dictionary["deviceID"] as! String
+            print("Debug: device is \(recipientDevice)")
+            completion(recipientDevice)
+            
+          }
+        }
+
+    
+    
+    
+    
+    
+    
+    
     
     @IBAction func privacyButtonPressed(_ sender: UIButton) {
        performSegue(withIdentifier: "showPrivacyPolicy", sender: self)

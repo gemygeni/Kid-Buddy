@@ -177,6 +177,8 @@ extension AppDelegate: MessagingDelegate {
                 guard let uid = Auth.auth().currentUser?.uid else {return}
                 let Reference = UserReference.child(uid)
                 Reference.updateChildValues(["deviceID" : newToken])
+                print("Debug: new Device token is: \(newToken)")
+
             }
         }
     }

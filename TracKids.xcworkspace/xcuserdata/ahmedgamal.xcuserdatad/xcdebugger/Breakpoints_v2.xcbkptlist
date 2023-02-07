@@ -122,8 +122,8 @@
             filePath = "TracKids/utilities/DataHandler.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "288"
-            endingLineNumber = "288"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
             landmarkName = "updateChildInfo(forId:withImage:name:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,6 +158,54 @@
             endingLineNumber = "18"
             landmarkName = "unknown"
             landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DA3F4954-BA6F-4A87-ABB1-CDDA5AAA10C4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TracKids/Controllers/ChatViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
+            landmarkName = "handleSendingMessage()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "DA3F4954-BA6F-4A87-ABB1-CDDA5AAA10C4 - aa6b524c8a5f7632"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TracKids.ChatViewController.handleSendingMessage() -&gt; ()"
+                  moduleName = "TracKids"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ahmedgamal/Trackids/TracKids/Controllers/ChatViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "210"
+                  endingLineNumber = "210"
+                  offsetFromSymbolStart = "1965">
+               </Location>
+               <Location
+                  uuid = "DA3F4954-BA6F-4A87-ABB1-CDDA5AAA10C4 - 63166259cec80fc6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.String) -&gt; () in TracKids.ChatViewController.handleSendingMessage() -&gt; ()"
+                  moduleName = "TracKids"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ahmedgamal/Trackids/TracKids/Controllers/ChatViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "211"
+                  endingLineNumber = "211"
+                  offsetFromSymbolStart = "89">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

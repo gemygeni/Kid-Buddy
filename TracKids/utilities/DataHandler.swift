@@ -29,6 +29,7 @@ struct DataHandler{
             let userID = snapshot.key
             guard let userInfo = snapshot.value as? [String : Any] else {return}
             let user = User(uid: userID, dictionary: userInfo)
+            print("token of device \(String(describing: user.deviceID))")
             completion(user)
         }
     }
