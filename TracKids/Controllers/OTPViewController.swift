@@ -39,7 +39,7 @@ class OTPViewController: UIViewController {
                     UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
                         guard let userInfo = snapshot.value as? [String : Any] else {return}
                         let name =   userInfo["name"] ?? ""
-                        let parenId   =   userInfo["parentID"] ?? ""
+                        let parenId  =   userInfo["parentID"] ?? ""
                         //fetch child image that parent have set to child from storage database.
                         let storageReference = storage.reference()
                         let imageReference  = storageReference.child("ChildsPictures/\(parenId)/\(name).jpg")
