@@ -38,7 +38,7 @@
                                         <textInputTraits key="textInputTraits" textContentType="name"/>
                                     </textField>
                                     <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fif-hj-a4t">
-                                        <rect key="frame" x="0.0" y="93.666666666666657" width="390" height="60"/>
+                                        <rect key="frame" x="0.0" y="97.666666666666657" width="390" height="60"/>
                                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="BB0-WC-ebN"/>
@@ -47,7 +47,7 @@
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LQM-Yi-eX0">
-                                        <rect key="frame" x="0.0" y="187.66666666666669" width="390" height="60"/>
+                                        <rect key="frame" x="0.0" y="195.66666666666669" width="390" height="60"/>
                                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="9tk-t0-PlI"/>
@@ -56,7 +56,7 @@
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <segmentedControl opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OPB-I6-SmR">
-                                        <rect key="frame" x="0.0" y="281.33333333333331" width="390" height="61"/>
+                                        <rect key="frame" x="0.0" y="293.33333333333331" width="390" height="61"/>
                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="HZ6-oO-qO9"/>
@@ -69,7 +69,7 @@
                                         <color key="selectedSegmentTintColor" systemColor="systemPinkColor"/>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MLe-ZH-lfK">
-                                        <rect key="frame" x="0.0" y="375.33333333333331" width="390" height="60"/>
+                                        <rect key="frame" x="0.0" y="391.33333333333331" width="390" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="oAP-5L-wo7"/>
                                         </constraints>
@@ -86,10 +86,10 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GPK-7E-XB2">
-                                        <rect key="frame" x="0.0" y="469" width="390" height="80"/>
+                                        <rect key="frame" x="0.0" y="489" width="390" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MkM-Ds-SuZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="279.66666666666669" height="80"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="279.66666666666669" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="260" id="nxY-QI-4Un"/>
                                                 </constraints>
@@ -98,7 +98,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BdX-el-GfE">
-                                                <rect key="frame" x="289.66666666666669" y="0.0" width="100.33333333333331" height="80"/>
+                                                <rect key="frame" x="289.66666666666669" y="0.0" width="100.33333333333331" height="60"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="Sign in">
                                                     <color key="titleColor" systemColor="linkColor"/>
@@ -116,7 +116,7 @@
                                             <constraint firstAttribute="trailing" secondItem="BdX-el-GfE" secondAttribute="trailing" id="CKN-r2-kgF"/>
                                             <constraint firstItem="MkM-Ds-SuZ" firstAttribute="leading" secondItem="GPK-7E-XB2" secondAttribute="leading" id="O2k-hZ-f8B"/>
                                             <constraint firstItem="MkM-Ds-SuZ" firstAttribute="top" secondItem="GPK-7E-XB2" secondAttribute="top" id="Y69-LW-Ofa"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="fs1-OL-76M"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="fs1-OL-76M"/>
                                             <constraint firstItem="BdX-el-GfE" firstAttribute="top" secondItem="GPK-7E-XB2" secondAttribute="top" id="hIb-rJ-pSd"/>
                                             <constraint firstAttribute="bottom" secondItem="BdX-el-GfE" secondAttribute="bottom" id="ql1-S0-4Qf"/>
                                             <constraint firstAttribute="bottom" secondItem="MkM-Ds-SuZ" secondAttribute="bottom" id="zEL-0m-76X"/>
@@ -700,7 +700,7 @@
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DjA-FS-pXk">
-                                        <rect key="frame" x="0.0" y="116.33333333333334" width="390" height="60"/>
+                                        <rect key="frame" x="0.0" y="129.66666666666666" width="390" height="60"/>
                                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="mjq-9L-ItM"/>
@@ -709,9 +709,9 @@
                                         <textInputTraits key="textInputTraits" returnKeyType="continue" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vw4-tM-fMB">
-                                        <rect key="frame" x="0.0" y="232.66666666666669" width="390" height="80"/>
+                                        <rect key="frame" x="0.0" y="259.33333333333331" width="390" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="PXi-MG-MEW"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="PXi-MG-MEW"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Log in">
@@ -726,16 +726,16 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2PO-uh-QSh">
-                                        <rect key="frame" x="0.0" y="369" width="390" height="80"/>
+                                        <rect key="frame" x="0.0" y="389" width="390" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Pf-KO-NAY">
-                                                <rect key="frame" x="0.0" y="0.0" width="269.66666666666669" height="80"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="269.66666666666669" height="60"/>
                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bug-il-4XN">
-                                                <rect key="frame" x="279.66666666666669" y="0.0" width="110.33333333333331" height="80"/>
+                                                <rect key="frame" x="279.66666666666669" y="0.0" width="110.33333333333331" height="60"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Sign up">
                                                     <color key="titleColor" systemColor="linkColor"/>
@@ -752,7 +752,7 @@
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="5Pf-KO-NAY" secondAttribute="bottom" id="DFr-VP-KLv"/>
                                             <constraint firstItem="5Pf-KO-NAY" firstAttribute="leading" secondItem="2PO-uh-QSh" secondAttribute="leading" id="DlL-0W-yD2"/>
-                                            <constraint firstAttribute="height" constant="80" id="eQa-EQ-jUN"/>
+                                            <constraint firstAttribute="height" constant="60" id="eQa-EQ-jUN"/>
                                             <constraint firstItem="5Pf-KO-NAY" firstAttribute="top" secondItem="2PO-uh-QSh" secondAttribute="top" id="fQI-do-bYJ"/>
                                             <constraint firstItem="Bug-il-4XN" firstAttribute="leading" secondItem="5Pf-KO-NAY" secondAttribute="trailing" constant="10" id="h0p-cN-smO"/>
                                             <constraint firstItem="Bug-il-4XN" firstAttribute="top" secondItem="2PO-uh-QSh" secondAttribute="top" id="hGi-YN-cOi"/>
