@@ -151,7 +151,7 @@ class AddChildViewController: UIViewController {
                         }
                     }
                 }
-                print("Debug:- original user uid is \(originalUser!.uid)")
+                print("Debug: original user uid is \(originalUser!.uid)")
             }
         }
     }

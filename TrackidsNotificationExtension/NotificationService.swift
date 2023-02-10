@@ -20,8 +20,7 @@ class NotificationService: UNNotificationServiceExtension {
         let userInfo: [AnyHashable : Any] = (bestAttemptContent.userInfo)
         //check if notification payload contains "critical" key to convert notification sound to critical.
         if let aps = userInfo["aps"] as? [AnyHashable: Any], let sound = aps["sound"] as? String, sound.contains("critical"){
-            bestAttemptContent.sound =  UNNotificationSound.criticalSoundNamed(UNNotificationSoundName.init("criticalAlert.m4a"),
-                                                                               withAudioVolume: 1.0)
+            bestAttemptContent.sound =  UNNotificationSound.criticalSoundNamed(UNNotificationSoundName.init("criticalAlert.wav"),                                     withAudioVolume: 1.0)
         }
         contentHandler(bestAttemptContent)
     }

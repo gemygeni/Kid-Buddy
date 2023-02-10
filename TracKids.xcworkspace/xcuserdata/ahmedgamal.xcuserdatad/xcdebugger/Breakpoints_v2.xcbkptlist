@@ -106,8 +106,8 @@
             filePath = "TracKids/Controllers/TrackingViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "configureDynamicLink()"
             landmarkType = "7">
          </BreakpointContent>
@@ -124,7 +124,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "289"
             endingLineNumber = "289"
-            landmarkName = "updateChildInfo(forId:withImage:name:completion:)"
+            landmarkName = "updateChildInfo(forId:withImage:name:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -1,21 +1,21 @@
 {
   "pins" : [
     {
-      "identity" : "iqkeyboardmanager",
+      "identity" : "floatingpanel",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
+      "location" : "https://github.com/scenee/FloatingPanel",
       "state" : {
-        "revision" : "0ea3febb36cfcec2afb5841fd8809a9c0fa545b3",
-        "version" : "6.5.11"
+        "revision" : "4ab7d260301ddf1cab5376ea14e285a128f5ba39",
+        "version" : "2.5.5"
       }
     },
     {
-      "identity" : "rncryptor",
+      "identity" : "iqkeyboardmanager",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/RNCryptor/RNCryptor.git",
+      "location" : "https://github.com/hackiftekhar/IQKeyboardManager",
       "state" : {
-        "revision" : "5e3bbf44f08bf90049537cb8902d8f4fa911a79a",
-        "version" : "5.1.0"
+        "revision" : "1e442766a41e2948df25559eb03ab752c6d3aad0",
+        "version" : "6.5.0"
       }
     },
     {
@@ -30,7 +30,7 @@
     {
       "identity" : "swiftotp",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/lachlanbell/SwiftOTP.git",
+      "location" : "https://github.com/lachlanbell/SwiftOTP",
       "state" : {
         "revision" : "315acdb759083fd8f3c37b02fc021321c8934f9c",
         "version" : "3.0.0"

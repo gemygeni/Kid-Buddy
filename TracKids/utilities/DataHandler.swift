@@ -23,55 +23,55 @@ var placesIds = [String]()
 struct DataHandler{
     static  let shared  = DataHandler()
     let deleteDataGroup = DispatchGroup()
-    func fetchUserInfo(completion : @escaping (User) -> Void) {
+    func fetchUserInfo(completionHandler : @escaping (User) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
             let userID = snapshot.key
             guard let userInfo = snapshot.value as? [String : Any] else {return}
             let user = User(uid: userID, dictionary: userInfo)
             print("token of device \(String(describing: user.deviceID))")
-            completion(user)
+            completionHandler(user)
         }
     }
     
     // MARK: - function to get  information of user's child
-    func fetchChildAccount(with childId : String, completion : @escaping (User) -> Void){
+    func fetchChildAccount(with childId : String, completionHandler : @escaping (User) -> Void){
         guard let uid = Auth.auth().currentUser?.uid else {return}
         TrackedChildsReference.child(uid).child(childId).observeSingleEvent(of: .value) { snapshot in
             let childID = snapshot.key
             guard let childInfo = snapshot.value as? [String : Any] else {return}
             let child = User(uid: childID, dictionary: childInfo)
-            completion(child)
+            completionHandler(child)
         }
     }
     
     // MARK: - function to get  List of user's childs.
-    func fetchChildsInfo(for uid : String, completion : @escaping (User ,  _ childID : String) -> Void)  {
+    func fetchChildsInfo(for uid : String, completionHandler : @escaping (User ,  _ childID : String) -> Void)  {
         TrackedChildsReference.child(uid).observe(.childAdded, with: { (snapshot) in
             guard let childInfo = snapshot.value as? [String : Any] else {
                 return}
             let childID = snapshot.key
             let child = User(uid: childID, dictionary: childInfo)
-            completion(child,childID)
+            completionHandler(child,childID)
         })
     }
     
     // MARK: - function to get  real time location of a specific child.
-    func fetchChildLocation(for childID : String, completion : @escaping (CLLocation?) -> Void){
+    func fetchChildLocation(for childID : String, completionHandler : @escaping (CLLocation?) -> Void){
         guard let uid = Auth.auth().currentUser?.uid else {return}
         let geofire = GeoFire(firebaseRef: ChildLocationReference.child(uid))
         ChildLocationReference.child(uid).observe(.value) { (snapshot) in
             geofire.getLocationForKey(childID) { (location, error) in
                 if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))") }
                 guard let childLocation = location else {return}
-                completion(childLocation)
+                completionHandler(childLocation)
             }
         }
     }
     
     
     // MARK: - function to get observed locations that set to a specific child.
-    func fetchObservedPlaces(for childID : String, of ParentId : String, completion : @escaping ([CLLocation]?, [String]) -> Void){
+    func fetchObservedPlaces(for childID : String, of ParentId : String, completionHandler : @escaping ([CLLocation]?, [String]) -> Void){
         FetchedPlaces = []
         placesIds = []
         let geofire = GeoFire(firebaseRef: ObservedPlacesReference.child(ParentId).child(childID))
@@ -82,7 +82,7 @@ struct DataHandler{
                 if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))") }
                 guard let FetchedPlace = location else {return}
                 FetchedPlaces.append(FetchedPlace)
-                completion(FetchedPlaces,placesIds)
+                completionHandler(FetchedPlaces,placesIds)
             }
         }
     }
@@ -97,7 +97,7 @@ struct DataHandler{
     }
     
     // MARK: - function to upload Meessage Info to firebase specific user.
-    func uploadMessageWithInfo(_ messageText : String , _ recipient : String, ImageURL : String? ,completion : @escaping(() -> Void) )  {
+    func uploadMessageWithInfo(_ messageText : String , _ recipient : String, ImageURL : String? ,completionHandler : @escaping(() -> Void) )  {
         guard  let sender = Auth.auth().currentUser?.uid else{return}
         let messageBody = messageText
         let recipient = recipient
@@ -116,7 +116,7 @@ struct DataHandler{
                         print("Debug: error \(String(describing: error!.localizedDescription))")
                     }
                     else {
-                        completion()
+                        completionHandler()
                     }
                 }
             }
@@ -126,7 +126,7 @@ struct DataHandler{
                         print("Debug: error \(String(describing: error!.localizedDescription))")
                     }
                     else {
-                        completion()
+                        completionHandler()
                     }
                 }
             }
@@ -157,7 +157,7 @@ struct DataHandler{
             request.allHTTPHeaderFields = ["Content-Type":"application/json", "Authorization":"key=\(AppDelegate.SERVERKEY)"]
             request.httpMethod = "POST"
             request.httpBody =
-            "{\"to\":\"\(recipientToken)\",\"notification\":{\"sound\":{\"critical\":\"1\",\"name\":\"criticalAlert.m4a\",\"volume\":\"1\"}\"title\":\"\(sender)\",\"body\":\"\(body)\",\"badge\":\"1\",\"mutable_content\":\"true\",\"content_available\":\"true\"}}".data(using: .utf8)
+            "{\"to\":\"\(recipientToken)\",\"notification\":{\"sound\":{\"critical\":\"1\",\"name\":\"criticalAlert.wav\",\"volume\":\"1\"}\"title\":\"\(sender)\",\"body\":\"\(body)\",\"badge\":\"1\",\"mutable_content\":\"true\",\"content_available\":\"true\"}}".data(using: .utf8)
             URLSession.shared.dataTask(with: request) { (_ , urlresponse, error) in
                 if error != nil {
                     print("error")
@@ -170,14 +170,14 @@ struct DataHandler{
     
     
     // MARK: - function to fetch a device ID of a specific user from realtime database.
-    func fetchDeviceID(for uid : String,  completion : @escaping (String) -> Void) {
+    func fetchDeviceID(for uid : String,  completionHandler : @escaping (String) -> Void) {
         UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionary = snapshot.value as? [String:Any] else {return}
             let recipientDevice = dictionary["deviceID"] as! String
             let name = dictionary["name"] as! String
             print("Debug: device name is \(name)")
             print("Debug: Device is \(recipientDevice)")
-            completion(recipientDevice)
+            completionHandler(recipientDevice)
         }
     }
     
@@ -191,34 +191,34 @@ struct DataHandler{
             deleteDataGroup.enter()
             let userId = currentUser.uid
             UserReference.child(userId).removeValue { error, _ in
-                if let error = error { print(error) }
+                if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
                 self.deleteDataGroup.leave()
             }
             deleteDataGroup.enter()
             ChildLocationReference.child(userId).removeValue { error, _ in
-                if let error = error { print(error) }
+                if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
                 self.deleteDataGroup.leave()
             }
             deleteDataGroup.enter()
             HistoryReference.child(userId).removeValue { error, _ in
-                if let error = error { print(error) }
+                if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
                 self.deleteDataGroup.leave()
             }
             deleteDataGroup.enter()
             TrackedChildsReference.child(userId).removeValue { error, _ in
-                if let error = error { print(error) }
+                if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
                 self.deleteDataGroup.leave()
             }
 
             deleteDataGroup.enter()
             ObservedPlacesReference.child(userId).removeValue { error, _ in
-                if let error = error { print(error) }
+                if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
                 self.deleteDataGroup.leave()
             }
             
             deleteDataGroup.enter()
             MessagesReference.child(userId).removeValue { error, _ in
-                if let error = error { print(error) }
+                if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
                 self.deleteDataGroup.leave()
             }
             //list and run over all files to delete each one independently
@@ -226,11 +226,11 @@ struct DataHandler{
             let storageReference = storage.reference()
             let imageMessagesReference  = storageReference.child("Messages/\(String(describing: userId))")
             imageMessagesReference.listAll { list, error in
-                if let error = error { print(error) }
+                if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
                 list.items.forEach({ file in
                     self.deleteDataGroup.enter()
                     file.delete { error in
-                        if let error = error { print(error) }
+                        if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
                         self.deleteDataGroup.leave()
                     }
                 })
@@ -286,7 +286,7 @@ struct DataHandler{
     }
     
     // MARK: - function to change a specific user information and image.
-    func updateChildInfo(forId childId : String, withImage newImage : UIImage, name: String, completion : @escaping () -> Void){
+    func updateChildInfo(forId childId : String, withImage newImage : UIImage, name: String, completionHandler : @escaping () -> Void){
         guard let parenId = Auth.auth().currentUser?.uid else {return}
         self.fetchChildAccount(with: childId) { child in
             let storageReference = storage.reference()
@@ -310,7 +310,7 @@ struct DataHandler{
                                         if error != nil {print(error!.localizedDescription)}
                                         urlReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, reference in
                                             if error != nil {print(error!.localizedDescription)}
-                                            completion()
+                                            completionHandler()
                                         }
                                     }
                                 }

@@ -110,7 +110,7 @@
         }
         
         // MARK: - function to remove Location History from realtime database.
-        func clearHistory (completion : @escaping () -> Void){
+        func clearHistory (completionHandler : @escaping () -> Void){
             guard let uid = Auth.auth().currentUser?.uid else {return}
             guard let trackedChildID = TrackingViewController.trackedChildUId else {return}
             let historyReference = HistoryReference.child( uid).child(trackedChildID)
@@ -120,7 +120,7 @@
 )
                 }
                 else{
-                    completion()
+                    completionHandler()
                 }
             }
         }
@@ -189,7 +189,7 @@
       
         
         // MARK: - function to search for address to be observed.
-        func searchForLocation (with query : String , completion : @escaping(([Location]) -> Void)){
+        func searchForLocation (with query : String , completionHandler : @escaping(([Location]) -> Void)){
             self.places = []
             let request = MKLocalSearch.Request()
             let region = MKCoordinateRegion(center: locationManager?.location?.coordinate ?? CLLocationCoordinate2D(), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
@@ -204,18 +204,18 @@
                     let details = item.placemark.title
                     let place = Location(title: name ?? "", details: details ?? "", coordinates: coordinates ?? CLLocationCoordinate2D())
                     self?.places.append(place)
-                    completion(self!.places)
+                    completionHandler(self!.places)
                 }
             }
         }
         
         // MARK: - function to convert observed location to readable address.
-        func convertLocationToAddress(for location : CLLocation?, completion : @escaping((Location?) -> Void)) {
+        func convertLocationToAddress(for location : CLLocation?, completionHandler : @escaping((Location?) -> Void)) {
             let geocoder = CLGeocoder()
             geocoder.reverseGeocodeLocation(location!) { (placeMarks, error) in
                 if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
                 guard let placemarks = placeMarks , error == nil
-                else {completion(nil)
+                else {completionHandler(nil)
                     return}
                 
                 let placeData = placemarks[0]
@@ -238,7 +238,7 @@
                 }
                 
                 let place = Location(title: name, details: "", coordinates: placeData.location?.coordinate ?? CLLocationCoordinate2D())
-                completion(place)
+                completionHandler(place)
             }
         }
     }

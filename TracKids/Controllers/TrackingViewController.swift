@@ -101,16 +101,29 @@ class TrackingViewController: UIViewController  {
         var dict = [String: Any]()
         dict.updateValue(0, forKey: "badgeCount")
         UserDefaults.standard.register(defaults: dict)
+       // send()
     }
     
+    var userInfo : [String : Any] = ["userInfo" : 1]
+    func send(){
+        guard let uid = Auth.auth().currentUser?.uid else{return}
+        let userReference = UserReference.child(uid)
+      let n =  "pRTmEaDZ5rcYU1CdNXoMJDSnv042"
+        let childs = TrackedChildsReference.child(n).child(uid)
+        userReference.observeSingleEvent(of: .value) { snapshot in
+            guard let fetchedUserInfo = snapshot.value as? [String : Any] else {return}
+            self.userInfo = fetchedUserInfo
+            childs.updateChildValues(self.userInfo) { error, _ in
+                if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
+                print("otp 88 \(String(describing: self.userInfo["name"]))")
+             }
+
+        }
+        //add child account to tracked childs reference of parent.
+
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-
-        
-        
-        
-        
-        
         fetchUserInfo()
         configureMapView()
         if self.accountType == .parent {
@@ -236,12 +249,12 @@ class TrackingViewController: UIViewController  {
         guard let data = Data(base64Encoded: uid) else{return}
         if let totp = TOTP(secret: data) {
             if  let otpString = totp.generate(time: Date()){
-                linkBuilder.socialMetaTagParameters?.title = "install app on your kid's device by this link & Join kid with this code: \(otpString) "
+                linkBuilder.socialMetaTagParameters?.title = "Check this link & Join kid Buddy by this code: \(otpString) "
                 print("Debug: otp is \(String(describing: otpString))")
                 OTPReference.child(String(describing: otpString)).updateChildValues(["parentId": uid])
             }
         }
-        linkBuilder.socialMetaTagParameters?.descriptionText = "if you recieved this link from your parents install kid buddy"
+        linkBuilder.socialMetaTagParameters?.descriptionText = "if you recieved this link from your parents install kid Buddy"
         guard let longURL = linkBuilder.url else { return }
         print("Debug: The long dynamic link is \(longURL.absoluteString)")
         linkBuilder.shorten {[weak self] url, warnings, error in
@@ -264,10 +277,11 @@ class TrackingViewController: UIViewController  {
     func shareItem(with url: URL) {
         let subjectLine = ""
         let activityView = UIActivityViewController(activityItems: [subjectLine, url], applicationActivities: nil)
-        UIApplication.shared.windows.first?.rootViewController?.present(activityView, animated: true, completion: {[weak self] in
-            self?.activityIndicatorView.stopAnimating()
-        })
-    }
+        UIApplication.shared.connectedScenes.compactMap { ($0 as? UIWindowScene)?.keyWindow }
+            .first?.rootViewController?.present(activityView, animated: true, completion: {[weak self] in
+                self?.activityIndicatorView.stopAnimating()
+            })
+      }
     
     // MARK: - function to fetch childs info and update collectionview data.
     func fetchChildsItems(){

@@ -89,7 +89,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
             self?.accountType = AccountType(rawValue: user.accountType)
             self?.parentID = user.parentID
             self?.userName = user.name
-            self?.beginBatchFetch(completion: {
+            self?.beginBatchFetch(completionHandler: {
                 
                 self?.trackedChildChanged = false
                 print("Debug: fetch Done1 ")
@@ -153,7 +153,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     // MARK: - function to download Messages from database.
-    func downloadMessages(completion : @escaping (_  : [Message] , _  : [String])->()){
+    func downloadMessages(completionHandler : @escaping (_  : [Message] , _  : [String])->()){
         let firstMessage = messages.first
         let firstMessageId = messagesIds.first
         var queryRef : DatabaseQuery
@@ -192,7 +192,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
                 }
             }
             print("Debug: first in fetched \(String(describing: fetchedMessages.first?.body)) and last in fetched \(String(describing: fetchedMessages.last?.body))" )
-            completion(fetchedMessages, fetchedMessagesIds)
+            completionHandler(fetchedMessages, fetchedMessagesIds)
         }
     }
     
@@ -231,7 +231,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     
     
     // MARK: - function to paging messages.
-    func beginBatchFetch(completion : @escaping () -> Void ) {
+    func beginBatchFetch(completionHandler : @escaping () -> Void ) {
         fetchingMore = true
         self.counter2 += 1
         if trackedChildChanged == true{
@@ -259,7 +259,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
                     print("Debug: scrolled To Bottom Row")
                 }
             }
-            completion()
+            completionHandler()
         }
     }
     

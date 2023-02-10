@@ -40,13 +40,14 @@
 		EF7FFB5128F8427A00FF6987 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FFB5028F8427A00FF6987 /* PrivacyPolicyViewController.swift */; };
 		EF8320F227B4CEC800892F37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF8320F127B4CEC800892F37 /* GoogleService-Info.plist */; };
 		EF87DE7127302F5E00AC4E37 /* ObservedPlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF87DE7027302F5E00AC4E37 /* ObservedPlacesTableViewController.swift */; };
-		EF8BE5E5284F4FF100CD01FD /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EF8BE5E4284F4FF100CD01FD /* IQKeyboardManagerSwift */; };
 		EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470B25CBA30300806D45 /* DataHandler.swift */; };
 		EF95470F25CBB45F00806D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470E25CBB45F00806D45 /* User.swift */; };
 		EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */; };
-		EFA8956827C1A05D00DD99CF /* RNCryptor in Frameworks */ = {isa = PBXBuildFile; productRef = EFA8956727C1A05D00DD99CF /* RNCryptor */; };
-		EFA8956B27C1FB9C00DD99CF /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = EFA8956A27C1FB9C00DD99CF /* SwiftOTP */; };
 		EFB23C00298F3C7E0091325F /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */; };
+		EFB4F011299579FA009CA617 /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = EFB4F010299579FA009CA617 /* SwiftOTP */; };
+		EFB4F0132995E415009CA617 /* criticalAlert.wav in Resources */ = {isa = PBXBuildFile; fileRef = EFB4F0122995E415009CA617 /* criticalAlert.wav */; };
+		EFD9EFE92994B319006D6BA8 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = EFD9EFE82994B319006D6BA8 /* FloatingPanel */; };
+		EFD9EFEF2994BA01006D6BA8 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EFD9EFEE2994BA01006D6BA8 /* IQKeyboardManagerSwift */; };
 		EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */; };
 		EFF4984E25C4CA390042A5D3 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */; };
 		EFFCA0382746F1A100B14C81 /* SimulatedLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */; };
@@ -80,7 +81,6 @@
 		0E9E5C21ED3D1EFEFDD0BAAE /* Pods-TracKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.release.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.release.xcconfig"; sourceTree = "<group>"; };
 		3C7627F4D4B9A58037E28A88 /* Pods-TracKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TracKids.debug.xcconfig"; path = "Target Support Files/Pods-TracKids/Pods-TracKids.debug.xcconfig"; sourceTree = "<group>"; };
 		6020EE5F1EB667AEE96F1344 /* Pods_TracKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TracKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EF018823298F08C7007DBFB9 /* criticalAlert.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = criticalAlert.m4a; sourceTree = "<group>"; };
 		EF16107526E79FFB007BA5ED /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		EF16107626E79FFB007BA5ED /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		EF1AA07C28D6B1A000B4CBBE /* TrackidsNotificationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TrackidsNotificationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +139,7 @@
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
 		EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PrivacyPolicy.html; sourceTree = "<group>"; };
+		EFB4F0122995E415009CA617 /* criticalAlert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = criticalAlert.wav; sourceTree = "<group>"; };
 		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SimulatedLocations.gpx; sourceTree = "<group>"; };
@@ -156,11 +157,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF8BE5E5284F4FF100CD01FD /* IQKeyboardManagerSwift in Frameworks */,
-				EFA8956827C1A05D00DD99CF /* RNCryptor in Frameworks */,
+				EFD9EFEF2994BA01006D6BA8 /* IQKeyboardManagerSwift in Frameworks */,
 				EF7FFB4F28F840FB00FF6987 /* WebKit.framework in Frameworks */,
+				EFD9EFE92994B319006D6BA8 /* FloatingPanel in Frameworks */,
 				EF5A089926F15481000087EB /* MapKit.framework in Frameworks */,
-				EFA8956B27C1FB9C00DD99CF /* SwiftOTP in Frameworks */,
+				EFB4F011299579FA009CA617 /* SwiftOTP in Frameworks */,
 				5F1A7028F401FDCC8AC107A5 /* Pods_TracKids.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,8 +261,8 @@
 		EF8F9B0C25F5DF2500C4BE16 /* supporting files */ = {
 			isa = PBXGroup;
 			children = (
-				EF018823298F08C7007DBFB9 /* criticalAlert.m4a */,
 				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
+				EFB4F0122995E415009CA617 /* criticalAlert.wav */,
 				EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */,
 				EF5B0EF325BE492200890F4B /* SceneDelegate.swift */,
 				EF1C84C027435A6800033A65 /* Apple.gpx */,
@@ -357,9 +358,9 @@
 			);
 			name = TracKids;
 			packageProductDependencies = (
-				EFA8956727C1A05D00DD99CF /* RNCryptor */,
-				EFA8956A27C1FB9C00DD99CF /* SwiftOTP */,
-				EF8BE5E4284F4FF100CD01FD /* IQKeyboardManagerSwift */,
+				EFD9EFE82994B319006D6BA8 /* FloatingPanel */,
+				EFD9EFEE2994BA01006D6BA8 /* IQKeyboardManagerSwift */,
+				EFB4F010299579FA009CA617 /* SwiftOTP */,
 			);
 			productName = TracKids;
 			productReference = EF5B0EEE25BE492200890F4B /* TracKids.app */;
@@ -396,9 +397,9 @@
 			);
 			mainGroup = EF5B0EE525BE492200890F4B;
 			packageReferences = (
-				EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor" */,
-				EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP" */,
-				EF8BE5E3284F4FF100CD01FD /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				EFD9EFE72994B319006D6BA8 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				EFD9EFED2994BA01006D6BA8 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				EFB4F00F299579FA009CA617 /* XCRemoteSwiftPackageReference "SwiftOTP" */,
 			);
 			productRefGroup = EF5B0EEF25BE492200890F4B /* Products */;
 			projectDirPath = "";
@@ -424,6 +425,7 @@
 			files = (
 				EF1C84C127435A6800033A65 /* Apple.gpx in Resources */,
 				EF8320F227B4CEC800892F37 /* GoogleService-Info.plist in Resources */,
+				EFB4F0132995E415009CA617 /* criticalAlert.wav in Resources */,
 				EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */,
 				EF5B0EFE25BE492300890F4B /* LaunchScreen.storyboard in Resources */,
 				EFB23C00298F3C7E0091325F /* PrivacyPolicy.html in Resources */,
@@ -563,7 +565,7 @@
 				INFOPLIST_FILE = TrackidsNotificationExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TrackidsNotificationExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -592,7 +594,7 @@
 				INFOPLIST_FILE = TrackidsNotificationExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TrackidsNotificationExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -813,47 +815,47 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		EF8BE5E3284F4FF100CD01FD /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+		EFB4F00F299579FA009CA617 /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			repositoryURL = "https://github.com/lachlanbell/SwiftOTP";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.5.0;
-			};
-		};
-		EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RNCryptor/RNCryptor.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-		EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
-			requirement = {
-				kind = upToNextMajorVersion;
+				kind = upToNextMinorVersion;
 				minimumVersion = 3.0.0;
+			};
+		};
+		EFD9EFE72994B319006D6BA8 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scenee/FloatingPanel";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.5.5;
+			};
+		};
+		EFD9EFED2994BA01006D6BA8 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		EF8BE5E4284F4FF100CD01FD /* IQKeyboardManagerSwift */ = {
+		EFB4F010299579FA009CA617 /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EF8BE5E3284F4FF100CD01FD /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
-			productName = IQKeyboardManagerSwift;
-		};
-		EFA8956727C1A05D00DD99CF /* RNCryptor */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EFA8956627C1A05D00DD99CF /* XCRemoteSwiftPackageReference "RNCryptor" */;
-			productName = RNCryptor;
-		};
-		EFA8956A27C1FB9C00DD99CF /* SwiftOTP */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EFA8956927C1FB9C00DD99CF /* XCRemoteSwiftPackageReference "SwiftOTP" */;
+			package = EFB4F00F299579FA009CA617 /* XCRemoteSwiftPackageReference "SwiftOTP" */;
 			productName = SwiftOTP;
+		};
+		EFD9EFE82994B319006D6BA8 /* FloatingPanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EFD9EFE72994B319006D6BA8 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
+			productName = FloatingPanel;
+		};
+		EFD9EFEE2994BA01006D6BA8 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EFD9EFED2994BA01006D6BA8 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
