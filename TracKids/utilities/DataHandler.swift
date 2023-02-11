@@ -175,13 +175,11 @@ struct DataHandler{
             guard let dictionary = snapshot.value as? [String:Any] else {return}
             let recipientDevice = dictionary["deviceID"] as! String
             let name = dictionary["name"] as! String
-            print("Debug: device name is \(name)")
-            print("Debug: Device is \(recipientDevice)")
+            print("Debug:  Device name is \(name)")
+            print("Debug:  Device is \(recipientDevice)")
             completionHandler(recipientDevice)
         }
     }
-    
-    
     
     // MARK: - function to Remove user data from Database & Storage
     func deleteUserData(user currentUser: FirebaseAuth.User) {

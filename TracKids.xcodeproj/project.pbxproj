@@ -43,9 +43,9 @@
 		EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470B25CBA30300806D45 /* DataHandler.swift */; };
 		EF95470F25CBB45F00806D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470E25CBB45F00806D45 /* User.swift */; };
 		EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */; };
+		EFACB7DB2996E697007CD2E2 /* criticalAlert.wav in Resources */ = {isa = PBXBuildFile; fileRef = EFACB7DA2996E697007CD2E2 /* criticalAlert.wav */; };
 		EFB23C00298F3C7E0091325F /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */; };
 		EFB4F011299579FA009CA617 /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = EFB4F010299579FA009CA617 /* SwiftOTP */; };
-		EFB4F0132995E415009CA617 /* criticalAlert.wav in Resources */ = {isa = PBXBuildFile; fileRef = EFB4F0122995E415009CA617 /* criticalAlert.wav */; };
 		EFD9EFE92994B319006D6BA8 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = EFD9EFE82994B319006D6BA8 /* FloatingPanel */; };
 		EFD9EFEF2994BA01006D6BA8 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EFD9EFEE2994BA01006D6BA8 /* IQKeyboardManagerSwift */; };
 		EFF4984A25C39B6F0042A5D3 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */; };
@@ -138,8 +138,8 @@
 		EF95470B25CBA30300806D45 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
+		EFACB7DA2996E697007CD2E2 /* criticalAlert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = criticalAlert.wav; sourceTree = "<group>"; };
 		EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PrivacyPolicy.html; sourceTree = "<group>"; };
-		EFB4F0122995E415009CA617 /* criticalAlert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = criticalAlert.wav; sourceTree = "<group>"; };
 		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		EFFCA0372746F1A100B14C81 /* SimulatedLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SimulatedLocations.gpx; sourceTree = "<group>"; };
@@ -262,7 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
-				EFB4F0122995E415009CA617 /* criticalAlert.wav */,
+				EFACB7DA2996E697007CD2E2 /* criticalAlert.wav */,
 				EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */,
 				EF5B0EF325BE492200890F4B /* SceneDelegate.swift */,
 				EF1C84C027435A6800033A65 /* Apple.gpx */,
@@ -425,7 +425,7 @@
 			files = (
 				EF1C84C127435A6800033A65 /* Apple.gpx in Resources */,
 				EF8320F227B4CEC800892F37 /* GoogleService-Info.plist in Resources */,
-				EFB4F0132995E415009CA617 /* criticalAlert.wav in Resources */,
+				EFACB7DB2996E697007CD2E2 /* criticalAlert.wav in Resources */,
 				EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */,
 				EF5B0EFE25BE492300890F4B /* LaunchScreen.storyboard in Resources */,
 				EFB23C00298F3C7E0091325F /* PrivacyPolicy.html in Resources */,
@@ -565,7 +565,7 @@
 				INFOPLIST_FILE = TrackidsNotificationExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TrackidsNotificationExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -594,7 +594,7 @@
 				INFOPLIST_FILE = TrackidsNotificationExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TrackidsNotificationExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

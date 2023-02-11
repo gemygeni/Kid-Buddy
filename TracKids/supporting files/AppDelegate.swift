@@ -29,9 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-
-    
-    
     // MARK: - UISceneSession Lifecycle.
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
@@ -166,6 +163,14 @@ extension AppDelegate: MessagingDelegate {
             name: Notification.Name("FCMToken"),
             object: nil,
             userInfo: tokenDict)
+        
+        if let newToken = fcmToken {
+            AppDelegate.DEVICEID = newToken
+            guard let uid = Auth.auth().currentUser?.uid else {return}
+            let Reference = UserReference.child(uid)
+            Reference.updateChildValues(["deviceID" : newToken])
+            print("Debug: new Device token1 is: \(newToken)")
+        }
     }
     
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
@@ -177,37 +182,36 @@ extension AppDelegate: MessagingDelegate {
                 guard let uid = Auth.auth().currentUser?.uid else {return}
                 let Reference = UserReference.child(uid)
                 Reference.updateChildValues(["deviceID" : newToken])
-                print("Debug: new Device token is: \(newToken)")
-
+                print("Debug: new Device token2 is: \(newToken)")
             }
         }
     }
 }
 extension AppDelegate{
-func signOutOldUser(){
-    if let _ = UserDefaults.standard.value(forKey: "isNewuser"){}else{
-        do{
-            UserDefaults.standard.set(true, forKey: "isNewuser")
-            let firebaseAuth = Auth.auth()
-            try firebaseAuth.signOut()
+    func signOutOldUser(){
+        if let _ = UserDefaults.standard.value(forKey: "isNewuser"){}else{
+            do{
+                UserDefaults.standard.set(true, forKey: "isNewuser")
+                let firebaseAuth = Auth.auth()
+                try firebaseAuth.signOut()
+            }
+            catch{}
         }
-        catch{}
-    }
-    
-    let userDefaults = UserDefaults.standard
-    if userDefaults.value(forKey: "appFirstTimeOpend") == nil {
-        //if app is first time opened then it will be nil
-        userDefaults.setValue(true, forKey: "appFirstTimeOpend")
-        // signOut from FIRAuth
-        do {
-            let firebaseAuth = Auth.auth()
-            try firebaseAuth.signOut()
-        }catch {
-
+        
+        let userDefaults = UserDefaults.standard
+        if userDefaults.value(forKey: "appFirstTimeOpend") == nil {
+            //if app is first time opened then it will be nil
+            userDefaults.setValue(true, forKey: "appFirstTimeOpend")
+            // signOut from FIRAuth
+            do {
+                let firebaseAuth = Auth.auth()
+                try firebaseAuth.signOut()
+            }catch {
+                
+            }
+        } 
+        if !userDefaults.bool(forKey: "hasRunBefore") {
+            userDefaults.set(true, forKey: "hasRunBefore")
         }
-    } 
-    if !userDefaults.bool(forKey: "hasRunBefore") {
-         userDefaults.set(true, forKey: "hasRunBefore")
     }
-  }
 }

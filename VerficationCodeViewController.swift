@@ -15,8 +15,6 @@ class VerficationCodeViewController: UIViewController {
     var imageURL = "imageURL"
     let semaphore = DispatchSemaphore(value: 0)
     var userInfo : [String : Any] = ["userInfo" : 1]
-    
-    
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBAction func SubmitButtonPressed(_ sender: UIButton) {
         ActivityIndicator.startAnimating()

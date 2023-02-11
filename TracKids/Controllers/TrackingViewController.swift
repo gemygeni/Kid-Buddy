@@ -21,6 +21,8 @@ class TrackingViewController: UIViewController  {
     var AuthHandler : AuthStateDidChangeListenerHandle?
     var annotationImage : UIImage?
     var fetchedImageView :  UIImageView?
+    var IsLoggedIn : Bool = false
+
     var trackedChild : User?{
         didSet{
             self.annotationImage = nil
@@ -33,7 +35,6 @@ class TrackingViewController: UIViewController  {
             }
         }
     }
-    var IsLoggedIn : Bool = false
     
     static var trackedChildUId : String?
     
@@ -101,28 +102,9 @@ class TrackingViewController: UIViewController  {
         var dict = [String: Any]()
         dict.updateValue(0, forKey: "badgeCount")
         UserDefaults.standard.register(defaults: dict)
-       // send()
     }
     
-    var userInfo : [String : Any] = ["userInfo" : 1]
-    func send(){
-        guard let uid = Auth.auth().currentUser?.uid else{return}
-        let userReference = UserReference.child(uid)
-      let n =  "pRTmEaDZ5rcYU1CdNXoMJDSnv042"
-        let childs = TrackedChildsReference.child(n).child(uid)
-        userReference.observeSingleEvent(of: .value) { snapshot in
-            guard let fetchedUserInfo = snapshot.value as? [String : Any] else {return}
-            self.userInfo = fetchedUserInfo
-            childs.updateChildValues(self.userInfo) { error, _ in
-                if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
-                print("otp 88 \(String(describing: self.userInfo["name"]))")
-             }
-
-        }
-        //add child account to tracked childs reference of parent.
-
-    }
-    override func viewWillAppear(_ animated: Bool) {
+      override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         fetchUserInfo()
         configureMapView()
