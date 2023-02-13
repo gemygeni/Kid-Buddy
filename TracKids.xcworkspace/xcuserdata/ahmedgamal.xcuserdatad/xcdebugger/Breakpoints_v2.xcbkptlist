@@ -106,9 +106,9 @@
             filePath = "TracKids/Controllers/TrackingViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
-            landmarkName = "fetchChildLocation()"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
+            landmarkName = "configureDynamicLink()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,8 +122,8 @@
             filePath = "TracKids/utilities/DataHandler.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "288"
-            endingLineNumber = "288"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
             landmarkName = "updateChildInfo(forId:withImage:name:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -163,54 +163,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DA3F4954-BA6F-4A87-ABB1-CDDA5AAA10C4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TracKids/Controllers/ChatViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "handleSendingMessage()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DA3F4954-BA6F-4A87-ABB1-CDDA5AAA10C4 - aa6b524c8a5f7719"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TracKids.ChatViewController.handleSendingMessage() -&gt; ()"
-                  moduleName = "TracKids"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ahmedgamal/Trackids/TracKids/Controllers/ChatViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "219"
-                  endingLineNumber = "219"
-                  offsetFromSymbolStart = "1720">
-               </Location>
-               <Location
-                  uuid = "DA3F4954-BA6F-4A87-ABB1-CDDA5AAA10C4 - 63166259cec80eaf"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.String) -&gt; () in TracKids.ChatViewController.handleSendingMessage() -&gt; ()"
-                  moduleName = "TracKids"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ahmedgamal/Trackids/TracKids/Controllers/ChatViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "220"
-                  endingLineNumber = "220"
-                  offsetFromSymbolStart = "136">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "7A722C48-9FEE-4284-BE96-CB73B36A4833"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -237,22 +189,6 @@
             startingLineNumber = "521"
             endingLineNumber = "521"
             landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2E0C899C-98C9-4F80-AC82-D97163AC5A32"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TracKids/Controllers/ChatViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
-            landmarkName = "uploadImageData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

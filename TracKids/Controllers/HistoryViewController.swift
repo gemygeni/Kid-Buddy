@@ -24,6 +24,15 @@ class HistoryViewController: UIViewController {
         print("Debug: clear history pressed")
         clearHistory()
     }
+    @IBAction func changeMapTypeButtonPressed(_ sender: Any) {
+        if mapView.mapType == .standard{
+            mapView.mapType = .hybrid
+        }
+        else if mapView.mapType == .hybrid {
+            mapView.mapType = .standard
+        }
+    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)

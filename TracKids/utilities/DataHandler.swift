@@ -169,7 +169,6 @@ struct DataHandler{
         }
     }
     
-    
     // MARK: - function to fetch a device ID of a specific user from realtime database.
     func fetchDeviceID(for uid : String,  completionHandler : @escaping (String) -> Void) {
         UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
@@ -186,7 +185,7 @@ struct DataHandler{
     func deleteUserData(user currentUser: FirebaseAuth.User) {
         // Check if `currentUser.delete()` won't require re-authentication
         if let lastSignInDate = currentUser.metadata.lastSignInDate,
-            lastSignInDate.minutes(from: Date()) >= -5 {
+           lastSignInDate.minutes(from: Date()) >= -5 {
             deleteDataGroup.enter()
             let userId = currentUser.uid
             UserReference.child(userId).removeValue { error, _ in
@@ -208,7 +207,7 @@ struct DataHandler{
                 if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
                 self.deleteDataGroup.leave()
             }
-
+            
             deleteDataGroup.enter()
             ObservedPlacesReference.child(userId).removeValue { error, _ in
                 if error != nil{print("Debug: error \(String(describing: error!.localizedDescription))")}
@@ -237,7 +236,7 @@ struct DataHandler{
             }
         }
     }
-
+    
     // MARK: - function to remove all child account data of a specific user from realtime database.
     func removeChild(withId childID : String){
         self.fetchChildAccount(with: childID) { child in
@@ -295,17 +294,17 @@ struct DataHandler{
             //fetching child info to get name and parennt Id and get reference to profile image
             self.fetchChildAccount(with: childId) { child in
                 let childName = child.name
-                 imageReference  = storageReference.child("ChildsPictures/\(parenId)/\(childName).jpg")
-                    self.semaphore.signal()
-                }
+                imageReference  = storageReference.child("ChildsPictures/\(parenId)/\(childName).jpg")
+                self.semaphore.signal()
+            }
             //delete profile image from storage
             self.semaphore.wait()
             imageReference.delete{ error in
-       if error != nil{print("error in deleting\(String(describing: error?.localizedDescription))")}
+                if error != nil{print("error in deleting\(String(describing: error?.localizedDescription))")}
                 self.semaphore.signal()
             }
             
-    //create reference to new child image and upload new image to storage
+            //create reference to new child image and upload new image to storage
             self.semaphore.wait()
             if let imageData =  newImage.jpegData(compressionQuality: 0.3){
                 let newImageReference  = storageReference.child("ChildsPictures/\(parenId)/\(name).jpg")

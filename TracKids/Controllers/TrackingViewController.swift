@@ -37,13 +37,10 @@ class TrackingViewController: UIViewController  {
     }
     
     static var trackedChildUId : String?
-    
     @IBOutlet weak var childsCollectionView: UICollectionView!
     @IBOutlet weak var addChildButton: UIButton!
-    
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = LocationHandler.shared.locationManager
-    
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBAction func changeMapTypeButtonPressed(_ sender: Any) {
         if mapView.mapType == .standard{
@@ -278,7 +275,6 @@ class TrackingViewController: UIViewController  {
             }
         }
     }
-
 }
 
 // MARK: - MKMapViewDelegate Methods.
