@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     guard granted else { return }
                     self?.getNotificationSettings()
                 }
-    }
+         }
     
     func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in

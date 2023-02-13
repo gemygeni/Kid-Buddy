@@ -74,6 +74,11 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
             imageView.layer.masksToBounds = true
         }
     }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if messageTextfield.text?.isEmpty == true{
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -199,12 +204,13 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     // MARK: - function to handle sending message to database.
     func handleSendingMessage(){
         sendPressed = true
-        guard let messageText = messageTextfield.text,(messageTextfield.text?.isEmpty) == false  ,let sender = self.userName  else {return}
+        guard messageTextfield.text?.isEmpty == false, let messageText = messageTextfield.text, let sender = self.userName  else {return}
         if self.accountType == .parent{
             if let childID = self.uniqueID{
-                DataHandler.shared.uploadMessageWithInfo(messageText, childID, ImageURL: ImageURL) {[weak self] in
+                DataHandler.shared.uploadMessageWithInfo(messageText, childID, ImageURL: self.ImageURL) {[weak self] in
                     self?.spinnerIndecator.stopAnimating()
                     self?.sendPressed = false
+                    self?.ImageURL = nil
                 }
                 //fetch second party device ID and send notification with message info
                 DataHandler.shared.fetchDeviceID(for: childID) { deviceID in
@@ -218,6 +224,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
                 DataHandler.shared.uploadMessageWithInfo(messageText, parentID, ImageURL: ImageURL) {[weak self] in
                     self?.spinnerIndecator.stopAnimating()
                     self?.sendPressed = false
+                    self?.ImageURL = nil
                 }
                 
                 DataHandler.shared.fetchDeviceID(for: parentID) { deviceID in
@@ -293,18 +300,18 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
     func uploadImageData(){
         self.spinnerIndecator.startAnimating()
         let storageReference = storage.reference()
-        let UId = Auth.auth().currentUser?.uid
+        guard let uid = Auth.auth().currentUser?.uid else {return}
         let imageName = NSUUID().uuidString
-        let imageReference  = storageReference.child("Messages/\(String(describing: UId))/\(imageName).jpg")
+        let imageReference  = storageReference.child("Messages/\(String(describing: uid))/\(imageName).jpg")
         if let imageData =  self.imageMessage?.jpegData(compressionQuality: 0.3){
             imageReference.putData(imageData, metadata: nil) { (metadata, error) in
-                if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
+    if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
                 imageReference.downloadURL { [weak self](url, error) in
-                    if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
+    if error != nil {print("Debug: error \(String(describing: error!.localizedDescription))")}
                     if let downloadedURL = url{
                         self?.ImageURL = downloadedURL.absoluteString
                         print("Debug: url is \(String(describing: self?.ImageURL))")
-                        self?.messageTextfield.text = ""
+                        self?.messageTextfield.text = "."
                         self?.handleSendingMessage()
                     }
                 }
@@ -342,7 +349,6 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate{
             self.backgroundView.isHidden = false
         })
     }
-    
     
     @objc func handleZoomOut(_ recognizer : UITapGestureRecognizer? =  nil ) {
         performZoomingOut()

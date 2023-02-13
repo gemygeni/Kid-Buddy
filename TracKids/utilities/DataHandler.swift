@@ -23,6 +23,7 @@ var placesIds = [String]()
 struct DataHandler{
     static  let shared  = DataHandler()
     let deleteDataGroup = DispatchGroup()
+    let semaphore = DispatchSemaphore(value: 0)
     func fetchUserInfo(completionHandler : @escaping (User) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         UserReference.child(uid).observeSingleEvent(of: .value) { (snapshot) in
@@ -286,38 +287,51 @@ struct DataHandler{
     // MARK: - function to change a specific user information and image.
     func updateChildInfo(forId childId : String, withImage newImage : UIImage, name: String, completionHandler : @escaping () -> Void){
         guard let parenId = Auth.auth().currentUser?.uid else {return}
-        self.fetchChildAccount(with: childId) { child in
-            let storageReference = storage.reference()
-            let childName = child.name
-            let imageReference  = storageReference.child("ChildsPictures/\(parenId)/\(childName).jpg")
-            imageReference.delete { error in
-                if error != nil{print("error in deleting\(String(describing: error?.localizedDescription))")}
-                else {
-                    if let imageData =  newImage.jpegData(compressionQuality: 0.3){
-                        let newImageReference  = storageReference.child("ChildsPictures/\(parenId)/\(name).jpg")
-                        
-                        newImageReference.putData(imageData, metadata: nil) { metaData, error in
-                            
-                            if error != nil {print(error!.localizedDescription)}
-                            newImageReference.downloadURL { (url, error) in
-                                if error != nil {print(error!.localizedDescription)}
-                                if let downloadedURL = url{
-                                    let urlReference = UserReference.child(childId)
-                                    let trackedChildReference = TrackedChildsReference.child(parenId).child(childId)
-                                    trackedChildReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, reference in
-                                        if error != nil {print(error!.localizedDescription)}
-                                        urlReference.updateChildValues(["imageURL" : downloadedURL.absoluteString, "name" : name]) { error, reference in
-                                            if error != nil {print(error!.localizedDescription)}
-                                            completionHandler()
-                                        }
-                                    }
-                                }
-                            }
-                        }
+        var imageReference = StorageReference()
+        let storageReference = storage.reference()
+        var imageURL = String()
+        let userReference = UserReference.child(childId)
+        DispatchQueue.global().async {
+            //fetching child info to get name and parennt Id and get reference to profile image
+            self.fetchChildAccount(with: childId) { child in
+                let childName = child.name
+                 imageReference  = storageReference.child("ChildsPictures/\(parenId)/\(childName).jpg")
+                    self.semaphore.signal()
+                }
+            //delete profile image from storage
+            self.semaphore.wait()
+            imageReference.delete{ error in
+       if error != nil{print("error in deleting\(String(describing: error?.localizedDescription))")}
+                self.semaphore.signal()
+            }
+            
+    //create reference to new child image and upload new image to storage
+            self.semaphore.wait()
+            if let imageData =  newImage.jpegData(compressionQuality: 0.3){
+                let newImageReference  = storageReference.child("ChildsPictures/\(parenId)/\(name).jpg")
+                newImageReference.putData(imageData, metadata: nil) { metaData, error in
+                    if error != nil {print(error!.localizedDescription)}
+                    //get new image url to update child info
+                    newImageReference.downloadURL { (url, error) in
+                        if error != nil {print(error!.localizedDescription)}
+                        imageURL = url?.absoluteString ?? ""
+                        self.semaphore.signal()
                     }
                 }
             }
+            //update child account with new child info
+            self.semaphore.wait()
+            userReference.updateChildValues(["imageURL" : imageURL, "name" : name]) { error, reference in
+                if error != nil {print(error!.localizedDescription)}
+                self.semaphore.signal()
+            }
+            //update tracked childs with new child info
+            self.semaphore.wait()
+            let trackedChildReference = TrackedChildsReference.child(parenId).child(childId)
+            trackedChildReference.updateChildValues(["imageURL" : imageURL, "name" : name]) { error, reference in
+                if error != nil {print(error!.localizedDescription)}
+                completionHandler()
+            }
         }
     }
-    
 }
