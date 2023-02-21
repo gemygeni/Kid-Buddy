@@ -102,12 +102,6 @@ class EditChildProfileViewController: UIViewController {
                 self?.delegate?.didChangedInfo(self!, newImage: newImage, newName: newName)
             })
         }
-        
-        
-        
-        
-        
-        
     }
 }
 
