@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EF5B0EED25BE492200890F4B"
-               BuildableName = "TracKids.app"
-               BlueprintName = "TracKids"
+               BuildableName = "Kid Buddy.app"
+               BlueprintName = "Kid Buddy"
                ReferencedContainer = "container:TracKids.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF5B0EED25BE492200890F4B"
-            BuildableName = "TracKids.app"
-            BlueprintName = "TracKids"
+            BuildableName = "Kid Buddy.app"
+            BlueprintName = "Kid Buddy"
             ReferencedContainer = "container:TracKids.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF5B0EED25BE492200890F4B"
-            BuildableName = "TracKids.app"
-            BlueprintName = "TracKids"
+            BuildableName = "Kid Buddy.app"
+            BlueprintName = "Kid Buddy"
             ReferencedContainer = "container:TracKids.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

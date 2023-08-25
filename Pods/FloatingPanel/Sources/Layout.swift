@@ -30,11 +30,11 @@ open class FloatingPanelBottomLayout: NSObject, FloatingPanelLayout {
         return .half
     }
 
-    open var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring]  {
+    open var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
         return [
             .full: FloatingPanelLayoutAnchor(absoluteInset: 18.0, edge: .top, referenceGuide: .safeArea),
             .half: FloatingPanelLayoutAnchor(fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea),
-            .tip: FloatingPanelLayoutAnchor(absoluteInset: 69.0, edge: .bottom, referenceGuide: .safeArea),
+            .tip: FloatingPanelLayoutAnchor(absoluteInset: 69.0, edge: .bottom, referenceGuide: .safeArea)
         ]
     }
 
@@ -45,7 +45,7 @@ open class FloatingPanelBottomLayout: NSObject, FloatingPanelLayout {
     open func prepareLayout(surfaceView: UIView, in view: UIView) -> [NSLayoutConstraint] {
         return [
             surfaceView.leftAnchor.constraint(equalTo: view.fp_safeAreaLayoutGuide.leftAnchor, constant: 0.0),
-            surfaceView.rightAnchor.constraint(equalTo: view.fp_safeAreaLayoutGuide.rightAnchor, constant: 0.0),
+            surfaceView.rightAnchor.constraint(equalTo: view.fp_safeAreaLayoutGuide.rightAnchor, constant: 0.0)
         ]
     }
 
@@ -173,13 +173,13 @@ class LayoutAdapter {
     }
 
     /*
-    Returns a constraint based value in the interaction and animation.
+     Returns a constraint based value in the interaction and animation.
 
-    So that it doesn't need to call `surfaceView.layoutIfNeeded()`
-    after every interaction and animation update. It has an effect on
-    the smooth interaction because the content view doesn't need to update
-    its layout frequently.
-    */
+     So that it doesn't need to call `surfaceView.layoutIfNeeded()`
+     after every interaction and animation update. It has an effect on
+     the smooth interaction because the content view doesn't need to update
+     its layout frequently.
+     */
     var surfaceLocation: CGPoint {
         get {
             var pos: CGFloat
@@ -375,7 +375,7 @@ class LayoutAdapter {
     private func referenceEdge(of anchor: FloatingPanelLayoutAnchoring) -> FloatingPanelReferenceEdge {
         switch anchor {
         case is FloatingPanelIntrinsicLayoutAnchor,
-            is FloatingPanelAdaptiveLayoutAnchor:
+             is FloatingPanelAdaptiveLayoutAnchor:
             switch position {
             case .top: return .top
             case .left: return .left
@@ -404,21 +404,21 @@ class LayoutAdapter {
             case .top, .bottom:
                 surfaceConstraints = [
                     surfaceView.leftAnchor.constraint(equalTo: vc.fp_safeAreaLayoutGuide.leftAnchor, constant: 0.0),
-                    surfaceView.rightAnchor.constraint(equalTo: vc.fp_safeAreaLayoutGuide.rightAnchor, constant: 0.0),
+                    surfaceView.rightAnchor.constraint(equalTo: vc.fp_safeAreaLayoutGuide.rightAnchor, constant: 0.0)
                 ]
             case .left, .right:
                 surfaceConstraints = [
                     surfaceView.topAnchor.constraint(equalTo: vc.fp_safeAreaLayoutGuide.topAnchor, constant: 0.0),
-                    surfaceView.bottomAnchor.constraint(equalTo: vc.fp_safeAreaLayoutGuide.bottomAnchor, constant: 0.0),
+                    surfaceView.bottomAnchor.constraint(equalTo: vc.fp_safeAreaLayoutGuide.bottomAnchor, constant: 0.0)
                 ]
             }
         }
         let backdropConstraints = [
             backdropView.topAnchor.constraint(equalTo: vc.view.topAnchor, constant: 0.0),
-            backdropView.leftAnchor.constraint(equalTo: vc.view.leftAnchor,constant: 0.0),
+            backdropView.leftAnchor.constraint(equalTo: vc.view.leftAnchor, constant: 0.0),
             backdropView.rightAnchor.constraint(equalTo: vc.view.rightAnchor, constant: 0.0),
-            backdropView.bottomAnchor.constraint(equalTo: vc.view.bottomAnchor, constant: 0.0),
-            ]
+            backdropView.bottomAnchor.constraint(equalTo: vc.view.bottomAnchor, constant: 0.0)
+        ]
 
         fixedConstraints = surfaceConstraints + backdropConstraints
 
@@ -453,7 +453,7 @@ class LayoutAdapter {
         for state in layout.anchors.keys {
             stateConstraints[state] = layout.anchors[state]?
                 .layoutConstraints(vc, for: position)
-                .map{ $0.identifier = "FloatingPanel-\(state)-constraint"; return $0 }
+                .map { $0.identifier = "FloatingPanel-\(state)-constraint"; return $0 }
         }
         let hiddenAnchor = layout.anchors[.hidden] ?? self.hiddenAnchor
         offConstraints = hiddenAnchor.layoutConstraints(vc, for: position)
@@ -554,7 +554,7 @@ class LayoutAdapter {
             switch referenceEdge(of: anchor) {
             case .left:
                 animationConstraint = surfaceView.rightAnchor.constraint(equalTo: layoutGuideProvider.leftAnchor,
-                                                                          constant: currentY)
+                                                                         constant: currentY)
                 if anchor.referenceGuide == .safeArea {
                     animationConstraint.constant -= safeAreaInsets.right
                     targetY -= safeAreaInsets.right
@@ -562,7 +562,7 @@ class LayoutAdapter {
             case .right:
                 targetY = -(baseHeight - targetY)
                 animationConstraint = surfaceView.rightAnchor.constraint(equalTo: layoutGuideProvider.rightAnchor,
-                                                                          constant: -(baseHeight - currentY))
+                                                                         constant: -(baseHeight - currentY))
                 if anchor.referenceGuide == .safeArea {
                     animationConstraint.constant += safeAreaInsets.left
                     targetY += safeAreaInsets.left
@@ -595,7 +595,7 @@ class LayoutAdapter {
             switch referenceEdge(of: anchor) {
             case .left:
                 animationConstraint = surfaceView.leftAnchor.constraint(equalTo: layoutGuideProvider.leftAnchor,
-                                                                         constant: currentY)
+                                                                        constant: currentY)
                 if anchor.referenceGuide == .safeArea {
                     animationConstraint.constant -= safeAreaInsets.left
                     targetY -= safeAreaInsets.left
@@ -603,7 +603,7 @@ class LayoutAdapter {
             case .right:
                 targetY = -(baseHeight - targetY)
                 animationConstraint = surfaceView.leftAnchor.constraint(equalTo: layoutGuideProvider.rightAnchor,
-                                                                         constant: -(baseHeight - currentY))
+                                                                        constant: -(baseHeight - currentY))
                 if anchor.referenceGuide == .safeArea {
                     animationConstraint.constant += safeAreaInsets.right
                     targetY += safeAreaInsets.right
@@ -781,7 +781,7 @@ class LayoutAdapter {
         /* This assertion does not work in a device rotating
          let statePosOrder = activeStates.sorted(by: { position(for: $0) < position(for: $1) })
          assert(sortedDirectionalStates == statePosOrder,
-               "Check your layout anchors because the state order(\(statePosOrder)) must be (\(sortedDirectionalStates))).")
+         "Check your layout anchors because the state order(\(statePosOrder)) must be (\(sortedDirectionalStates))).")
          */
     }
 }

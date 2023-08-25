@@ -8,7 +8,7 @@
 import UIKit
 
 class ChildsCollectionViewCell: UICollectionViewCell {
-    var profileImageView : UIImageView = {
+    var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
@@ -17,7 +17,7 @@ class ChildsCollectionViewCell: UICollectionViewCell {
         imageView.image = #imageLiteral(resourceName: "person")
         return imageView
     }()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.cornerRadius = 20

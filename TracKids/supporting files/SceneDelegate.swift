@@ -11,11 +11,11 @@ import CoreLocation
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let locationManager = CLLocationManager()
-    var count : Int = 0
-    var message : String = ""
-    
+    var count: Int = 0
+    var message: String = ""
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard scene is UIWindowScene else { return }
         locationManager.delegate = self
         UNUserNotificationCenter.current().delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -23,8 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.distanceFilter = CLLocationDistance(100)
         locationManager.startMonitoringSignificantLocationChanges()
-     }
-    
+    }
+
     func sceneDidBecomeActive(_ scene: UIScene) {
         UserDefaults.standard.setValue(0, forKey: "badgeCount")
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -40,7 +40,7 @@ extension SceneDelegate: CLLocationManagerDelegate {
         LocationHandler.shared.uploadChildLocation(for: lastLocation)
         LocationHandler.shared.uploadLocationHistory(for: lastLocation)
     }
-    
+
     func locationManager(
         _ manager: CLLocationManager,
         didEnterRegion region: CLRegion
@@ -50,7 +50,7 @@ extension SceneDelegate: CLLocationManagerDelegate {
             print("geo exit")
         }
     }
-    
+
     func locationManager(
         _ manager: CLLocationManager,
         didExitRegion region: CLRegion
@@ -61,13 +61,13 @@ extension SceneDelegate: CLLocationManagerDelegate {
         }
     }
     // MARK: - function to handle sending push notification in background.
-    func handleEvent(for region: CLRegion, withType event : String) {
-        var childName : String = " "
-        DataHandler.shared.fetchUserInfo { (user) in
+    func handleEvent(for region: CLRegion, withType event: String) {
+        var childName: String = " "
+        DataHandler.shared.fetchUserInfo { user in
             childName = user.name
             self.message = "your child  \(String(describing: childName))  \(event)  \(region.identifier)"
             print("Debug: message in fetch  \(self.message)")
-            guard let parentID = user.parentID else{return}
+            guard let parentID = user.parentID else {return}
             DataHandler.shared.fetchDeviceID(for: parentID) { parentDeviceToken in
                 DataHandler.shared.sendPushNotification(to: parentDeviceToken, sender: childName, body: self.message)
                 if UIApplication.shared.applicationState == .active {
@@ -104,7 +104,7 @@ extension SceneDelegate: UNUserNotificationCenterDelegate {
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler:
-        @escaping (UNNotificationPresentationOptions) -> Void
+            @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         if var badgeCount = UserDefaults.standard.value(forKey: "badgeCount") as? Int {
             badgeCount += 1
@@ -113,7 +113,7 @@ extension SceneDelegate: UNUserNotificationCenterDelegate {
         }
         completionHandler([[.banner, .sound]])
     }
-    
+
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,

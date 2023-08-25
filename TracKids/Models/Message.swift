@@ -7,18 +7,18 @@
 
 import Foundation
 struct Message {
-    let sender : String?
-    let body  : String?
-    let recipient : String?
-    let timestamp : NSNumber?
-    let fromDevice : String?
-    let imageURL : String?
-    init(_ MessageInfo : [String  : Any] ) {
-        self.sender = MessageInfo["sender"] as? String
-        self.body = MessageInfo["body"] as? String
-        self.recipient = MessageInfo["recipient"] as? String
-        self.timestamp = MessageInfo["timestamp"] as? NSNumber
-        self.fromDevice = MessageInfo["fromDevice"] as? String
-        self.imageURL = MessageInfo["imageURL"] as? String
+    let sender: String?
+    let body: String?
+    let recipient: String?
+    let timestamp: NSNumber?
+    let fromDevice: String?
+    let imageURL: String?
+    init(_ messageInfo: [String: Any] ) {
+        self.sender = messageInfo["sender"] as? String
+        self.body = messageInfo["body"] as? String
+        self.recipient = messageInfo["recipient"] as? String
+        self.timestamp = messageInfo["timestamp"] as? NSNumber
+        self.fromDevice = messageInfo["fromDevice"] as? String
+        self.imageURL = messageInfo["imageURL"] as? String
     }
 }

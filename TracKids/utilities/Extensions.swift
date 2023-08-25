@@ -7,23 +7,21 @@
 
 import UIKit
 import CoreLocation
-// MARK: -  UIViewController extension
+// MARK: - UIViewController extension
 extension UIViewController {
     // MARK: extension var to get contents of ViewController if it embedded in NavigationController.
-    var contents : UIViewController {
+    var contents: UIViewController {
         if let VC = self as? UINavigationController {
             return VC.visibleViewController ?? self
-        }
-        else {
+        } else {
             return self
         }
     }
     // MARK: extension var to get root ViewController of NavigationController.
-    var rootViewController : UIViewController {
-        if let VC = self as? UINavigationController{
+    var rootViewController: UIViewController {
+        if let VC = self as? UINavigationController {
             return VC.viewControllers.first ?? self
-        }
-        else {
+        } else {
             return self
         }
     }
@@ -41,10 +39,10 @@ extension UIViewController {
     }
 }
 
-// MARK: -  UIImage extension.
+// MARK: - UIImage extension.
 extension UIImage {
     // MARK: function to resize image with given width and height.
-    func resize(_ width: CGFloat, _ height:CGFloat) -> UIImage? {
+    func resize(_ width: CGFloat, _ height: CGFloat) -> UIImage? {
         let widthRatio  = width / size.width
         let heightRatio = height / size.height
         let ratio = widthRatio > heightRatio ? heightRatio : widthRatio
@@ -56,25 +54,24 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
-    
 }
 
-let imageCache = NSCache<NSString , AnyObject>()
-// MARK: -  UIImageView extension.
+let imageCache = NSCache<NSString, AnyObject>()
+// MARK: - UIImageView extension.
 extension UIImageView {
     // MARK: function to load and cache image to imageview from specific url
     func loadImageUsingCacheWithUrlString(_ urlString: String) {
         self.image = nil
-        //check cache for image first
+        // check cache for image first
         if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
             self.image = cachedImage
             return
         }
-        
-        //otherwise fire off a new download
-        if let url = URL(string: urlString){
-            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-                //download hit an error so lets return out
+
+        // otherwise fire off a new download
+        if let url = URL(string: urlString) {
+            URLSession.shared.dataTask(with: url, completionHandler: { data, _, error in
+                // download hit an error so lets return out
                 if let error = error {
                     print(error)
                     return
@@ -83,34 +80,31 @@ extension UIImageView {
                     if let downloadedImage = UIImage(data: data!) {
                         imageCache.setObject(downloadedImage, forKey: urlString as NSString)
                         self.image = downloadedImage
-                    }
-                    else{
+                    } else {
                         self.image = #imageLiteral(resourceName: "person.png")
                     }
                 })
-                
-            }).resume()
+            })
+            .resume()
         }
     }
-    
+
     // MARK: function to enable zooming to imageview's image.
     func enableZoom() {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(startZooming(_:)))
         isUserInteractionEnabled = true
         addGestureRecognizer(pinchGesture)
     }
-    
-    
+
     @objc private func startZooming(_ sender: UIPinchGestureRecognizer) {
         let scaleResult = sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale)
         guard let scale = scaleResult, scale.a > 1, scale.d > 1 else { return }
         sender.view?.transform = scale
         sender.scale = 1
     }
-    
 }
 
-// MARK: -  NSNumber extension.
+// MARK: - NSNumber extension.
 extension NSNumber {
     // MARK: function to convert timestamp number to date format.
     func convertDateFormatter() -> String {
@@ -122,11 +116,10 @@ extension NSNumber {
         let dateString = formatter.string(from: date)
         return dateString
     }
-    
 }
 
-// MARK: -  NSNumber extension.
-extension Date{
+// MARK: - NSNumber extension.
+extension Date {
     // MARK: function to convert date format to string.
     func convertDateFormatter() -> String {
         let formatter = DateFormatter()
@@ -135,62 +128,61 @@ extension Date{
         let dateString = formatter.string(from: self)
         return dateString
     }
-    
+
     // MARK: function to Return the amount of minutes from another date
     func minutes(from date: Date) -> Int {
         return Calendar.current.dateComponents([.minute], from: date, to: self).minute ?? 0
     }
-    
 }
 
-// MARK: -  UITableView extension.
+// MARK: - UITableView extension.
 extension UITableView {
     // MARK: function to reload tableview with keeping the offset.
     public func reloadDataAndKeepOffset() {
         // stop scrolling
         setContentOffset(contentOffset, animated: false)
-        
+
         // calculate the offset and reloadData
         let beforeContentSize = contentSize
         reloadData()
         layoutIfNeeded()
         let afterContentSize = contentSize
-        
+
         // reset the contentOffset after data is updated
         let newOffset = CGPoint(
             x: contentOffset.x + (afterContentSize.width - beforeContentSize.width),
             y: contentOffset.y + (afterContentSize.height - beforeContentSize.height))
         setContentOffset(newOffset, animated: false)
     }
-    
+
     // MARK: function to scroll down to last row of tableview .
     func scrollToBottomRow() {
         DispatchQueue.main.async {
             guard self.numberOfSections > 0 else { return }
-            
+
             // Make an attempt to use the bottom-most section with at least one row
             var section = max(self.numberOfSections - 1, 0)
             var row = max(self.numberOfRows(inSection: section) - 1, 0)
             var indexPath = IndexPath(row: row, section: section)
-            
+
             // Ensure the index path is valid, otherwise use the section above (sections can
             // contain 0 rows which leads to an invalid index path)
             while !self.indexPathIsValid(indexPath) {
                 section = max(section - 1, 0)
                 row = max(self.numberOfRows(inSection: section) - 1, 0)
                 indexPath = IndexPath(row: row, section: section)
-                
+
                 // If we're down to the last section, attempt to use the first row
                 if indexPath.section == 0 {
                     indexPath = IndexPath(row: 0, section: 0)
                     break
                 }
             }
-            
+
             // In the case that [0, 0] is valid (perhaps no data source?), ensure we don't encounter an
             // exception here
             guard self.indexPathIsValid(indexPath) else { return }
-            
+
             self.scrollToRow(at: indexPath, at: .none, animated: false)
         }
     }
@@ -204,7 +196,7 @@ extension UITableView {
 
 // MARK: extension function to download the URL into the data using the extension from UNNotificationAttachment. And save it in UserDefaults.
 extension UNNotificationAttachment {
-    static func download(imageFileIdentifier: String, data: Data, options: [NSObject : AnyObject]?)
+    static func download(imageFileIdentifier: String, data: Data, options: [NSObject: AnyObject]?)
     -> UNNotificationAttachment? {
         let fileManager = FileManager.default
         if let directory = fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.Trackids.extension") {

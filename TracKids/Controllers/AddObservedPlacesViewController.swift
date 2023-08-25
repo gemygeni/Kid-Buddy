@@ -11,14 +11,14 @@ import Firebase
 import FloatingPanel
 
 class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, SearchViewControllerDelegate {
-    
     let panel = FloatingPanelController()
     var observedPlaces = [CLLocationCoordinate2D]()
-    var ObservedLocation = CLLocation()
+    var observedLocation = CLLocation()
     var addressTitle = ""
-    var searchResults : [MKPlacemark] = []
-    let LocationManager = LocationHandler.shared.locationManager
-    
+    var searchResults: [MKPlacemark] = []
+    let locationManager = LocationHandler.shared.locationManager
+    let defaultLocation = CLLocation(latitude: 37.7749, longitude: -122.4194)
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMapView()
@@ -26,69 +26,70 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
         searchVC.delegate = self
         panel.set(contentViewController: searchVC)
         panel.addPanel(toParent: self)
-        panel.move(to: .tip , animated: false)
+        panel.move(to: .tip, animated: false)
     }
-    
+
     @IBOutlet weak var mapView: MKMapView!
-    
-    @IBAction func AddButtonPressed(_ sender: UIButton) {
+
+    @IBAction func addButtonPressed(_ sender: UIButton) {
         uploadObservedPlaceData()
     }
-    
+
     @IBAction func changeMapTypeButtonPressed(_ sender: Any) {
-        if mapView.mapType == .standard{
+        if mapView.mapType == .standard {
             mapView.mapType = .hybrid
-        }
-        else if mapView.mapType == .hybrid {
+        } else if mapView.mapType == .hybrid {
             mapView.mapType = .standard
         }
     }
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     // MARK: - function to configure map and center on user location.
-    func configureMapView(){
+    func configureMapView() {
         mapView.delegate = self
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.isZoomEnabled = true
-        // centering Map On User Location.
-        guard let coordinate = self.LocationManager?.location?.coordinate else { return }
-        let region = MKCoordinateRegion(center: coordinate,
-                                        latitudinalMeters: 2000,
-                                        longitudinalMeters: 2000)
+        // centering Map On user Location.
+        let coordinate = self.locationManager?.location?.coordinate ?? defaultLocation.coordinate
+        print("coordinates is \(coordinate)")
+        let region = MKCoordinateRegion(
+            center: coordinate,
+            latitudinalMeters: 2000,
+            longitudinalMeters: 2000)
         mapView.setRegion(region, animated: true)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         mapView.addGestureRecognizer(tapGesture)
     }
-    
+
     // MARK: - function to handle tap on the map to assign location to observe.
     @objc func handleTap(gestureReconizer: UITapGestureRecognizer) {
         mapView.removeAnnotations(mapView.annotations)
         let location = gestureReconizer.location(in: mapView)
-        let coordinate = mapView.convert(location,toCoordinateFrom: mapView)
+        let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
         // Add annotation:
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
-        let ObservedLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        self.ObservedLocation = ObservedLocation
+        let observedLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        self.observedLocation = observedLocation
         mapView.addAnnotation(annotation)
-        addRadiusOverlay(for: ObservedLocation)
-        //convert location to address to display on observeed places.
-        LocationHandler.shared.convertLocationToAddress(for: ObservedLocation) { [weak self] address in
+        addRadiusOverlay(for: observedLocation)
+        // convert location to address to display on observeed places.
+        LocationHandler.shared.convertLocationToAddress(for: observedLocation) { [weak self] address in
             self?.addressTitle = (address?.title.components(separatedBy: ",").dropLast(2).joined(separator: " "))!
             print("Debug: addressTitle  \(String(describing: self?.addressTitle))")
         }
     }
-    
+
     // MARK: - SearchViewControllerDelegate method triggered when select search result row.
     func searchViewController(_ VC: SearchViewController, didSelectLocationWith coordinates: CLLocationCoordinate2D?, title: String) {
         panel.move(to: .tip, animated: true)
         guard let coordinates = coordinates else {return}
-        self.addressTitle  = title
-        let ObservedLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        self.ObservedLocation = ObservedLocation
+        self.addressTitle = title
+        let observedLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        self.observedLocation = observedLocation
         self.observedPlaces.append(coordinates)
         mapView.removeAnnotations(mapView.annotations)
         let pin = MKPointAnnotation()
@@ -96,22 +97,22 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
         mapView.addAnnotation(pin)
         mapView.setRegion(MKCoordinateRegion(center: coordinates, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
         mapView.removeOverlays(mapView.overlays)
-        addRadiusOverlay(for: ObservedLocation)
+        addRadiusOverlay(for: observedLocation)
     }
-    
+
     // MARK: - SearchViewControllerDelegate method triggered when search  begin to expand search panel.
     func didBeginSearching(_ VC: SearchViewController) {
         self.panel.move(to: .full, animated: true)
     }
-    
+
     // MARK: - function to upload observed place to database .
-    func uploadObservedPlaceData(){
-        if let trackedChildId = TrackingViewController.trackedChildUId{
+    func uploadObservedPlaceData() {
+        if let trackedChildId = TrackingViewController.trackedChildUId {
             if self.addressTitle.count > 1 {
                 print("Debug: fetched is \( addressTitle) ")
-                DataHandler.shared.uploadObservedPlace(ObservedLocation, addressTitle: self.addressTitle, for: trackedChildId)
-            }else{
-                DataHandler.shared.uploadObservedPlace(ObservedLocation, addressTitle: "no address", for: trackedChildId)
+                DataHandler.shared.uploadObservedPlace(observedLocation, addressTitle: self.addressTitle, for: trackedChildId)
+            } else {
+                DataHandler.shared.uploadObservedPlace(observedLocation, addressTitle: "no address", for: trackedChildId)
             }
             self.dismiss(animated: true, completion: nil)
             print("Debug: uploaded place successfully")
@@ -130,9 +131,8 @@ class AddObservedPlacesViewController: UIViewController, MKMapViewDelegate, Sear
         return MKOverlayRenderer(overlay: overlay)
     }
     // MARK: - function to add circular overlay on map with specific location.
-    func addRadiusOverlay(for Location: CLLocation) {
+    func addRadiusOverlay(for location: CLLocation) {
         mapView.removeOverlays(mapView.overlays)
-        mapView.addOverlay(MKCircle(center: Location.coordinate, radius: 200))
+        mapView.addOverlay(MKCircle(center: location.coordinate, radius: 200))
     }
 }
-

@@ -8,7 +8,7 @@
 import UIKit
 
 class ChildsListTableViewCell: UITableViewCell {
-    let profileImageView : UIImageView = {
+    let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
@@ -16,7 +16,7 @@ class ChildsListTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         addSubview(profileImageView)
@@ -25,14 +25,14 @@ class ChildsListTableViewCell: UITableViewCell {
         profileImageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         textLabel?.frame = CGRect(x: 64, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
-        
+
         detailTextLabel?.frame = CGRect(x: 64, y: detailTextLabel!.frame.origin.y + 2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }

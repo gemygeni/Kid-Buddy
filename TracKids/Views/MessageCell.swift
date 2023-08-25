@@ -8,26 +8,26 @@
 import UIKit
 
 class MessageCell: UITableViewCell {
-    @IBOutlet weak var MessageImageView: UIImageView!
-    @IBOutlet weak var MessageBodyView: UIView!
-    @IBOutlet weak var MessageBodyLabel: UILabel!
-    
+    @IBOutlet weak var messageImageView: UIImageView!
+    @IBOutlet weak var messageBodyView: UIView!
+    @IBOutlet weak var messageBodyLabel: UILabel!
+
     @IBOutlet weak var timeLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        MessageImageView.translatesAutoresizingMaskIntoConstraints = false
-        MessageImageView.layer.cornerRadius = MessageImageView.frame.size.height / 5
-        MessageImageView.layer.masksToBounds = true
-        MessageImageView.contentMode = .scaleAspectFill
-        MessageBodyView.translatesAutoresizingMaskIntoConstraints = false
-        MessageBodyView.layer.cornerRadius = MessageBodyView.frame.size.height / 5
-        MessageBodyView.layer.masksToBounds = true
-        MessageBodyView.contentMode = .scaleAspectFill
+        messageImageView.translatesAutoresizingMaskIntoConstraints = false
+        messageImageView.layer.cornerRadius = messageImageView.frame.size.height / 5
+        messageImageView.layer.masksToBounds = true
+        messageImageView.contentMode = .scaleAspectFill
+        messageBodyView.translatesAutoresizingMaskIntoConstraints = false
+        messageBodyView.layer.cornerRadius = messageBodyView.frame.size.height / 5
+        messageBodyView.layer.masksToBounds = true
+        messageBodyView.contentMode = .scaleAspectFill
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
-        MessageImageView?.image = nil
-        MessageImageView?.removeConstraints(MessageImageView.constraints)
+        messageImageView?.image = nil
+        messageImageView?.removeConstraints(messageImageView.constraints)
     }
 }

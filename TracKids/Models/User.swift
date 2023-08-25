@@ -7,16 +7,16 @@
 import UIKit
 import CoreLocation
 struct User {
-    var name : String
-    var uid : String
-    var email : String
-    var password : String
-    var accountType : Int
-    var parentID : String?
-    var imageURL : String?
-    var deviceID : String?
-    
-    init(uid : String , dictionary : [String : Any] ) {
+    var name: String
+    var uid: String
+    var email: String
+    var password: String
+    var accountType: Int
+    var parentID: String?
+    var imageURL: String?
+    var deviceID: String?
+
+    init(uid: String, dictionary: [String: Any] ) {
         self.uid = uid
         self.name = dictionary["name"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
@@ -27,4 +27,3 @@ struct User {
         self.deviceID = dictionary["deviceID"] as? String ?? ""
     }
 }
-
