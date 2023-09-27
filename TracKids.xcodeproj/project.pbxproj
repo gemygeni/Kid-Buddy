@@ -139,6 +139,7 @@
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
 		EFACB7DA2996E697007CD2E2 /* criticalAlert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = criticalAlert.wav; sourceTree = "<group>"; };
 		EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PrivacyPolicy.html; sourceTree = "<group>"; };
+		EFB7FA872AC3E2E700F0F6F4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EFDF382D2A8EFC870006D716 /* ObservedPlacesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservedPlacesTableViewController.swift; sourceTree = "<group>"; };
 		EFF4984925C39B6F0042A5D3 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		EFF4984D25C4CA390042A5D3 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +227,7 @@
 		EF5B0EE525BE492200890F4B = {
 			isa = PBXGroup;
 			children = (
+				EFB7FA872AC3E2E700F0F6F4 /* README.md */,
 				EF92B58327DB857D00A2FA64 /* TracKids.entitlements */,
 				EF5B0EF025BE492200890F4B /* TracKids */,
 				EF1AA07D28D6B1A000B4CBBE /* TrackidsNotificationExtension */,
