@@ -1,4 +1,4 @@
-# TracKids
+# Kid-Buddy
 ![appstore](https://user-images.githubusercontent.com/47509504/205902251-0b600df3-cfc3-417c-a8cb-8bba38300647.png)
 
 Kid Buddy is a comprehensive solution that enables parents to effortlessly track their children's real-time location, providing peace of mind and promoting a safer environment. Here are some key features that make Kid Buddy a must-have app for every parent:

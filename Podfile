@@ -3,11 +3,11 @@
 
 
 
-target 'TracKids' do
+target 'Kid Buddy' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for TracKids
+  # Pods for Kid Buddy
         pod 'Firebase/Database'
         pod 'Firebase/Auth'
         pod 'Firebase/Storage'
