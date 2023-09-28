@@ -1,0 +1,6 @@
+framework module Pods_Kid_Buddy {
+  umbrella header "Pods-Kid Buddy-umbrella.h"
+
+  export *
+  module * { export * }
+}
