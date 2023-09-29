@@ -114,9 +114,9 @@ open class FloatingPanelController: UIViewController {
     }
 
     /// The delegate of a panel controller object.
-    @objc
-    public weak var delegate: FloatingPanelControllerDelegate? {
-        didSet {
+    @objc 
+    public weak var delegate: FloatingPanelControllerDelegate?{
+        didSet{
             didUpdateDelegate()
         }
     }
@@ -193,7 +193,7 @@ open class FloatingPanelController: UIViewController {
     /// The behavior for determining the adjusted content offsets.
     ///
     /// This property specifies how the content area of the tracking scroll view is modified using ``adjustedContentInsets``. The default value of this property is FloatingPanelController.ContentInsetAdjustmentBehavior.always.
-    @objc
+    @objc 
     public var contentInsetAdjustmentBehavior: ContentInsetAdjustmentBehavior = .always
 
     /// A Boolean value that determines whether the removal interaction is enabled.
@@ -267,13 +267,13 @@ open class FloatingPanelController: UIViewController {
         floatingPanel = Core(self, layout: initialLayout, behavior: initialBehavior)
     }
 
-    private func didUpdateDelegate() {
+    private func didUpdateDelegate(){
         if let layout = delegate?.floatingPanel?(self, layoutFor: traitCollection) {
             _layout = layout
         }
     }
 
-    // MARK: - Overrides
+    // MARK:- Overrides
 
     /// Creates the view that the controller manages.
     open override func loadView() {
@@ -344,7 +344,7 @@ open class FloatingPanelController: UIViewController {
         safeAreaInsetsObservation = nil
     }
 
-    // MARK: - Child view controller to consult
+    // MARK:- Child view controller to consult
     open override var childForStatusBarStyle: UIViewController? {
         return contentViewController
     }
@@ -361,7 +361,7 @@ open class FloatingPanelController: UIViewController {
         return contentViewController
     }
 
-    // MARK: - Privates
+    // MARK:- Privates
 
     private func shouldUpdateLayout(from previous: UITraitCollection, to new: UITraitCollection) -> Bool {
         return previous.horizontalSizeClass != new.horizontalSizeClass
@@ -373,7 +373,7 @@ open class FloatingPanelController: UIViewController {
     private func update(safeAreaInsets: UIEdgeInsets) {
         guard
             preSafeAreaInsets != safeAreaInsets
-        else { return }
+            else { return }
 
         log.debug("Update safeAreaInsets", safeAreaInsets)
 
@@ -491,8 +491,8 @@ open class FloatingPanelController: UIViewController {
             self.view.topAnchor.constraint(equalTo: parent.view.topAnchor, constant: 0.0),
             self.view.leftAnchor.constraint(equalTo: parent.view.leftAnchor, constant: 0.0),
             self.view.rightAnchor.constraint(equalTo: parent.view.rightAnchor, constant: 0.0),
-            self.view.bottomAnchor.constraint(equalTo: parent.view.bottomAnchor, constant: 0.0)
-        ])
+            self.view.bottomAnchor.constraint(equalTo: parent.view.bottomAnchor, constant: 0.0),
+            ])
 
         show(animated: animated) { [weak self] in
             guard let self = self else { return }
@@ -657,7 +657,7 @@ extension FloatingPanelController {
             return animator
         }
         let timingParameters = UISpringTimingParameters(decelerationRate: UIScrollView.DecelerationRate.fast.rawValue,
-                                                        frequencyResponse: 0.25)
+                                                       frequencyResponse: 0.25)
         return UIViewPropertyAnimator(duration: 0.0,
                                       timingParameters: timingParameters)
     }
@@ -667,8 +667,8 @@ extension FloatingPanelController {
             return animator
         }
         let timingParameters = UISpringTimingParameters(decelerationRate: UIScrollView.DecelerationRate.fast.rawValue,
-                                                        frequencyResponse: 0.25,
-                                                        initialVelocity: velocity)
+                                                       frequencyResponse: 0.25,
+                                                       initialVelocity: velocity)
         return UIViewPropertyAnimator(duration: 0.0,
                                       timingParameters: timingParameters)
     }
@@ -676,9 +676,9 @@ extension FloatingPanelController {
 
 extension FloatingPanelController {
     private static let dismissSwizzling: Void = {
-        let aClass: AnyClass! = UIViewController.self // object_getClass(vc)
+        let aClass: AnyClass! = UIViewController.self //object_getClass(vc)
         if let imp = class_getMethodImplementation(aClass, #selector(dismiss(animated:completion:))),
-           let originalAltMethod = class_getInstanceMethod(aClass, #selector(fp_original_dismiss(animated:completion:))) {
+            let originalAltMethod = class_getInstanceMethod(aClass, #selector(fp_original_dismiss(animated:completion:))) {
             method_setImplementation(originalAltMethod, imp)
         }
         let originalMethod = class_getInstanceMethod(aClass, #selector(dismiss(animated:completion:)))

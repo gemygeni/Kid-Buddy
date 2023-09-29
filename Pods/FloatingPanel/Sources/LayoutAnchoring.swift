@@ -49,7 +49,7 @@ public extension FloatingPanelLayoutAnchor {
         case .left:
             return layoutConstraints(layoutGuide, for: vc.surfaceView.rightAnchor)
         case .bottom:
-            return layoutConstraints(layoutGuide, for: vc.surfaceView.topAnchor)
+            return layoutConstraints(layoutGuide, for:  vc.surfaceView.topAnchor)
         case .right:
             return layoutConstraints(layoutGuide, for: vc.surfaceView.leftAnchor)
         }
@@ -62,7 +62,7 @@ public extension FloatingPanelLayoutAnchor {
                 return [edgeAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: inset)]
             }
             let offsetAnchor = layoutGuide.topAnchor.anchorWithOffset(to: edgeAnchor)
-            return [offsetAnchor.constraint(equalTo: layoutGuide.heightAnchor, multiplier: inset)]
+            return [offsetAnchor.constraint(equalTo:layoutGuide.heightAnchor, multiplier: inset)]
         case .bottom:
             if isAbsolute {
                 return [layoutGuide.bottomAnchor.constraint(equalTo: edgeAnchor, constant: inset)]

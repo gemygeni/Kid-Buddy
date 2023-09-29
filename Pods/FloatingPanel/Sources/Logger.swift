@@ -86,7 +86,7 @@ struct Logger {
         #endif
     }
 
-    func info(_ log: Any, _ arguments: Any..., tag: String = "", function: String = #function, file: String  = #file, line: UInt = #line) {
+    func info(_ log: Any, _ arguments: Any..., tag: String = "",  function: String = #function, file: String  = #file, line: UInt = #line) {
         self.log(.info, log, arguments, tag: tag, function: getPrettyFunction(function, file), line: line)
     }
 
