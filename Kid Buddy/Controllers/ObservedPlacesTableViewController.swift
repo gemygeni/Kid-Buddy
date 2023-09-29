@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import Firebase
 
 class ObservedPlacesTableViewController: UITableViewController {
     var Addresses = [Location?]()
@@ -21,37 +22,64 @@ class ObservedPlacesTableViewController: UITableViewController {
     func fetchObservedPlaces(){
         Addresses = []
         
-        if let trackedChildId = TrackingViewController.trackedChildUId{
-            
-            DataHandler.shared.fetchObservedPlaces(for: trackedChildId) {[weak self] (locations) in
-                guard let locations = locations else{return}
-               
-               
-                for location in locations{
-                    LocationHandler.shared.convertLocationToAddress(for: location) { (address) in
+        if let trackedChildId = TrackingViewController.trackedChildUId, let parent = Auth.auth().currentUser?.uid{
+        DataHandler.shared.fetchObservedPlaces(for: trackedChildId, of: parent) {[weak self] locations, placesIds in
+          guard let locations = locations else{return}
 
-                        if   !((self?.Addresses.contains(where: { (address2) -> Bool in
-                            if address2?.coordinates.latitude == address?.coordinates.latitude && address2?.coordinates.longitude == address?.coordinates.longitude {
-                                return true
-                            }
-                            return false
-                        })) ?? false){
 
-                          self?.Addresses.append(contentsOf: address)
+          for location in locations{
+              LocationHandler.shared.convertLocationToAddress(for: location) { (address) in
 
-                           }
-                       
-                        DispatchQueue.main.async {
-                                          
-                            self?.tableView.reloadData()
-                          }
-                        }
+                  if   !((self?.Addresses.contains(where: { (address2) -> Bool in
+                      if address2?.coordinates.latitude == address?.coordinates.latitude && address2?.coordinates.longitude == address?.coordinates.longitude {
+                          return true
+                      }
+                      return false
+                  })) ?? false){
+                    self?.Addresses.append( address)
                      }
+
+                  DispatchQueue.main.async {
+                      self?.tableView.reloadData()
+                    }
                   }
                }
-        navigationItem.rightBarButtonItem?.isEnabled = Addresses.count < 20
-             }
-  
+            }
+         }
+  navigationItem.rightBarButtonItem?.isEnabled = Addresses.count < 20
+
+          }
+
+
+
+
+
+//            DataHandler.shared.fetchObservedPlaces(for: trackedChildId) {[weak self] (locations) in
+//                guard let locations = locations else{return}
+//
+//
+//                for location in locations{
+//                    LocationHandler.shared.convertLocationToAddress(for: location) { (address) in
+//
+//                        if   !((self?.Addresses.contains(where: { (address2) -> Bool in
+//                            if address2?.coordinates.latitude == address?.coordinates.latitude && address2?.coordinates.longitude == address?.coordinates.longitude {
+//                                return true
+//                            }
+//                            return false
+//                        })) ?? false){
+//                          self?.Addresses.append( address)
+//                           }
+//
+//                        DispatchQueue.main.async {
+//                            self?.tableView.reloadData()
+//                          }
+//                        }
+//                     }
+//                  }
+//               }
+//        navigationItem.rightBarButtonItem?.isEnabled = Addresses.count < 20
+//             }
+
     @IBAction func AddPlacesButtonPressed(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "AddPlacesSegue", sender: self)
     }
