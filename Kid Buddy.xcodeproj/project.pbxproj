@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		EC708EE711466769357C985D /* Pods_Kid_Buddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4D28E631F65351252EDDD23 /* Pods_Kid_Buddy.framework */; };
+		EF13F4DC2AC8BC0A007A6418 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF13F4DA2AC8BC09007A6418 /* Info.plist */; };
+		EF13F4DD2AC8BC0A007A6418 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF13F4DB2AC8BC09007A6418 /* GoogleService-Info.plist */; };
 		EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16107526E79FFB007BA5ED /* MessageCell.swift */; };
 		EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF16107626E79FFB007BA5ED /* MessageCell.xib */; };
 		EF1AA07F28D6B1A000B4CBBE /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1AA07E28D6B1A000B4CBBE /* NotificationService.swift */; };
@@ -37,7 +39,6 @@
 		EF78C48B27AF5720000E0579 /* EditChildProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF78C48A27AF5720000E0579 /* EditChildProfileViewController.swift */; };
 		EF7FFB4F28F840FB00FF6987 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7FFB4E28F840FB00FF6987 /* WebKit.framework */; };
 		EF7FFB5128F8427A00FF6987 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7FFB5028F8427A00FF6987 /* PrivacyPolicyViewController.swift */; };
-		EF8320F227B4CEC800892F37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF8320F127B4CEC800892F37 /* GoogleService-Info.plist */; };
 		EF95470C25CBA30300806D45 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470B25CBA30300806D45 /* DataHandler.swift */; };
 		EF95470F25CBB45F00806D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95470E25CBB45F00806D45 /* User.swift */; };
 		EF9CEB1F25E0CEFA00D4D364 /* AddChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */; };
@@ -81,6 +82,8 @@
 		985DF44B7197D4DBDD038040 /* Pods-Kid Buddy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kid Buddy.debug.xcconfig"; path = "Target Support Files/Pods-Kid Buddy/Pods-Kid Buddy.debug.xcconfig"; sourceTree = "<group>"; };
 		C4D28E631F65351252EDDD23 /* Pods_Kid_Buddy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kid_Buddy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B273A45A16454802A2189E /* Pods-Kid Buddy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kid Buddy.release.xcconfig"; path = "Target Support Files/Pods-Kid Buddy/Pods-Kid Buddy.release.xcconfig"; sourceTree = "<group>"; };
+		EF13F4DA2AC8BC09007A6418 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF13F4DB2AC8BC09007A6418 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EF16107526E79FFB007BA5ED /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		EF16107626E79FFB007BA5ED /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		EF1AA07C28D6B1A000B4CBBE /* TrackidsNotificationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TrackidsNotificationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,12 +133,10 @@
 		EF78C48A27AF5720000E0579 /* EditChildProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditChildProfileViewController.swift; sourceTree = "<group>"; };
 		EF7FFB4E28F840FB00FF6987 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		EF7FFB5028F8427A00FF6987 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
-		EF8320F127B4CEC800892F37 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EF95470B25CBA30300806D45 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		EF95470E25CBB45F00806D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF9CEB1E25E0CEFA00D4D364 /* AddChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildViewController.swift; sourceTree = "<group>"; };
 		EFACB7DA2996E697007CD2E2 /* criticalAlert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = criticalAlert.wav; sourceTree = "<group>"; };
-		EFB20FA32AC50C55000A5D83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PrivacyPolicy.html; sourceTree = "<group>"; };
 		EFB7FA872AC3E2E700F0F6F4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EFBF00F52AC5052A0000935B /* Kid Buddy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Kid Buddy.entitlements"; path = "Kid Buddy/Kid Buddy.entitlements"; sourceTree = "<group>"; };
@@ -254,8 +255,6 @@
 				EF8F9B0C25F5DF2500C4BE16 /* supporting files */,
 				EF92A708275352B3003566E4 /* utilities */,
 				EF16107A26E7A01C007BA5ED /* Views */,
-				EFB20FA32AC50C55000A5D83 /* Info.plist */,
-				EF8320F127B4CEC800892F37 /* GoogleService-Info.plist */,
 			);
 			path = "Kid Buddy";
 			sourceTree = "<group>";
@@ -263,6 +262,8 @@
 		EF8F9B0C25F5DF2500C4BE16 /* supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				EF13F4DB2AC8BC09007A6418 /* GoogleService-Info.plist */,
+				EF13F4DA2AC8BC09007A6418 /* Info.plist */,
 				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
 				EFACB7DA2996E697007CD2E2 /* criticalAlert.wav */,
 				EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */,
@@ -427,7 +428,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF1C84C127435A6800033A65 /* Apple.gpx in Resources */,
-				EF8320F227B4CEC800892F37 /* GoogleService-Info.plist in Resources */,
 				EFACB7DB2996E697007CD2E2 /* criticalAlert.wav in Resources */,
 				EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */,
 				EF5B0EFE25BE492300890F4B /* LaunchScreen.storyboard in Resources */,
@@ -435,6 +435,8 @@
 				EF1C84C427435A8500033A65 /* Google.gpx in Resources */,
 				EF5B0EFB25BE492300890F4B /* Assets.xcassets in Resources */,
 				EF5B0EF925BE492200890F4B /* Main.storyboard in Resources */,
+				EF13F4DD2AC8BC0A007A6418 /* GoogleService-Info.plist in Resources */,
+				EF13F4DC2AC8BC0A007A6418 /* Info.plist in Resources */,
 				EFFCA0382746F1A100B14C81 /* SimulatedLocations.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,7 +483,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --no-cache --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		FA2C037F5F1687E1FD52FFDA /* [CP] Embed Pods Frameworks */ = {
@@ -765,7 +767,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 376L6GYCXP;
 				GCC_NO_COMMON_BLOCKS = NO;
-				INFOPLIST_FILE = TracKids/Info.plist;
+				INFOPLIST_FILE = "Kid Buddy/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Kid Buddy";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -792,7 +794,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 376L6GYCXP;
 				GCC_NO_COMMON_BLOCKS = NO;
-				INFOPLIST_FILE = TracKids/Info.plist;
+				INFOPLIST_FILE = "Kid Buddy/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Kid Buddy";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (

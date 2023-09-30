@@ -18,8 +18,9 @@ protocol SearchViewControllerDelegate: AnyObject {
 
 class SearchViewController: UIViewController {
     weak var delegate: SearchViewControllerDelegate?
-    var places = [Location]()
-    var searchResults = [MKLocalSearchCompletion]()
+    var places: [Location] = []
+    var searchResults: [MKLocalSearchCompletion] = []
+
     private let searchCompleter = MKLocalSearchCompleter()
     let label: UILabel = {
         let label = UILabel()

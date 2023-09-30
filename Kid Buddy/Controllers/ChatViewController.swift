@@ -374,7 +374,7 @@ class ChatViewController: UIViewController, UIGestureRecognizerDelegate {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
 }
-
+// swiftlint:enable file_length
 // MARK: - UITableViewDataSource, UITableViewDelegate Methods.
 extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

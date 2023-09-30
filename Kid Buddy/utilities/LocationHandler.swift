@@ -20,7 +20,7 @@ class LocationHandler: NSObject, CLLocationManagerDelegate {
     var locationManager: CLLocationManager?
     var locationHistory = [CLLocation]()
     var places = [Location]()
-    var geofences = [CLCircularRegion]()
+    var geofences: [CLCircularRegion] = []
     var count1 = 0
     override init() {
         super.init()

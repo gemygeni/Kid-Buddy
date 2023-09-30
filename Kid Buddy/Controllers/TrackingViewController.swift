@@ -17,7 +17,7 @@ enum AccountType: Int {
 class TrackingViewController: UIViewController {
     var accountType: AccountType!
     var childs = [User?]()
-    var childsID = [String]()
+    var childsID: [String] = []
     var authHandler: AuthStateDidChangeListenerHandle?
     var annotationImage: UIImage?
     var fetchedImageView: UIImageView?
@@ -92,7 +92,7 @@ class TrackingViewController: UIViewController {
         configureMapView()
         centerMapOnUserLocation()
         LocationHandler.shared.startObservingPlaces()
-        var dict = [String: Any]()
+        var dict: [String: Any] = [:]
         dict.updateValue(0, forKey: "badgeCount")
         UserDefaults.standard.register(defaults: dict)
     }
