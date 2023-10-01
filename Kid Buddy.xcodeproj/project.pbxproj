@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		EC708EE711466769357C985D /* Pods_Kid_Buddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4D28E631F65351252EDDD23 /* Pods_Kid_Buddy.framework */; };
-		EF13F4DC2AC8BC0A007A6418 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF13F4DA2AC8BC09007A6418 /* Info.plist */; };
 		EF13F4DD2AC8BC0A007A6418 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF13F4DB2AC8BC09007A6418 /* GoogleService-Info.plist */; };
 		EF16107726E79FFB007BA5ED /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16107526E79FFB007BA5ED /* MessageCell.swift */; };
 		EF16107826E79FFB007BA5ED /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF16107626E79FFB007BA5ED /* MessageCell.xib */; };
@@ -250,6 +249,8 @@
 		EF5B0EF025BE492200890F4B /* Kid Buddy */ = {
 			isa = PBXGroup;
 			children = (
+				EF13F4DB2AC8BC09007A6418 /* GoogleService-Info.plist */,
+				EF13F4DA2AC8BC09007A6418 /* Info.plist */,
 				EF55672326797E1800077ACF /* Controllers */,
 				EF55672226797DEE00077ACF /* Models */,
 				EF8F9B0C25F5DF2500C4BE16 /* supporting files */,
@@ -262,8 +263,6 @@
 		EF8F9B0C25F5DF2500C4BE16 /* supporting files */ = {
 			isa = PBXGroup;
 			children = (
-				EF13F4DB2AC8BC09007A6418 /* GoogleService-Info.plist */,
-				EF13F4DA2AC8BC09007A6418 /* Info.plist */,
 				EF5B0EF125BE492200890F4B /* AppDelegate.swift */,
 				EFACB7DA2996E697007CD2E2 /* criticalAlert.wav */,
 				EFB23BFF298F3C7E0091325F /* PrivacyPolicy.html */,
@@ -436,7 +435,6 @@
 				EF5B0EFB25BE492300890F4B /* Assets.xcassets in Resources */,
 				EF5B0EF925BE492200890F4B /* Main.storyboard in Resources */,
 				EF13F4DD2AC8BC0A007A6418 /* GoogleService-Info.plist in Resources */,
-				EF13F4DC2AC8BC0A007A6418 /* Info.plist in Resources */,
 				EFFCA0382746F1A100B14C81 /* SimulatedLocations.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
