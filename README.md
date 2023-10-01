@@ -1,33 +1,14 @@
-# TracKids
+# Kid-Buddy
 ![appstore](https://user-images.githubusercontent.com/47509504/205902251-0b600df3-cfc3-417c-a8cb-8bba38300647.png)
 
-Kid Buddy is an IOS app which help parents to track their kids location in realtime.
-Our features:
-. GPS Location tracking 
-You can track your child’s location in real-time and see child’s annotation moving on the map.
+Kid Buddy is a comprehensive solution that enables parents to effortlessly track their children's real-time location, providing peace of mind and promoting a safer environment. Here are some key features that make Kid Buddy a must-have app for every parent:
 
-.Arrival and leaving Alert
-You can specify places to observe and get notified in real-time when your child arrive or leave.
+📍 Real-Time Location Tracking: Keep a close eye on your child's whereabouts with precise, real-time GPS tracking. Stay informed and ensure their safety, no matter where they are.
 
-.Location History
-You can see your child’s movements history during the past 24 hrs.
+🏠 Geofencing Notifications: Define specific areas, such as home, school, or a friend's house, and receive instant notifications when your child enters or leaves those locations. Stay connected and be alerted when it matters most.
 
-.Emergency alert
-Your child can send you an alert in emergency situation and you can send an alert to child’s device which will delivered even if the recipient device is on silent or don’t disturb mode.
+🗺️ Movement History: Kid Buddy stores a detailed history of your child's movements, allowing you to review their past locations. Gain valuable insights into their routines and ensure their well-being.
 
-.Family Chat
-communicate with your child with real-time chatting, sending photos is available.
+💬 In-App Chatting: Stay connected with your child through Kid Buddy's built-in chat feature. Easily communicate, share updates, and strengthen the bond between parent and child.
 
-How to use Kid Buddy : 
-
-1- install app on your device
-
-2- install app on your child’s device
-
-3- press ‘+’ button to add  child by two choices : 
-
-       A- create new child account by child’s email.
-       
-       B- send an OTP code to your child’s device and join it by submitting code with ‘+’ button.
-       
-4- choose the child that you want to track by pressing child’s icon.
+🆘 Emergency Alerts: Kid Buddy empowers children to send emergency alerts directly to their parents. In critical situations, help is just a tap away, providing an additional layer of safety.
